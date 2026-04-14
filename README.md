@@ -1,6 +1,6 @@
 # Relay for Codex
 
-![Relay for Codex hero](docs/assets/relay-cover.svg)
+![Relay for Codex hero](docs/assets/relay-cover.png)
 
 [![Tests](https://github.com/Ryan-Guo123/relay-codex/actions/workflows/tests.yml/badge.svg)](https://github.com/Ryan-Guo123/relay-codex/actions/workflows/tests.yml)
 [![MIT License](https://img.shields.io/badge/license-MIT-0f172a.svg)](LICENSE)
