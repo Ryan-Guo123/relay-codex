@@ -1,0 +1,44 @@
+{
+  "name": "relay-codex",
+  "version": "0.1.0",
+  "description": "Keep Codex moving on your project without losing state.",
+  "author": {
+    "name": "Ryan-Guo123",
+    "url": "https://github.com/Ryan-Guo123"
+  },
+  "homepage": "https://github.com/Ryan-Guo123/relay-codex",
+  "repository": "https://github.com/Ryan-Guo123/relay-codex",
+  "license": "MIT",
+  "keywords": [
+    "codex",
+    "automation",
+    "workflow",
+    "agent",
+    "relay"
+  ],
+  "skills": "./skills/",
+  "hooks": "./hooks.json",
+  "interface": {
+    "displayName": "Relay for Codex",
+    "shortDescription": "Monitor progress, detect drift, and keep work moving",
+    "longDescription": "Relay for Codex adds repo-local state, progress monitoring, recovery heuristics, and automation pack recommendations so heavy Codex users can keep a project moving without losing context.",
+    "developerName": "Ryan-Guo123",
+    "category": "Coding",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "websiteURL": "https://github.com/Ryan-Guo123/relay-codex",
+    "privacyPolicyURL": "https://docs.github.com/site-policy/privacy-policies/github-general-privacy-statement",
+    "termsOfServiceURL": "https://docs.github.com/en/site-policy/github-terms/github-terms-of-service",
+    "defaultPrompt": [
+      "Enable Relay in this repo",
+      "Check whether Codex is stuck and what to do next",
+      "Install automations to keep this project moving"
+    ],
+    "brandColor": "#F97316",
+    "composerIcon": "./assets/icon.svg",
+    "logo": "./assets/logo.svg",
+    "screenshots": []
+  }
+}

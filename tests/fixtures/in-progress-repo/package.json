@@ -1,0 +1,16 @@
+{
+  "name": "in-progress-repo",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "test": "npm test"
+  },
+  "dependencies": {
+    "next": "15.0.0",
+    "react": "19.0.0"
+  },
+  "devDependencies": {
+    "typescript": "5.6.0"
+  }
+}

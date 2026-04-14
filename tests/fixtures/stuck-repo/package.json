@@ -1,0 +1,7 @@
+{
+  "name": "stuck-repo",
+  "private": true,
+  "scripts": {
+    "test": "pytest"
+  }
+}
