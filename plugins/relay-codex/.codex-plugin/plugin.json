@@ -37,8 +37,8 @@
       "Install automations to keep this project moving"
     ],
     "brandColor": "#F97316",
-    "composerIcon": "./assets/icon.svg",
-    "logo": "./assets/logo.svg",
+    "composerIcon": "./assets/app-icon.png",
+    "logo": "./assets/app-icon.png",
     "screenshots": []
   }
 }
