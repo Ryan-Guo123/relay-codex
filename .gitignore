@@ -1,6 +1,9 @@
 __pycache__/
 *.pyc
 .DS_Store
+.env
+.env.*
+!.env.example
 .relay/
 !tests/fixtures/stuck-repo/.relay/
 !tests/fixtures/stuck-repo/.relay/events.jsonl
