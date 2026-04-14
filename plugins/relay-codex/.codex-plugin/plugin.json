@@ -20,8 +20,8 @@
   "hooks": "./hooks.json",
   "interface": {
     "displayName": "Relay for Codex",
-    "shortDescription": "Monitor progress, detect drift, and keep work moving",
-    "longDescription": "Relay for Codex adds repo-local state, progress monitoring, recovery heuristics, and automation pack recommendations so heavy Codex users can keep a project moving without losing context.",
+    "shortDescription": "Repo-local state, drift detection, and recovery for Codex",
+    "longDescription": "Relay for Codex turns Codex App into a project relay system with repo-local state, progress verdicts, stuck-project recovery, and automation pack recommendations for long-running work.",
     "developerName": "Ryan-Guo123",
     "category": "Coding",
     "capabilities": [
