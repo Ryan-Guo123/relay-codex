@@ -42,7 +42,7 @@ Those are already Paperclip's territory. Copying them would make Relay late, hea
 
 ### What Codex native goals change
 
-Codex-native goals reduce the value of a generic "keep working later" pitch. Relay should not sell continuation as the main product.
+Codex-native goals reduce the value of a generic "keep working later" pitch. OpenAI positions `/goal` for long-running work with a durable objective, verifiable stopping condition, validation loop, and evidence-based completion. Relay should not sell continuation as the main product.
 
 Instead, Relay should treat Codex continuation as an input and add what a maintainer still needs:
 
@@ -51,6 +51,36 @@ Instead, Relay should treat Codex continuation as an input and add what a mainta
 - stuck-recovery policy
 - PR and release handoff
 - audit-friendly evidence of what changed, what failed, and what needs review
+
+The boundary is simple:
+
+- Codex Goal: thread-scoped completion contract.
+- Relay: repo-scoped evidence and handoff contract.
+
+### What AI workflow writing reinforces
+
+Tom Tunguz's writing on harnessing AI reinforces the same product direction: the durable value is not only a smarter model, but the surrounding harness that turns model work into reliable workflows. Relay should be that harness for one specific slice of software work: Codex-driven repository maintenance.
+
+That means Relay should invest in:
+
+- evidence capture
+- handoff surfaces
+- review gates
+- recovery paths
+- release and PR workflows
+
+It should avoid a vague "AI productivity" message and keep proving value through concrete maintainer flows.
+
+### What external coding-agent heuristics reinforce
+
+Common coding-agent advice says the same thing in a more tactical way: direction before speed, plan before implementation, compare options before committing, split complex work into phases, and use human review at the high-leverage checkpoints.
+
+Relay should not turn that into a generic multi-agent planning product. The useful translation is narrower:
+
+- make phase boundaries visible in `.relay/queue.md`
+- make review checkpoints visible in `.relay/handoff.md`
+- make "stop and inspect" cheaper than another blind coding pass
+- preserve enough evidence that a maintainer can compare plans or execution paths later
 
 ## Define
 
@@ -191,3 +221,6 @@ Avoid:
 
 - Paperclip GitHub repository: https://github.com/paperclipai/paperclip
 - Design Council Framework for Innovation and Double Diamond: https://www.designcouncil.org.uk/resources/framework-for-innovation/
+- OpenAI Codex goal use case: https://developers.openai.com/codex/use-cases/follow-goals
+- OpenAI Cookbook, Using Goals in Codex: https://developers.openai.com/cookbook/examples/codex/using_goals_in_codex
+- Tom Tunguz, Harnessing AI: https://tomtunguz.com/harnessing-ai
