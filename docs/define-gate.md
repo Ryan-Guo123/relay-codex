@@ -30,13 +30,13 @@ Current external evidence:
 | --- | ---: | --- |
 | GitHub stars | 1 | Existence only, not traction. |
 | Forks | 0 | No distribution signal. |
-| Targeted asks sent | 2 | Outreach started, not validation. |
+| Targeted asks sent | 3 | Outreach started, not validation. |
 | Replies received | 0 | No market response yet. |
 | Outside reviewer outcomes | 0 | Product usefulness unproven. |
 | External repo trials | 0 | Installation and workflow fit unproven. |
 | Money signals | 0 | Revenue forecast stays $0. |
 
-The two public targeted asks are useful because they test the riskiest question: whether Relay is `not_needed` because existing AI PR review tools already cover the job.
+The three public targeted asks are useful because they test the riskiest question: whether Relay is `not_needed` because existing AI PR review tools already cover the job.
 
 ## Define Gate Question
 
@@ -70,9 +70,9 @@ Negative evidence is not failure of the research process. It is the point of thi
 
 ## Next Three Actions
 
-1. Wait for replies on the two public targeted asks already sent.
-2. Send one more targeted ask only to a maintainer or reviewer who is plausibly close to AI-generated PR review, not a generic AI community.
-3. If three asks produce no reply, stop outreach in that segment and change the artifact or target segment before any new feature work.
+1. Wait for replies on the three public targeted asks already sent.
+2. If any reviewer replies, record the outcome before changing the product.
+3. If all three asks produce no reply after 7 days, stop outreach in that segment and change the artifact or target segment before any new feature work.
 
 Do not ask for stars, sponsorship, or paid setup during this gate.
 
