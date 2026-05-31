@@ -15,6 +15,20 @@ body:
 
         Please be blunt. `ignored` and `confusing` are useful outcomes.
   - type: dropdown
+    id: review_path
+    attributes:
+      label: Review path
+      description: Which Relay artifact or trial did you judge?
+      options:
+        - 60-second quick verdict
+        - Round 1 reviewer request
+        - Reviewer pack example
+        - External repo trial
+        - Real PR handoff
+        - Other
+    validations:
+      required: true
+  - type: dropdown
     id: reviewer_relationship
     attributes:
       label: Reviewer relationship
@@ -57,7 +71,7 @@ body:
     id: comparison
     attributes:
       label: Relay vs normal PR summary
-      description: Was the Relay handoff better, worse, or different from the normal PR summary in the reviewer request? If you use an AI PR review tool, say whether it already covers this job.
+      description: Was the Relay handoff better, worse, or different from the normal PR summary in the reviewer request or quick verdict page? If you use an AI PR review tool, say whether it already covers this job.
       placeholder: "Relay helped with changed files, but the normal summary was easier to paste..."
     validations:
       required: true

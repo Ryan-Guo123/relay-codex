@@ -34,15 +34,26 @@ Every feedback issue should also record AI PR review fit:
 | `not_needed` | Existing AI PR review tools already solve this job. |
 | `unsure` | The reviewer needs to test both on a real PR. |
 
+Every feedback issue should record one review path:
+
+| Value | Meaning |
+| --- | --- |
+| `60-second quick verdict` | Reviewer judged the no-install quick sample. Useful for friction and format signal, but weaker than a real PR trial. |
+| `Round 1 reviewer request` | Reviewer judged the stable real-PR Round 1 packet. |
+| `Reviewer pack example` | Reviewer judged the fixture-backed sample pack. |
+| `External repo trial` | Reviewer ran Relay on a repository outside `Ryan-Guo123/relay-codex`. Strongest current evidence. |
+| `Real PR handoff` | Reviewer judged a generated handoff from a real PR or release task. |
+| `Other` | Reviewer used a path not covered above; explain it in the issue. |
+
 ## Triage Steps
 
 1. Confirm the reviewer is outside the current Relay build thread.
 2. Confirm the issue links or pastes the artifact being judged.
 3. Confirm the issue compares Relay against a normal Codex, manual, or GitHub PR summary.
-4. Confirm the issue records AI PR review fit.
+4. Confirm the issue records review path and AI PR review fit.
 5. Apply exactly one `outcome:*` label.
 6. Keep `needs-ledger-update` until the issue is added to [validation-ledger.md](validation-ledger.md).
-7. Update the ledger with the reviewer relationship, artifact, outcome, AI review fit, and product decision.
+7. Update the ledger with the reviewer relationship, review path, artifact, outcome, AI review fit, and product decision.
 8. Remove `needs-ledger-update` after the ledger row is committed.
 9. Close the feedback issue only after the ledger update is merged.
 
@@ -53,6 +64,7 @@ Count as external validation:
 - feedback from an outside maintainer, outside contributor, frequent PR reviewer, or teammate who did not run the Codex thread
 - a linked external repository trial
 - a public PR, issue, workflow artifact, or release handoff where Relay output was actually reviewed
+- a `60-second quick verdict` only when it includes a public outcome and comparison; treat it as format signal, not proof of install or workflow fit
 
 Do not count as external validation:
 

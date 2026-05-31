@@ -20,6 +20,20 @@ body:
     validations:
       required: true
   - type: dropdown
+    id: review_path
+    attributes:
+      label: Review path
+      description: Which Relay artifact or trial did you judge?
+      options:
+        - 60-second quick verdict
+        - Round 1 reviewer request
+        - Reviewer pack example
+        - External repo trial
+        - Real PR handoff
+        - Other
+    validations:
+      required: true
+  - type: dropdown
     id: reviewer_relationship
     attributes:
       label: Reviewer relationship
