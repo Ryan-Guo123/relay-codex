@@ -1,7 +1,7 @@
 {
   "name": "relay-codex",
-  "version": "0.1.0",
-  "description": "Keep Codex moving on your project without losing state.",
+  "version": "0.1.1",
+  "description": "Repo-local maintainer workflow for long-running Codex work.",
   "author": {
     "name": "Ryan-Guo123",
     "url": "https://github.com/Ryan-Guo123"
@@ -21,7 +21,7 @@
   "interface": {
     "displayName": "Relay for Codex",
     "shortDescription": "Repo-local state, drift detection, and recovery for Codex",
-    "longDescription": "Relay for Codex turns Codex App into a project relay system with repo-local state, progress verdicts, stuck-project recovery, and automation pack recommendations for long-running work.",
+    "longDescription": "Relay for Codex adds a repo-local maintainer layer around long-running Codex work: inspectable state, progress verdicts, stuck-project recovery, and automation pack recommendations.",
     "developerName": "Ryan-Guo123",
     "category": "Coding",
     "capabilities": [

@@ -109,6 +109,8 @@ Relay renders three starter packs:
 3. Open the workspace in Codex App and install `Relay for Codex`.
 4. In the target repository, use `Enable Relay in this repo`.
 
+See [docs/demo-usage.md](docs/demo-usage.md) for a concrete PR triage and stuck-recovery example.
+
 ### Option B: develop the plugin itself
 
 1. Open this repository in Codex App.
@@ -158,10 +160,11 @@ Planned next:
 - better screenshots and real-world demos
 - more opinionated automation setup
 - stronger review queue handoff patterns
+- a tighter boundary with Codex's native goal and continuation features
 
 ## Contributing
 
-Bug reports, repro cases, workflow ideas, and pull requests are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md).
+Bug reports, repro cases, workflow ideas, and pull requests are welcome. Start with [CONTRIBUTING.md](CONTRIBUTING.md). Security boundaries and reporting guidance live in [SECURITY.md](SECURITY.md).
 
 ## Launch notes
 
