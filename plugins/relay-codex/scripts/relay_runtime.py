@@ -8,6 +8,7 @@ It intentionally stays stdlib-only so the plugin can run in clean workspaces.
 from __future__ import annotations
 
 import argparse
+import fnmatch
 import json
 import os
 import re
@@ -21,6 +22,7 @@ from typing import Any
 
 
 RELAY_DIRNAME = ".relay"
+CODEOWNERS_LOCATIONS = (".github/CODEOWNERS", "CODEOWNERS", "docs/CODEOWNERS")
 QUESTION_PATTERNS = (
     "should i",
     "do you want",
@@ -429,11 +431,98 @@ def detect_sensitive_review_paths(files: list[str]) -> list[tuple[str, str]]:
     return matches
 
 
+def load_codeowners(root: Path) -> tuple[str, list[tuple[str, list[str]]]]:
+    for relative_path in CODEOWNERS_LOCATIONS:
+        source = root / relative_path
+        if not source.exists():
+            continue
+        rules: list[tuple[str, list[str]]] = []
+        for line in source.read_text(encoding="utf-8").splitlines():
+            stripped = line.strip()
+            if not stripped or stripped.startswith("#"):
+                continue
+            parts = stripped.split()
+            if len(parts) < 2:
+                continue
+            pattern = parts[0]
+            owners = [part for part in parts[1:] if part.startswith("@")]
+            if owners:
+                rules.append((pattern, owners))
+        return relative_path, rules
+    return "", []
+
+
+def codeowner_pattern_matches(pattern: str, path: str) -> bool:
+    normalized = pattern.strip()
+    if not normalized:
+        return False
+    normalized = normalized.lstrip("/")
+    if normalized.endswith("/"):
+        prefix = normalized.rstrip("/")
+        return path == prefix or path.startswith(f"{prefix}/")
+    if "/" not in normalized:
+        return fnmatch.fnmatch(Path(path).name, normalized)
+    return fnmatch.fnmatch(path, normalized) or fnmatch.fnmatch(f"/{path}", pattern)
+
+
+def match_codeowners(path: str, rules: list[tuple[str, list[str]]]) -> list[str]:
+    matched: list[str] = []
+    for pattern, owners in rules:
+        if codeowner_pattern_matches(pattern, path):
+            matched = owners
+    return matched
+
+
+def summarize_review_routing(root: Path, files: list[str]) -> tuple[list[str], dict[str, Any]]:
+    source, rules = load_codeowners(root)
+    metadata: dict[str, Any] = {
+        "codeowners_path": source or None,
+        "suggested_reviewers": [],
+        "unowned_paths": [],
+    }
+
+    if not files:
+        return [], metadata
+    if not source:
+        return ["- Review routing: No CODEOWNERS file detected."], metadata
+    if not rules:
+        return [f"- Review routing: `{source}` exists but has no supported owner rules."], metadata
+
+    owner_paths: dict[str, list[str]] = {}
+    unowned_paths: list[str] = []
+    for path in files:
+        owners = match_codeowners(path, rules)
+        if not owners:
+            unowned_paths.append(path)
+            continue
+        for owner in owners:
+            owner_paths.setdefault(owner, []).append(path)
+
+    metadata["suggested_reviewers"] = [
+        {"owner": owner, "paths": paths}
+        for owner, paths in sorted(owner_paths.items())
+    ]
+    metadata["unowned_paths"] = unowned_paths
+
+    if not owner_paths:
+        return [f"- Review routing: `{source}` found, but no CODEOWNERS rule matched the changed files."], metadata
+
+    lines = [f"- Review routing from `{source}`:"]
+    for owner, paths in sorted(owner_paths.items())[:8]:
+        sample = ", ".join(f"`{path}`" for path in paths[:3])
+        suffix = f" and {len(paths) - 3} more" if len(paths) > 3 else ""
+        lines.append(f"  - {owner}: {sample}{suffix}")
+    if unowned_paths:
+        lines.append(f"  - Unowned changed paths: {len(unowned_paths)}")
+    return lines, metadata
+
+
 def summarize_review_readiness(root: Path) -> tuple[str, dict[str, Any]]:
     files = collect_changed_files(root)
     sensitive_paths = detect_sensitive_review_paths(files)
     file_count = len(files)
     large_change = file_count > 12
+    routing_lines, routing_metadata = summarize_review_routing(root, files)
 
     if not files:
         lines = [
@@ -457,11 +546,13 @@ def summarize_review_readiness(root: Path) -> tuple[str, dict[str, Any]]:
             lines.append("- Review signal: Ask a maintainer familiar with the sensitive area to inspect before merge.")
         else:
             lines.append("- Review signal: Changed-file scope looks small enough for normal maintainer review.")
+        lines.extend(routing_lines)
 
     metadata = {
         "changed_file_count": file_count,
         "large_change": large_change,
         "sensitive_paths": [{"label": label, "path": path} for label, path in sensitive_paths],
+        "review_routing": routing_metadata,
     }
     return "\n".join(lines), metadata
 

@@ -19,7 +19,7 @@ python3 ../../scripts/relay_runtime.py pr-comment --json
 3. Report:
    - current verdict
    - review posture
-   - review-readiness signals, including sensitive paths or large-scope warnings
+   - review-readiness signals, including sensitive paths, large-scope warnings, or CODEOWNERS routing hints
    - verification evidence or missing verification
    - risks / review focus
    - recommended next action
