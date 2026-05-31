@@ -105,12 +105,33 @@ class RelayRuntimeTests(unittest.TestCase):
     def test_pr_comment_omits_relay_artifacts_from_changed_files(self) -> None:
         workspace = self.copy_fixture("in-progress-repo")
         subprocess.run(["git", "init"], cwd=workspace, capture_output=True, text=True, check=True)
+        subprocess.run(["git", "add", "package.json"], cwd=workspace, capture_output=True, text=True, check=True)
+        subprocess.run(
+            [
+                "git",
+                "-c",
+                "user.email=relay@example.com",
+                "-c",
+                "user.name=Relay Test",
+                "commit",
+                "-m",
+                "Seed fixture",
+            ],
+            cwd=workspace,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        package_json = workspace / "package.json"
+        package_json.write_text(package_json.read_text(encoding="utf-8").replace("in-progress-repo", "relay-pr-test"), encoding="utf-8")
         (workspace / "src").mkdir()
         (workspace / "src" / "app.ts").write_text("export const status = 'ready';\n", encoding="utf-8")
         self.run_runtime(workspace, "pr-comment")
 
         comment = (workspace / ".relay" / "pr-comment.md").read_text(encoding="utf-8")
+        self.assertIn("`package.json`", comment)
         self.assertIn("`src/app.ts`", comment)
+        self.assertNotIn("`ackage.json`", comment)
         self.assertNotIn("`.relay/handoff.md`", comment)
         self.assertNotIn("`.relay/state.md`", comment)
 

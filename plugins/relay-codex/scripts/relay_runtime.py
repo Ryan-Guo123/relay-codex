@@ -163,7 +163,7 @@ def git_output(root: Path, args: list[str]) -> str:
         return ""
     if result.returncode != 0:
         return ""
-    return result.stdout.strip()
+    return result.stdout.rstrip("\n")
 
 
 def dedupe_preserve_order(values: list[str]) -> list[str]:
