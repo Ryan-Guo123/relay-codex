@@ -1,6 +1,6 @@
 # Demo Usage Example
 
-This example shows the narrow job Relay should do now that Codex has its own goal and continuation features: make long-running work inspectable inside the repository, detect churn, and produce a maintainer handoff when the agent should stop pushing.
+This example shows the narrow job Relay should do now that Codex has its own goal and continuation features: turn long-running Codex work into GitHub-ready maintainer handoff artifacts.
 
 ## Scenario
 
@@ -9,9 +9,9 @@ A maintainer opens a pull request that has been worked on for a while. Codex has
 Relay is useful when the question is no longer "can Codex keep going?" but:
 
 - what is the current repo-local state?
-- is the next action clear enough to continue?
-- is Codex looping on tests, failures, or repeated questions?
-- what should a maintainer review before more work happens?
+- what can be posted into the PR?
+- what should a maintainer review before merge or another agent pass?
+- what evidence should survive after the thread ends?
 
 ## Step 1: enable Relay
 
@@ -88,7 +88,7 @@ Relay rewrites `.relay/queue.md` into a small recovery checklist:
 - [ ] Do not keep running tests or formatting loops without a concrete hypothesis.
 ```
 
-This is the handoff point. A maintainer can inspect the queue and decide whether Codex should continue, pause, or ask for missing input.
+This is the handoff point. A maintainer can inspect the queue and decide what to put in the PR note before asking for another agent pass.
 
 ## Step 4: generate the PR handoff
 
@@ -164,10 +164,10 @@ Use this flow on a real pull request:
 
 ## What this demo proves
 
-Relay is not trying to replace Codex goals. It adds a repo-local audit trail and recovery policy around Codex work so maintainers can see:
+Relay is not trying to replace Codex goals. It adds a repo-local handoff surface around Codex work so maintainers can see:
 
-- why Codex should continue
-- why Codex should stop
+- what the PR/release note should say
+- what review focus should be preserved
 - what state another person or agent can pick up later
 
 ## Release handoff

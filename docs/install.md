@@ -1,6 +1,6 @@
 # Install Relay for Codex
 
-Relay is currently distributed from this repository as a local Codex App plugin bundle. The install path should leave you with a visible plugin, a generated `.relay/` folder in a target repo, and a verdict you can inspect before asking Codex to keep working.
+Relay is currently distributed from this repository as a local Codex App plugin bundle. The install path should leave you with a visible plugin, a generated `.relay/` folder in a target repo, and handoff artifacts you can reuse in PR or release workflows.
 
 ## Fast path
 

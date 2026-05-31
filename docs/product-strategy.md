@@ -1,6 +1,6 @@
 # Product Strategy: Relay for Codex
 
-Relay should become the maintainer workflow layer for long-running Codex work. It should not become a general agent company, an agent framework, or a dashboard clone.
+Relay should become a Codex App-native GitHub handoff adapter for long-running Codex work. It should not become a general agent company, an agent framework, a memory engine, a local-first evidence ledger, or a dashboard clone.
 
 ## Research frame
 
@@ -21,7 +21,7 @@ What is known:
 
 - The market is real: agents now need durable work records, review gates, release handoff, and recovery paths.
 - The crowded areas are also real: hosted agent runtimes, kanban boards, memory engines, broad skills packs, and autonomous-agent platforms are already occupied.
-- Relay's strongest wedge is repo-local maintainer evidence: small files that say whether work should continue, stop, recover, review, or release.
+- Relay's strongest wedge is repo-local maintainer evidence: small artifacts that make PR review, release readiness, recovery notes, and remaining human judgment explicit.
 
 What is not ready yet:
 
@@ -29,7 +29,7 @@ What is not ready yet:
 - Relay is not ready for a new patch release just because more research landed.
 - Relay is not ready to claim a finished product category until the demo proves the wedge in one real workflow.
 
-The next gate is Define: turn the research into one primary use case, one demo path, and one public message. The current validation plan is tracked in [validation-plan.md](validation-plan.md).
+The next gate is Define: turn the research into one primary use case, one demo path, and one public message. The current validation plan is tracked in [validation-plan.md](validation-plan.md), the stricter competitor map is tracked in [market-map.md](market-map.md), and community pain research is tracked in [community-research.md](community-research.md).
 
 ## Discover
 
@@ -62,18 +62,19 @@ Those are already Paperclip's territory. Copying them would make Relay late, hea
 
 Codex-native goals reduce the value of a generic "keep working later" pitch. OpenAI positions `/goal` for long-running work with a durable objective, verifiable stopping condition, validation loop, and evidence-based completion. Relay should not sell continuation as the main product.
 
-Instead, Relay should treat Codex continuation as an input and add what a maintainer still needs:
+This overlap is stronger than the original strategy admitted. If Relay claims to decide whether Codex should continue, it is mostly duplicating the native Goal loop.
 
-- inspectable repo-local state
-- a current verdict before more work happens
-- stuck-recovery policy
-- PR and release handoff
-- audit-friendly evidence of what changed, what failed, and what needs review
+Instead, Relay should treat Codex continuation as upstream and add what a maintainer still needs after the run:
+
+- a GitHub-ready PR comment or release note
+- a small repo-local evidence bundle
+- a review checklist tied to the files and commands touched
+- explicit notes about what still needs human review
 
 The boundary is simple:
 
 - Codex Goal: thread-scoped completion contract.
-- Relay: repo-scoped evidence and handoff contract.
+- Relay: GitHub-facing handoff adapter after the Goal run.
 
 ### What AI workflow writing reinforces
 
@@ -218,16 +219,15 @@ The product boundary after discovery:
 
 ### Product thesis
 
-Relay is the repo-local flight recorder and handoff layer for Codex-maintained software projects.
+Relay is a Codex App-native adapter that turns long-running Codex work into maintainer-readable GitHub artifacts.
 
 It answers:
 
-- What is Codex trying to do in this repo?
-- What changed recently?
-- Is the project safe to continue?
-- Is Codex looping, blocked, or drifting?
-- What should a human maintainer review before the next run?
-- What is the smallest next action for PR or release handoff?
+- What can be posted into the PR?
+- What should the reviewer focus on?
+- What verification happened or still needs to happen?
+- What should go into release notes?
+- What repo-local evidence should survive after the Codex thread ends?
 
 ### Confidence level
 
@@ -236,8 +236,8 @@ This is still a product bet, not a proven category.
 Relay is likely useful if:
 
 - a maintainer uses Codex often enough that work spans multiple threads, PRs, or release steps
-- the repo needs a durable handoff that GitHub reviewers can inspect
-- the hard part is deciding whether to continue, recover, review, or release after agent work
+- the repo needs a durable handoff that GitHub reviewers can inspect or paste into review surfaces
+- the hard part is converting a Codex run into PR/release evidence, not deciding whether Codex should keep running
 
 Relay is probably not useful if:
 
@@ -245,8 +245,9 @@ Relay is probably not useful if:
 - the project already has a full agent board and does not need repo-local handoff files
 - a plain GitHub issue checklist is enough
 - the maintainer does not care about preserving agent-run evidence in the repository
+- Maestro, Kage, Recall, or another local-first continuity/evidence tool is already installed and trusted
 
-The validation target is simple: a maintainer should see the README demo and immediately understand one workflow where Relay saves time or reduces review anxiety.
+The validation target is simple: a maintainer should see the README demo and immediately understand one GitHub workflow where Relay saves time or reduces review anxiety.
 
 ### Primary user
 
@@ -290,7 +291,7 @@ The strongest near-term shape is a Codex App plugin plus repo-local protocol:
 
 The public-facing product should feel like:
 
-> "Before Codex keeps going, Relay tells you whether the repo is actually moving."
+> "After Codex finishes a run, Relay gives you the PR or release handoff."
 
 ### Better-than-Paperclip wedge
 
@@ -306,9 +307,9 @@ Relay can beat a general control plane in one narrow place:
 
 Relay can beat native goals in one narrow place:
 
-- goals live in the conversation; Relay state lives in the repo
-- Codex can continue; Relay explains whether continuing is wise
-- native goal state is useful to the current thread; Relay handoff is useful to future maintainers, future threads, and PR review
+- goals live in the conversation; Relay artifacts live in the repo and GitHub workflow
+- Codex can complete a goal; Relay packages the outcome for PR review and release handoff
+- native goal state is useful to the current thread; Relay output is useful to reviewers and future maintainers
 
 ### Product experiments
 
@@ -317,17 +318,22 @@ Relay can beat native goals in one narrow place:
    - Include last successful change, likely stuck point, review checklist, and next command.
    - Use it as the concrete demo for issue #3.
 
-2. Release Handoff
+2. PR Comment Adapter
+   - Generate `.relay/pr-comment.md` from `.relay/handoff.md`.
+   - Keep it paste-only unless a human explicitly approves posting to GitHub.
+   - Use it to validate whether Relay is better than asking Codex to summarize the thread.
+
+3. Release Handoff
    - Add a release checklist that maps state -> tests -> changelog -> tag -> GitHub release.
    - Keep human approval explicit.
    - Use it to close issue #4.
 
-3. Stuck Recovery Demo
+4. Stuck Recovery Demo
    - Record or script a fixture where repeated failure events flip the verdict to `needs_review`.
    - Show the queue rewrite.
    - Use it as the next production-quality walkthrough after the first runtime-generated GIF.
 
-4. Public Proof Loop
+5. Public Proof Loop
    - Keep small PRs visible.
    - Close issues only when their done criteria are actually met.
    - Publish patch releases only after meaningful merged changes.
@@ -338,7 +344,7 @@ Relay can beat native goals in one narrow place:
 
 `v0.2.0` should not be "more automation." It should be:
 
-> Relay can produce a maintainer-grade PR handoff from repo-local state.
+> Relay can produce a GitHub-ready PR handoff from a Codex Goal/run.
 
 Acceptance:
 
@@ -346,13 +352,14 @@ Acceptance:
 - `release-checklist.md` exists and is generated by the runtime.
 - A stuck fixture demonstrates `continue -> needs_review -> recovery handoff`.
 - README shows one real before/after flow.
+- `pr-comment.md` exists or the strategy explicitly rejects it after validation.
 - Release notes explain the difference from Codex native goals and Paperclip.
 
 ### Launch message
 
 Use this short pitch:
 
-> Relay for Codex is a repo-local flight recorder for long-running Codex work. It tells maintainers when Codex should continue, stop, recover, or hand off a PR.
+> Relay for Codex turns long-running Codex work into GitHub-ready maintainer handoffs.
 
 Avoid:
 

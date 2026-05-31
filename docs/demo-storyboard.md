@@ -22,7 +22,7 @@ Show that Relay turns a long-running Codex task into a maintainer-readable hando
 
 The viewer should understand this in 30 seconds:
 
-> Codex did work. Relay tells the maintainer whether the repo should continue, recover, review, or release.
+> Codex did work. Relay turns the run into a maintainer-readable PR or release handoff.
 
 ## Audience
 
@@ -39,7 +39,7 @@ They are not asking for another dashboard. They want to know:
 ## 30-Second Script
 
 1. Open a repository with Relay enabled.
-2. Show `.relay/state.md` with verdict `continue`.
+2. Show `.relay/state.md` as supporting repo evidence.
 3. Run a small Codex task that touches code or docs.
 4. Run the Relay handoff command.
 5. Show `.relay/handoff.md` with:
@@ -53,7 +53,7 @@ They are not asking for another dashboard. They want to know:
 8. End on the message:
 
 ```text
-Relay is the repo-local flight recorder for long-running Codex work.
+Relay turns long-running Codex work into GitHub-ready handoffs.
 ```
 
 ## Shot List
@@ -127,7 +127,7 @@ Release steps stay gated by verification and human approval.
 End with the concise product line:
 
 ```text
-Repo-local evidence for Codex-maintained projects.
+GitHub-ready handoffs for Codex-maintained projects.
 ```
 
 ## What Not To Show
@@ -155,6 +155,6 @@ Issue #2 can close when the repository has a real GIF or video that:
 After the short GIF exists, record a 2-minute walkthrough that compares:
 
 - Codex Goal: thread-scoped objective and completion contract
-- Relay: repo-scoped evidence, recovery, PR handoff, and release gates
+- Relay: GitHub-ready PR handoff, release gates, and minimal repo evidence
 
 This longer demo is useful for product education, but it should not block closing the first demo issue.

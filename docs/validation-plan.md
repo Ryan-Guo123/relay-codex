@@ -1,16 +1,16 @@
 # Relay Validation Plan
 
-Relay is in late Discover / early Define. The next milestone is not a bigger feature set. It is proof that the narrow repo-local handoff layer is useful enough for real maintainers.
+Relay is in late Discover / early Define. The next milestone is not a bigger feature set. It is proof that a narrow Codex App-native GitHub handoff adapter is useful enough for real maintainers.
 
 ## Core Hypothesis
 
 Relay is useful when a maintainer uses Codex heavily enough that work spans threads, branches, pull requests, releases, or scheduled follow-ups.
 
-The value is not "run agents better." The value is:
+The value is not "run agents better" or "decide whether Codex should continue." Codex Goals already own that loop. The value is:
 
-> Every long-running Codex run leaves behind a maintainer-readable handoff inside the repository.
+> Every long-running Codex Goal/run can become a GitHub-ready maintainer handoff.
 
-That handoff should make it easier to decide whether the repo should continue, recover, review, or release.
+That handoff should make it easier to review, comment on, resume, or release the work without reconstructing the full thread.
 
 ## What Must Be Proven
 
@@ -30,21 +30,21 @@ Pass condition:
 
 - Three real or fixture-backed runs produce handoffs that are understandable without thread context.
 
-### 2. The verdict prevents bad continuation
+### 2. The handoff prevents bad review or blind follow-up
 
 Question:
 
-> Does Relay stop Codex from blindly continuing when the repo is actually stuck or drifting?
+> Does Relay make it obvious when a PR needs human review instead of another generic agent pass?
 
 Evidence:
 
-- A stuck fixture flips to `needs_review`.
+- A stuck fixture or run flips to `needs_review`.
 - The recovery queue names the smallest next investigation.
-- The handoff says what a human should review before more autonomous work.
+- The handoff says what a human should review before another agent pass.
 
 Pass condition:
 
-- One demo shows `continue -> needs_review -> recovery handoff` using real runtime output.
+- One demo shows `needs_review -> recovery handoff -> PR comment draft` using real runtime output.
 
 ### 3. The release gate makes shipping safer
 
@@ -88,7 +88,7 @@ Use when:
 Path:
 
 ```text
-issue/task -> Codex run -> relay handoff -> PR body/review checklist
+issue/task -> Codex Goal/run -> relay handoff -> PR body/review checklist
 ```
 
 Artifacts:
@@ -125,7 +125,7 @@ Artifacts:
 
 Measure:
 
-- Did Relay make stopping feel like progress rather than failure?
+- Did Relay make human review feel like progress rather than failure?
 
 ### Workflow C: Release Handoff
 
@@ -207,6 +207,7 @@ Relay should shrink or pivot if:
 - `.relay/` files feel like stale documentation instead of useful state
 - users ask for a board, runtime, or memory system more than they ask for handoff evidence
 - Codex native features expose repo-local evidence and release handoff directly
+- Maestro/Kage/Recall-style tools prove the same handoff use case with stronger adoption
 
 ## Current Stage Gate
 
@@ -215,4 +216,4 @@ Relay can move from Define to Develop when:
 - README explains the wedge clearly.
 - A runtime-generated demo proves the handoff path.
 - Open issues map to the three validation workflows above.
-- The next feature PR improves one of those workflows, not the product surface area in general.
+- The next feature PR improves GitHub handoff output, not the product surface area in general.
