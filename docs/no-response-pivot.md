@@ -58,6 +58,8 @@ Instead:
 
 Use if no one replies because the ask is too much work.
 
+Tracking issue: [#62 Prepare 60-second reviewer sample if Round 1 gets no replies](https://github.com/Ryan-Guo123/relay-codex/issues/62).
+
 Change the artifact from a full reviewer pack to a 60-second sample:
 
 - one changed-file summary
