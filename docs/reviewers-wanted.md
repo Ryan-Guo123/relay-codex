@@ -5,6 +5,7 @@ Relay needs outside maintainer feedback.
 The product is only useful if someone who did not run the Codex thread can still understand the generated handoff.
 
 If you are sharing this request with another maintainer, use the drafts in [outreach-copy.md](outreach-copy.md).
+If you want to review the format before installing anything, start with [reviewer-pack-example.md](reviewer-pack-example.md).
 
 ## Who This Is For
 
@@ -17,7 +18,7 @@ You are a good reviewer if you:
 
 ## 10-Minute Review
 
-1. Pick a real PR or maintenance task.
+1. Skim [reviewer-pack-example.md](reviewer-pack-example.md), or pick a real PR or maintenance task.
 2. Generate a Relay reviewer pack:
 
 ```bash

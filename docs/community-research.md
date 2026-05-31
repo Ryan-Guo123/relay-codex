@@ -29,6 +29,31 @@ That is narrower than repo memory, continuity runtime, task orchestration, or ag
 
 ## Repeated Pain Points
 
+### 0. Agent PRs increase review burden
+
+Repeated pattern:
+
+- agents make it easier to create more PRs than maintainers can review
+- large generated diffs bury sensitive changes such as auth, billing, schema, and deployment config
+- plausible-looking code passes superficial checks but still needs human judgment
+- maintainers want evidence, scope control, and risk signals before investing review time
+
+Community language:
+
+> "AI coding tools are making it way easier to generate huge amounts of code quickly."
+
+> "When a PR is big, reviewers naturally start skimming, and it gets easier for sensitive changes to slip through unnoticed."
+
+> "The bigger issue is cohesion, not just size."
+
+GitHub's own agent-PR review guidance makes the same point: agent pull requests are already saturating review bandwidth, reviewers need context before reading the diff, and agent-authored PR bodies should be edited before review is requested.
+
+Research also points in the same direction. A 2026 MSR paper studying 33k agent-authored PRs found that unmerged agent PRs tend to be larger, touch more files, fail CI more often, and suffer from reviewer-engagement and misalignment issues.
+
+Implication for Relay:
+
+This is the strongest current wedge. Relay should not try to make more agent work happen. It should make agent work cheaper to review by producing a compact, evidence-backed PR handoff with changed files, verification, risk focus, and the next human decision.
+
 ### 1. New sessions start blind
 
 Repeated pattern:
@@ -276,6 +301,28 @@ User promise:
 
 This is narrower, less magical, and easier to kill if it fails.
 
+## Updated Product Read
+
+The public pain is not "I need another agent loop." That space is now strongly covered by native Goals, managed agents, Symphony-style implementation runs, Paperclip-style control planes, and vibe-kanban-style workspaces.
+
+The public pain that still looks under-served is the maintainer review bottleneck after agent work:
+
+- Was the PR scoped enough to review?
+- Did the agent weaken CI, skip tests, or only make superficial progress?
+- Which sensitive files changed?
+- What should a human inspect before merge?
+- Can the reviewer understand the work without reading the full agent thread?
+
+That narrows Relay's positioning further:
+
+> Relay is a review-readiness layer for Codex-generated repository work.
+
+The current product bet should be validated in this order:
+
+1. `reviewer-pack` example so reviewers can inspect the format without installing anything.
+2. One real outside-review issue on a real PR/task.
+3. Only then consider a runtime feature, such as risk-file detection or PR-size/scope warnings.
+
 ## Validation Questions
 
 Relay should answer these before building more:
@@ -318,6 +365,10 @@ If Relay is not clearly better for PR/release GitHub surfaces, archive or reposi
 - AICTX Reddit thread: https://www.reddit.com/r/buildinpublic/comments/1tbaeds/coding_agents_like_codex_or_claude_dont_just_need/
 - Planning / git checkpoint / test gate thread: https://www.reddit.com/r/AI_Agents/comments/1tr652d/how_i_stopped_babysitting_claude_code_and_codex/
 - Context-rot feature suggestion: https://www.reddit.com/r/ClaudeAI/comments/1t8batc/feature_suggestion_proactive_contextrot_detection/
+- Agent PR review burden thread: https://www.reddit.com/r/github/comments/1rofktt/is_ai_coding_making_pull_requests_harder_to_review/
+- Open source AI slop / maintainer burden thread: https://www.reddit.com/r/opensource/comments/1q3f89b/open_source_is_being_ddosed_by_ai_slop_and_github/
+- GitHub agent PR review guidance: https://github.blog/ai-and-ml/generative-ai/agent-pull-requests-are-everywhere-heres-how-to-review-them/
+- MSR 2026 agent PR failure study: https://arxiv.org/abs/2601.15195
 - CONTINUE.md: https://continue.md/
 - Maestro: https://github.com/ReinaMacCredy/maestro
 - AICTX: https://aictx.org/

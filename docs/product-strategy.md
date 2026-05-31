@@ -22,6 +22,7 @@ What is known:
 - The market is real: agents now need durable work records, review gates, release handoff, and recovery paths.
 - The crowded areas are also real: hosted agent runtimes, kanban boards, memory engines, broad skills packs, and autonomous-agent platforms are already occupied.
 - Relay's strongest wedge is repo-local maintainer evidence: small artifacts that make PR review, release readiness, recovery notes, and remaining human judgment explicit.
+- The sharpest public pain is review burden after agent work, not agent continuation itself: large generated PRs, shallow PR descriptions, hidden sensitive changes, and maintainers needing evidence before spending review attention.
 
 What is not ready yet:
 
@@ -210,6 +211,7 @@ Relay should adopt the packaging style:
 | Memory engines | agentmemory | Cross-agent recall, search, auto-capture, benchmarks | Store only maintainer state; allow indexing later |
 | Skills packs | agent-skills, Matt Pocock skills | Reusable engineering process and expert workflows | Keep Relay skills narrow, inspectable, and evidence-driven |
 | Autonomous agents | Automaton | Self-funding, self-modification, survival loops | Reject autonomy metaphor; keep human review gates |
+| Review bottleneck | GitHub guidance, Reddit maintainer threads, MSR 2026 agent PR research | Human judgment, scope control, risky-file review, evidence before merge | Own the small review-readiness artifact, not the review bot |
 
 The product boundary after discovery:
 
@@ -228,6 +230,7 @@ It answers:
 - What verification happened or still needs to happen?
 - What should go into release notes?
 - What repo-local evidence should survive after the Codex thread ends?
+- Is this agent PR ready for review, or should it be split, verified, or sent back before consuming maintainer attention?
 
 ### Confidence level
 
