@@ -44,7 +44,7 @@ Relay adds a thin repo-local packaging layer on top of Codex App:
   - `needs_review`
 - lightweight hooks for activity tracking
 - recovery notes when work starts to churn
-- PR comment, handoff, and release artifacts that can be reused in GitHub
+- PR comment, reviewer pack, handoff, and release artifacts that can be reused in GitHub
 
 ## Is this already solved?
 
@@ -127,8 +127,9 @@ Relay renders three starter packs:
 6. `recover-stuck-project` rewrites the queue into smaller, recovery-first steps when the repo is stuck.
 7. `generate-relay-handoff` writes `.relay/handoff.md` for PR, release, or future-Codex pickup.
 8. `generate-pr-comment` writes `.relay/pr-comment.md` as a pasteable GitHub review note.
-9. `generate-release-checklist` writes `.relay/release-checklist.md` before tags or GitHub releases.
-10. `install-relay-automations` turns the current state into repeatable Codex App follow-up.
+9. `generate-reviewer-pack` writes `.relay/reviewer-pack.md` for outside maintainer validation.
+10. `generate-release-checklist` writes `.relay/release-checklist.md` before tags or GitHub releases.
+11. `install-relay-automations` turns the current state into repeatable Codex App follow-up.
 
 ## Example `.relay/` snapshot
 
@@ -140,6 +141,7 @@ Relay renders three starter packs:
   guardrails.md    -> When to stop, escalate, or recover
   handoff.md       -> Maintainer-ready PR or release handoff
   pr-comment.md    -> GitHub-ready PR review comment draft
+  reviewer-pack.md -> Outside reviewer prompt, rubric, and handoff excerpt
   release-checklist.md -> Verification, versioning, tag, and approval steps
   automations.md   -> Suggested automation packs
   events.jsonl     -> Lightweight event log from hooks
@@ -178,6 +180,7 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 - `recover-stuck-project`
 - `generate-relay-handoff`
 - `generate-pr-comment`
+- `generate-reviewer-pack`
 - `generate-release-checklist`
 - `install-relay-automations`
 
@@ -206,6 +209,7 @@ Relay is intentionally narrow in v1. It already covers:
 - recovery queue generation
 - maintainer handoff generation
 - GitHub PR comment generation
+- outside reviewer pack generation
 - release checklist generation
 - stuck recovery walkthrough from real runtime output
 - automation pack rendering

@@ -135,6 +135,34 @@ class RelayRuntimeTests(unittest.TestCase):
         self.assertNotIn("`.relay/handoff.md`", comment)
         self.assertNotIn("`.relay/state.md`", comment)
 
+    def test_reviewer_pack_wraps_pr_comment_and_rubric(self) -> None:
+        workspace = self.copy_fixture("stuck-repo")
+        pack_result = self.run_runtime(workspace, "reviewer-pack")
+        payload = json.loads(pack_result.stdout)
+        pack_path = Path(payload["reviewer_pack"])
+        pack = pack_path.read_text(encoding="utf-8")
+        self.assertTrue(pack_path.exists())
+        self.assertEqual(payload["verdict"], "needs_review")
+        self.assertIn("# Relay Reviewer Pack", pack)
+        self.assertIn("## Reviewer Ask", pack)
+        self.assertIn("## Relay Handoff To Review", pack)
+        self.assertIn("## Scoring Rubric", pack)
+        self.assertIn("Relay handoff feedback", pack)
+        self.assertIn("Needs maintainer review before another agent pass", pack)
+
+    def test_changed_files_ignore_parent_repo_when_root_is_nested_fixture(self) -> None:
+        workspace = self.copy_fixture("in-progress-repo")
+        parent_repo = workspace.parent
+        subprocess.run(["git", "init"], cwd=parent_repo, capture_output=True, text=True, check=True)
+        (parent_repo / "outside.md").write_text("outside change\n", encoding="utf-8")
+
+        self.run_runtime(workspace, "pr-comment")
+
+        comment = (workspace / ".relay" / "pr-comment.md").read_text(encoding="utf-8")
+        self.assertIn("No Git changes detected in the current workspace", comment)
+        self.assertNotIn("outside.md", comment)
+        self.assertNotIn("../", comment)
+
     def test_release_writes_checklist_with_approval_gates(self) -> None:
         workspace = self.copy_fixture("in-progress-repo")
         release_result = self.run_runtime(workspace, "release")
@@ -162,6 +190,7 @@ class RelayRuntimeTests(unittest.TestCase):
         self.run_runtime(workspace, "enable")
         self.run_runtime(workspace, "handoff")
         self.run_runtime(workspace, "pr-comment")
+        self.run_runtime(workspace, "reviewer-pack")
         self.run_runtime(workspace, "release")
 
         relay_root = workspace / ".relay"
@@ -173,6 +202,7 @@ class RelayRuntimeTests(unittest.TestCase):
             "automations.md": ("# Relay Automation Packs", "## Continue Working", "## Daily Triage", "## Stuck Recovery", "## Release Readiness"),
             "handoff.md": ("# Relay Handoff", "## Maintainer Summary", "## Recommended Next Action", "## Safe Handoff Rules"),
             "pr-comment.md": ("## Relay PR Handoff", "### Current State", "### Verification", "### Recommended Next Action", "### Maintainer Checklist"),
+            "reviewer-pack.md": ("# Relay Reviewer Pack", "## Reviewer Ask", "## Scoring Rubric", "## Required Outcome"),
             "release-checklist.md": ("# Relay Release Checklist", "## Release Posture", "## 2. Verification", "## 5. Human Approval Gates"),
         }
         for filename, headings in expected.items():

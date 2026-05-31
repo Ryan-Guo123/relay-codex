@@ -375,6 +375,10 @@ def summarize_verification(events: list[dict[str, Any]], commands: list[str]) ->
 
 
 def summarize_changed_files(root: Path) -> str:
+    git_top_level = git_output(root, ["rev-parse", "--show-toplevel"])
+    if git_top_level and Path(git_top_level).resolve() != root.resolve() and not (root / ".git").exists():
+        return "- No Git changes detected in the current workspace."
+
     status = git_output(root, ["status", "--short", "--untracked-files=all"])
     if not status:
         return "- No Git changes detected in the current workspace."
@@ -690,6 +694,83 @@ def write_pr_comment(root: Path) -> dict[str, Any]:
     return {**handoff_payload, "pr_comment": str(target)}
 
 
+def render_reviewer_pack(context: dict[str, Any], pr_comment: str, inspection: dict[str, Any]) -> str:
+    return f"""# Relay Reviewer Pack
+
+- Project: `{context["project_name"]}`
+- Branch: `{context["git_branch"]}`
+- Verdict: `{inspection["verdict"]}`
+- Generated: {iso_now()}
+
+## Reviewer Ask
+
+I am testing whether Relay's generated PR handoff is useful for maintainers.
+
+Please compare the Relay handoff below with a normal Codex/manual summary for the same PR or task.
+
+Could you tell what changed, what was verified, what still needs review, and what the next action should be?
+
+Please be blunt: would you reuse this, edit it heavily, ignore it, or ask for a different format?
+
+## Relay Handoff To Review
+
+```markdown
+{pr_comment.strip()}
+```
+
+## Compare Against
+
+Paste or link the normal Codex/manual summary here before sending this pack to a reviewer.
+
+```markdown
+TODO: Add the non-Relay summary for comparison.
+```
+
+## Scoring Rubric
+
+Score each item from 1 to 5.
+
+| Question | Score | Notes |
+| --- | --- | --- |
+| Changed files are clear |  |  |
+| Verification is reviewable |  |  |
+| Review focus points to the right risk |  |  |
+| Next action is directly actionable |  |  |
+| GitHub fit is pasteable |  |  |
+
+## Required Outcome
+
+Choose one:
+
+- `reused`: the reviewer reused most of the generated handoff.
+- `edited_heavily`: the structure helped, but the content needed major edits.
+- `ignored`: the generated handoff was not useful.
+- `confusing`: the reviewer could not tell what to do with it.
+
+## Record The Feedback
+
+Open a GitHub issue with the `Relay handoff feedback` template and include:
+
+- the PR or task being reviewed
+- the redacted Relay handoff excerpt
+- the comparison summary
+- the outcome
+- the product decision: keep, simplify, rename, remove, or test again
+
+Do not treat this pack as proof of value until someone outside the current build thread responds.
+"""
+
+
+def write_reviewer_pack(root: Path) -> dict[str, Any]:
+    pr_payload = write_pr_comment(root)
+    context = detect_repo_context(root)
+    relay_root = relay_dir(root)
+    pr_comment = read_text(relay_root / "pr-comment.md")
+    target = relay_root / "reviewer-pack.md"
+    write_text(target, render_reviewer_pack(context, pr_comment, pr_payload))
+    return {**pr_payload, "reviewer_pack": str(target)}
+
+
 def render_release_checklist(context: dict[str, Any], inspection: dict[str, Any]) -> str:
     commands = context["commands"]
     test_commands = [command for command in commands if "test" in command]
@@ -918,6 +999,16 @@ def cmd_pr_comment(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_reviewer_pack(args: argparse.Namespace) -> int:
+    payload = write_reviewer_pack(args.root.resolve())
+    if args.json:
+        print_json(payload)
+    else:
+        print(f"Relay reviewer pack written to {payload['reviewer_pack']}")
+        print(f"Verdict: {payload['verdict']}")
+    return 0
+
+
 def cmd_release(args: argparse.Namespace) -> int:
     payload = write_release_checklist(args.root.resolve())
     if args.json:
@@ -962,6 +1053,7 @@ def build_parser() -> argparse.ArgumentParser:
         ("recover", cmd_recover),
         ("handoff", cmd_handoff),
         ("pr-comment", cmd_pr_comment),
+        ("reviewer-pack", cmd_reviewer_pack),
         ("release", cmd_release),
         ("automations", cmd_automations),
         ("hook-posttooluse", cmd_hook),

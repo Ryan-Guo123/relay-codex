@@ -24,12 +24,14 @@ Do not use a synthetic demo as the main evidence. Synthetic demos are useful for
 ```bash
 python3 plugins/relay-codex/scripts/relay_runtime.py handoff --json
 python3 plugins/relay-codex/scripts/relay_runtime.py pr-comment --json
+python3 plugins/relay-codex/scripts/relay_runtime.py reviewer-pack --json
 ```
 
 2. Read `.relay/pr-comment.md`.
-3. Remove secrets, customer data, private links, or internal context.
-4. Keep a plain Codex summary or manual PR summary beside it for comparison.
-5. Ask one reviewer to compare both without reading the full Codex thread.
+3. Read `.relay/reviewer-pack.md`.
+4. Add or link the plain Codex summary or manual PR summary in the `Compare Against` section.
+5. Remove secrets, customer data, private links, or internal context.
+6. Ask one reviewer to compare both without reading the full Codex thread.
 
 ## Reviewer Prompt
 
@@ -44,6 +46,8 @@ Could you tell what changed, what was verified, what still needs review, and wha
 
 Please be blunt: would you reuse this, edit it heavily, ignore it, or ask for a different format?
 ```
+
+The generated `.relay/reviewer-pack.md` includes this prompt, the Relay handoff, the comparison placeholder, the scoring rubric, and the outcome choices.
 
 ## Scoring Rubric
 

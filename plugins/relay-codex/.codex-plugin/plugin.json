@@ -1,6 +1,6 @@
 {
   "name": "relay-codex",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "GitHub-ready maintainer handoffs for long-running Codex work.",
   "author": {
     "name": "Ryan-Guo123",
@@ -36,6 +36,7 @@
       "Check whether Codex is stuck and what to do next",
       "Generate a Relay handoff for this PR",
       "Generate a GitHub-ready PR comment with Relay",
+      "Generate an outside reviewer pack with Relay",
       "Generate a release checklist with Relay",
       "Install automations to keep this project moving"
     ],
