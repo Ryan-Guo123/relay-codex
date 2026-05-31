@@ -25,7 +25,13 @@ You are a good reviewer if you:
 python3 plugins/relay-codex/scripts/relay_runtime.py reviewer-pack --json
 ```
 
-3. Open `.relay/reviewer-pack.md`.
+Or generate the full validation ask:
+
+```bash
+python3 plugins/relay-codex/scripts/relay_runtime.py validation-brief --json
+```
+
+3. Open `.relay/reviewer-pack.md` or `.relay/validation-brief.md`.
 4. Add or link a normal Codex/manual summary in the `Compare Against` section.
 5. Compare the two without reading the full agent thread.
 6. Open a `Relay handoff feedback` issue.

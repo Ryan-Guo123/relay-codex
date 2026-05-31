@@ -28,18 +28,20 @@ python3 plugins/relay-codex/scripts/relay_runtime.py handoff --json
 python3 plugins/relay-codex/scripts/relay_runtime.py review-readiness --json
 python3 plugins/relay-codex/scripts/relay_runtime.py pr-comment --json
 python3 plugins/relay-codex/scripts/relay_runtime.py reviewer-pack --json
+python3 plugins/relay-codex/scripts/relay_runtime.py validation-brief --json
 ```
 
-If the branch is already committed or running in CI, add `--base-ref origin/main` to `review-readiness` and `pr-comment`.
+If the branch is already committed or running in CI, add `--base-ref origin/main` to `review-readiness`, `pr-comment`, `reviewer-pack`, and `validation-brief`.
 
 On GitHub PRs, the `Review Readiness` workflow also publishes `.relay/review-readiness.md` to the Actions job summary and uploads `relay-review-readiness` as an artifact containing the Markdown plus `relay-review-readiness.json`.
 
 2. Read `.relay/review-readiness.md`, the `Review Readiness` job summary, or the `relay-review-readiness` Actions artifact from the PR.
 3. Read `.relay/pr-comment.md`.
 4. Read `.relay/reviewer-pack.md`.
-5. Add or link the plain Codex summary or manual PR summary in the `Compare Against` section.
-6. Remove secrets, customer data, private links, or internal context.
-7. Ask one reviewer to compare both without reading the full Codex thread.
+5. Read `.relay/validation-brief.md`.
+6. Add or link the plain Codex summary or manual PR summary in the `Compare Against` section.
+7. Remove secrets, customer data, private links, or internal context.
+8. Ask one reviewer to compare both without reading the full Codex thread.
 
 ## Reviewer Prompt
 

@@ -277,6 +277,24 @@ class RelayRuntimeTests(unittest.TestCase):
         self.assertIn("Relay handoff feedback", pack)
         self.assertIn("Needs maintainer review before another agent pass", pack)
 
+    def test_validation_brief_wraps_reviewer_pack_and_required_outcome(self) -> None:
+        workspace = self.copy_fixture("stuck-repo")
+        brief_result = self.run_runtime(workspace, "validation-brief")
+        payload = json.loads(brief_result.stdout)
+        brief_path = Path(payload["validation_brief"])
+        brief = brief_path.read_text(encoding="utf-8")
+
+        self.assertTrue(brief_path.exists())
+        self.assertEqual(payload["verdict"], "needs_review")
+        self.assertIn("# Relay Validation Brief", brief)
+        self.assertIn("## Validation Goal", brief)
+        self.assertIn("## Reviewer Pack", brief)
+        self.assertIn("````markdown", brief)
+        self.assertIn(".relay/reviewer-pack.md", brief)
+        self.assertIn("reused, edited_heavily, ignored, or confusing", brief)
+        self.assertIn("Update `docs/validation-ledger.md`", brief)
+        self.assertIn("Do not ask for stars, sponsorship, or praise", brief)
+
     def test_changed_files_ignore_parent_repo_when_root_is_nested_fixture(self) -> None:
         workspace = self.copy_fixture("in-progress-repo")
         parent_repo = workspace.parent
@@ -319,6 +337,7 @@ class RelayRuntimeTests(unittest.TestCase):
         self.run_runtime(workspace, "review-readiness")
         self.run_runtime(workspace, "pr-comment")
         self.run_runtime(workspace, "reviewer-pack")
+        self.run_runtime(workspace, "validation-brief")
         self.run_runtime(workspace, "release")
 
         relay_root = workspace / ".relay"
@@ -332,6 +351,7 @@ class RelayRuntimeTests(unittest.TestCase):
             "review-readiness.md": ("# Relay Review Readiness", "## Review Gate", "## Suggested Reviewers", "## Recommended Review Decision"),
             "pr-comment.md": ("## Relay PR Handoff", "### Current State", "### Review Readiness", "### Verification", "### Recommended Next Action", "### Maintainer Checklist"),
             "reviewer-pack.md": ("# Relay Reviewer Pack", "## Reviewer Ask", "## Scoring Rubric", "## Required Outcome"),
+            "validation-brief.md": ("# Relay Validation Brief", "## Validation Goal", "## Reviewer Pack", "## Feedback To Record", "## Guardrails"),
             "release-checklist.md": ("# Relay Release Checklist", "## Release Posture", "## 2. Verification", "## 5. Human Approval Gates"),
         }
         for filename, headings in expected.items():

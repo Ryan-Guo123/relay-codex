@@ -97,7 +97,7 @@ If users want a board, memory engine, runtime, scheduler, or autonomous PR facto
 Validated:
 
 - Public repository exists.
-- Releases exist through `v0.1.11`.
+- Public releases exist.
 - Runtime can generate handoff, review-readiness, PR comment, reviewer-pack, and release checklist artifacts.
 - GitHub Actions can generate and publish review-readiness artifacts on PRs.
 - Documentation now clearly states that Relay is not Codex Goals, not Paperclip, not a board, and not a memory engine.

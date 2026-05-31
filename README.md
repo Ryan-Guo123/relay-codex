@@ -47,6 +47,7 @@ Relay adds a thin repo-local packaging layer on top of Codex App:
 - lightweight hooks for activity tracking
 - recovery notes when work starts to churn
 - PR comment, review-readiness, reviewer pack, handoff, and release artifacts that can be reused in GitHub
+- validation briefs that make outside reviewer asks concrete and measurable
 
 ## Is this already solved?
 
@@ -131,8 +132,9 @@ Relay renders three starter packs:
 8. `generate-review-readiness` writes `.relay/review-readiness.md` as a review routing gate.
 9. `generate-pr-comment` writes `.relay/pr-comment.md` as a pasteable GitHub review note.
 10. `generate-reviewer-pack` writes `.relay/reviewer-pack.md` for outside maintainer validation.
-11. `generate-release-checklist` writes `.relay/release-checklist.md` before tags or GitHub releases.
-12. `install-relay-automations` turns the current state into repeatable Codex App follow-up.
+11. `generate-validation-brief` writes `.relay/validation-brief.md` before asking an outside reviewer for evidence.
+12. `generate-release-checklist` writes `.relay/release-checklist.md` before tags or GitHub releases.
+13. `install-relay-automations` turns the current state into repeatable Codex App follow-up.
 
 ## Example `.relay/` snapshot
 
@@ -146,6 +148,7 @@ Relay renders three starter packs:
   review-readiness.md -> Changed-file scope, sensitive paths, and reviewer routing
   pr-comment.md    -> GitHub-ready PR review comment draft
   reviewer-pack.md -> Outside reviewer prompt, rubric, and handoff excerpt
+  validation-brief.md -> Outside validation ask, reviewer pack, and ledger instructions
   release-checklist.md -> Verification, versioning, tag, and approval steps
   automations.md   -> Suggested automation packs
   events.jsonl     -> Lightweight event log from hooks
@@ -186,6 +189,7 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 - `generate-review-readiness`
 - `generate-pr-comment`
 - `generate-reviewer-pack`
+- `generate-validation-brief`
 - `generate-release-checklist`
 - `install-relay-automations`
 
@@ -217,6 +221,7 @@ Relay is intentionally narrow in v1. It already covers:
 - GitHub PR comment generation
 - review-readiness signals for changed-file count, sensitive paths, and CODEOWNERS routing
 - outside reviewer pack generation
+- outside validation brief generation
 - release checklist generation
 - stuck recovery walkthrough from real runtime output
 - automation pack rendering

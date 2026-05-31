@@ -1043,14 +1043,94 @@ Do not treat this pack as proof of value until someone outside the current build
 """
 
 
-def write_reviewer_pack(root: Path) -> dict[str, Any]:
-    pr_payload = write_pr_comment(root)
+def write_reviewer_pack(root: Path, base_ref: str | None = None) -> dict[str, Any]:
+    pr_payload = write_pr_comment(root, base_ref=base_ref)
     context = detect_repo_context(root)
     relay_root = relay_dir(root)
     pr_comment = read_text(relay_root / "pr-comment.md")
     target = relay_root / "reviewer-pack.md"
     write_text(target, render_reviewer_pack(context, pr_comment, pr_payload))
     return {**pr_payload, "reviewer_pack": str(target)}
+
+
+def render_validation_brief(context: dict[str, Any], reviewer_pack: str, payload: dict[str, Any]) -> str:
+    readiness = payload.get("review_readiness", {})
+    decision = readiness.get("decision", {})
+    changed_count = readiness.get("changed_file_count", 0)
+    base_ref = readiness.get("base_ref")
+    base_line = f"- Base ref: `{base_ref}`" if base_ref else "- Base ref: current worktree status"
+    action = decision.get("recommended_action", "Ask an outside reviewer to compare the Relay handoff with a normal summary.")
+    return f"""# Relay Validation Brief
+
+- Project: `{context["project_name"]}`
+- Branch: `{context["git_branch"]}`
+- Verdict: `{payload["verdict"]}`
+- Generated: {iso_now()}
+{base_line}
+
+## Validation Goal
+
+Get one outside maintainer or frequent PR reviewer to compare Relay's generated handoff with a normal Codex/manual summary and record one blunt outcome.
+
+This brief is not proof of product value. It is the packet to send when collecting proof.
+
+## Artifacts To Share
+
+- `.relay/review-readiness.md`
+- `.relay/pr-comment.md`
+- `.relay/reviewer-pack.md`
+
+## Current Review Gate
+
+- Changed files: {changed_count}
+- Risk level: `{decision.get("risk_level", "unknown")}`
+- Decision: `{decision.get("decision", "unknown")}`
+- Recommended action: {action}
+
+## Short Ask
+
+```text
+I am validating Relay for Codex, a small tool that turns Codex work into GitHub-ready maintainer handoffs.
+
+Could you spend about 10 minutes comparing this Relay handoff with a normal Codex/manual summary?
+
+Please record one outcome: reused, edited_heavily, ignored, or confusing.
+
+The useful question is not whether the repo looks polished. It is whether this handoff helps you decide what changed, what was verified, what still needs review, and what should happen next.
+```
+
+## Reviewer Pack
+
+````markdown
+{reviewer_pack.strip()}
+````
+
+## Feedback To Record
+
+- Link to the PR or task being reviewed.
+- Link or paste the redacted Relay handoff.
+- Link or paste the normal Codex/manual summary used for comparison.
+- Record one outcome: `reused`, `edited_heavily`, `ignored`, or `confusing`.
+- Record whether the reviewer identified changed files, verification, review focus, and next action without reading the full Codex thread.
+- Update `docs/validation-ledger.md` with the result.
+
+## Guardrails
+
+- Do not ask for stars, sponsorship, or praise in the validation ask.
+- Do not count this brief, an internal PR, or a synthetic demo as validation.
+- Redact secrets, customer data, private links, and internal owner names before sharing.
+- If the reviewer marks this `ignored` or `confusing`, treat that as useful product signal.
+"""
+
+
+def write_validation_brief(root: Path, base_ref: str | None = None) -> dict[str, Any]:
+    pack_payload = write_reviewer_pack(root, base_ref=base_ref)
+    context = detect_repo_context(root)
+    relay_root = relay_dir(root)
+    reviewer_pack = read_text(relay_root / "reviewer-pack.md")
+    target = relay_root / "validation-brief.md"
+    write_text(target, render_validation_brief(context, reviewer_pack, pack_payload))
+    return {**pack_payload, "validation_brief": str(target)}
 
 
 def render_release_checklist(context: dict[str, Any], inspection: dict[str, Any]) -> str:
@@ -1292,11 +1372,21 @@ def cmd_review_readiness(args: argparse.Namespace) -> int:
 
 
 def cmd_reviewer_pack(args: argparse.Namespace) -> int:
-    payload = write_reviewer_pack(args.root.resolve())
+    payload = write_reviewer_pack(args.root.resolve(), base_ref=args.base_ref)
     if args.json:
         print_json(payload)
     else:
         print(f"Relay reviewer pack written to {payload['reviewer_pack']}")
+        print(f"Verdict: {payload['verdict']}")
+    return 0
+
+
+def cmd_validation_brief(args: argparse.Namespace) -> int:
+    payload = write_validation_brief(args.root.resolve(), base_ref=args.base_ref)
+    if args.json:
+        print_json(payload)
+    else:
+        print(f"Relay validation brief written to {payload['validation_brief']}")
         print(f"Verdict: {payload['verdict']}")
     return 0
 
@@ -1347,6 +1437,7 @@ def build_parser() -> argparse.ArgumentParser:
         ("review-readiness", cmd_review_readiness),
         ("pr-comment", cmd_pr_comment),
         ("reviewer-pack", cmd_reviewer_pack),
+        ("validation-brief", cmd_validation_brief),
         ("release", cmd_release),
         ("automations", cmd_automations),
         ("hook-posttooluse", cmd_hook),
