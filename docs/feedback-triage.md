@@ -21,6 +21,8 @@ Supporting labels:
 | --- | --- |
 | `round-1` | Feedback belongs to the first outside-review validation round. |
 | `needs-ledger-update` | The issue has not yet been copied into [validation-ledger.md](validation-ledger.md). |
+| `waiting-on-feedback` | The issue is waiting for an outside reviewer, maintainer, or community response. Do not treat this as validation. |
+| `candidate-pivot` | The issue is a possible product direction after a gate triggers. Do not treat this as requested by users. |
 
 Every feedback issue should also record AI PR review fit:
 
