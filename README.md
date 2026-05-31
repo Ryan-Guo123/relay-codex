@@ -7,7 +7,7 @@
 [![Codex App](https://img.shields.io/badge/Codex%20App-native-f97316.svg)](plugins/relay-codex/.codex-plugin/plugin.json)
 [![Stars](https://img.shields.io/github/stars/Ryan-Guo123/relay-codex?style=social)](https://github.com/Ryan-Guo123/relay-codex/stargazers)
 
-Keep Codex moving on your project without losing state.
+Relay for Codex is an open-source maintainer workflow layer for long-running Codex work: triage, review, stuck recovery, and release handoff.
 
 Relay for Codex is an App-native project relay for heavy Codex workflows. It gives Codex a repo-local memory, a progress verdict, recovery heuristics, and automation packs so long-running work stops drifting, looping, or asking the same question twice.
 
