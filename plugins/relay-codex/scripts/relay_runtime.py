@@ -557,6 +557,66 @@ def summarize_review_readiness(root: Path) -> tuple[str, dict[str, Any]]:
     return "\n".join(lines), metadata
 
 
+def render_review_readiness(context: dict[str, Any], inspection: dict[str, Any], summary: str) -> str:
+    metadata = inspection["review_readiness"]
+    verdict = inspection["verdict"]
+    reasons = inspection["reasons"]
+    reason_lines = "\n".join(f"- {reason}" for reason in reasons) if reasons else "- No active blocker signals."
+    routing = metadata["review_routing"]
+    suggested_reviewers = routing["suggested_reviewers"]
+
+    if suggested_reviewers:
+        reviewer_lines = "\n".join(
+            f"- {entry['owner']}: {', '.join(f'`{path}`' for path in entry['paths'][:5])}"
+            for entry in suggested_reviewers[:8]
+        )
+    elif routing["codeowners_path"]:
+        reviewer_lines = "- No CODEOWNERS owner matched the changed files."
+    else:
+        reviewer_lines = "- No CODEOWNERS file detected."
+
+    if metadata["large_change"]:
+        decision = "Ask for a split or a tighter maintainer summary before deep review."
+    elif metadata["sensitive_paths"]:
+        decision = "Route to an owner for the sensitive area before merge."
+    elif suggested_reviewers:
+        decision = "Request review from the suggested CODEOWNERS owner(s)."
+    elif metadata["changed_file_count"] == 0:
+        decision = "Treat this as a handoff sample; no code-review gate is available without changed files."
+    else:
+        decision = "Scope looks small enough for normal maintainer review."
+
+    return f"""# Relay Review Readiness
+
+- Project: `{context["project_name"]}`
+- Branch: `{context["git_branch"]}`
+- Verdict: `{verdict}`
+- Generated: {iso_now()}
+
+## Review Gate
+
+{summary}
+
+## Suggested Reviewers
+
+{reviewer_lines}
+
+## Current Relay Signals
+
+{reason_lines}
+
+## Recommended Review Decision
+
+{decision}
+
+## Safe Use
+
+- This is a routing and review-prep artifact, not merge approval.
+- Use Codex Goals for execution; use Relay review readiness to decide who should inspect the PR and whether the scope is reviewable.
+- Redact sensitive paths or internal owner names before sharing publicly.
+"""
+
+
 def infer_phase(context: dict[str, Any], events: list[dict[str, Any]]) -> str:
     if not events:
         return "setup"
@@ -851,6 +911,17 @@ def write_pr_comment(root: Path) -> dict[str, Any]:
     _review_readiness, readiness_metadata = summarize_review_readiness(root)
     write_text(target, render_pr_comment(context, events, handoff_payload))
     return {**handoff_payload, "pr_comment": str(target), "review_readiness": readiness_metadata}
+
+
+def write_review_readiness(root: Path) -> dict[str, Any]:
+    inspection = inspect_relay(root)
+    context = detect_repo_context(root)
+    relay_root = relay_dir(root)
+    target = relay_root / "review-readiness.md"
+    summary, readiness_metadata = summarize_review_readiness(root)
+    payload = {**inspection, "review_readiness": readiness_metadata}
+    write_text(target, render_review_readiness(context, payload, summary))
+    return {**payload, "review_readiness_artifact": str(target)}
 
 
 def render_reviewer_pack(context: dict[str, Any], pr_comment: str, inspection: dict[str, Any]) -> str:
@@ -1161,6 +1232,16 @@ def cmd_pr_comment(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_review_readiness(args: argparse.Namespace) -> int:
+    payload = write_review_readiness(args.root.resolve())
+    if args.json:
+        print_json(payload)
+    else:
+        print(f"Relay review readiness written to {payload['review_readiness_artifact']}")
+        print(f"Changed files: {payload['review_readiness']['changed_file_count']}")
+    return 0
+
+
 def cmd_reviewer_pack(args: argparse.Namespace) -> int:
     payload = write_reviewer_pack(args.root.resolve())
     if args.json:
@@ -1214,6 +1295,7 @@ def build_parser() -> argparse.ArgumentParser:
         ("inspect", cmd_inspect),
         ("recover", cmd_recover),
         ("handoff", cmd_handoff),
+        ("review-readiness", cmd_review_readiness),
         ("pr-comment", cmd_pr_comment),
         ("reviewer-pack", cmd_reviewer_pack),
         ("release", cmd_release),

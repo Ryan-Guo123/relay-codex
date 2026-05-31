@@ -160,6 +160,47 @@ class RelayRuntimeTests(unittest.TestCase):
         self.assertNotIn("`.relay/handoff.md`", comment)
         self.assertNotIn("`.relay/state.md`", comment)
 
+    def test_review_readiness_writes_standalone_gate(self) -> None:
+        workspace = self.copy_fixture("in-progress-repo")
+        subprocess.run(["git", "init"], cwd=workspace, capture_output=True, text=True, check=True)
+        (workspace / ".github").mkdir()
+        (workspace / ".github" / "CODEOWNERS").write_text(
+            "/src/auth/* @security-team\n*.json @tooling-team\n",
+            encoding="utf-8",
+        )
+        subprocess.run(["git", "add", "package.json", ".github/CODEOWNERS"], cwd=workspace, capture_output=True, text=True, check=True)
+        subprocess.run(
+            [
+                "git",
+                "-c",
+                "user.email=relay@example.com",
+                "-c",
+                "user.name=Relay Test",
+                "commit",
+                "-m",
+                "Seed fixture",
+            ],
+            cwd=workspace,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        (workspace / "src" / "auth").mkdir(parents=True)
+        (workspace / "src" / "auth" / "session.ts").write_text("export const status = 'review';\n", encoding="utf-8")
+
+        result = self.run_runtime(workspace, "review-readiness")
+        payload = json.loads(result.stdout)
+        artifact = Path(payload["review_readiness_artifact"])
+        content = artifact.read_text(encoding="utf-8")
+
+        self.assertTrue(artifact.exists())
+        self.assertIn("# Relay Review Readiness", content)
+        self.assertIn("## Review Gate", content)
+        self.assertIn("## Suggested Reviewers", content)
+        self.assertIn("@security-team: `src/auth/session.ts`", content)
+        self.assertEqual(payload["review_readiness"]["changed_file_count"], 1)
+        self.assertEqual(payload["review_readiness"]["review_routing"]["codeowners_path"], ".github/CODEOWNERS")
+
     def test_reviewer_pack_wraps_pr_comment_and_rubric(self) -> None:
         workspace = self.copy_fixture("stuck-repo")
         pack_result = self.run_runtime(workspace, "reviewer-pack")
@@ -214,6 +255,7 @@ class RelayRuntimeTests(unittest.TestCase):
         workspace = self.copy_fixture("stuck-repo")
         self.run_runtime(workspace, "enable")
         self.run_runtime(workspace, "handoff")
+        self.run_runtime(workspace, "review-readiness")
         self.run_runtime(workspace, "pr-comment")
         self.run_runtime(workspace, "reviewer-pack")
         self.run_runtime(workspace, "release")
@@ -226,6 +268,7 @@ class RelayRuntimeTests(unittest.TestCase):
             "guardrails.md": ("# Relay Guardrails", "## Escalation Rules"),
             "automations.md": ("# Relay Automation Packs", "## Continue Working", "## Daily Triage", "## Stuck Recovery", "## Release Readiness"),
             "handoff.md": ("# Relay Handoff", "## Maintainer Summary", "## Recommended Next Action", "## Safe Handoff Rules"),
+            "review-readiness.md": ("# Relay Review Readiness", "## Review Gate", "## Suggested Reviewers", "## Recommended Review Decision"),
             "pr-comment.md": ("## Relay PR Handoff", "### Current State", "### Review Readiness", "### Verification", "### Recommended Next Action", "### Maintainer Checklist"),
             "reviewer-pack.md": ("# Relay Reviewer Pack", "## Reviewer Ask", "## Scoring Rubric", "## Required Outcome"),
             "release-checklist.md": ("# Relay Release Checklist", "## Release Posture", "## 2. Verification", "## 5. Human Approval Gates"),
