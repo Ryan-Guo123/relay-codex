@@ -18,7 +18,7 @@ You are a good reviewer if you:
 
 ## 10-Minute Review
 
-1. Skim [reviewer-pack-example.md](reviewer-pack-example.md), or pick a real PR or maintenance task.
+1. Skim [reviewer-pack-example.md](reviewer-pack-example.md), download the `relay-validation-bundle` artifact from a Relay PR, or pick a real PR or maintenance task.
 2. Generate a Relay reviewer pack:
 
 ```bash

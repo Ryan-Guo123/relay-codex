@@ -25,11 +25,31 @@ jobs:
           BASE_REF="origin/${GITHUB_BASE_REF:-main}"
           python3 plugins/relay-codex/scripts/relay_runtime.py review-readiness --base-ref "$BASE_REF" --json | tee relay-review-readiness.json
 
+      - name: Generate Relay validation bundle
+        run: |
+          BASE_REF="origin/${GITHUB_BASE_REF:-main}"
+          python3 plugins/relay-codex/scripts/relay_runtime.py validation-brief --base-ref "$BASE_REF" --json | tee relay-validation-brief.json
+
       - name: Publish Relay review readiness summary
         if: always()
         run: |
           if [ -f .relay/review-readiness.md ]; then
             cat .relay/review-readiness.md >> "$GITHUB_STEP_SUMMARY"
+            {
+              echo
+              echo "## Relay Validation Bundle"
+              echo
+              echo "The workflow uploaded a validation bundle with:"
+              echo
+              echo "- .relay/handoff.md"
+              echo "- .relay/pr-comment.md"
+              echo "- .relay/reviewer-pack.md"
+              echo "- .relay/validation-brief.md"
+              echo "- relay-review-readiness.json"
+              echo "- relay-validation-brief.json"
+              echo
+              echo "Use the bundle when asking an outside maintainer to compare Relay output with a normal Codex/manual summary."
+            } >> "$GITHUB_STEP_SUMMARY"
           else
             {
               echo "# Relay Review Readiness"
@@ -46,4 +66,18 @@ jobs:
           path: |
             .relay/review-readiness.md
             relay-review-readiness.json
+          if-no-files-found: warn
+
+      - name: Upload Relay validation bundle
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: relay-validation-bundle
+          path: |
+            .relay/handoff.md
+            .relay/pr-comment.md
+            .relay/reviewer-pack.md
+            .relay/validation-brief.md
+            relay-review-readiness.json
+            relay-validation-brief.json
           if-no-files-found: warn
