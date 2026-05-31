@@ -200,6 +200,8 @@ class RelayRuntimeTests(unittest.TestCase):
         self.assertIn("@security-team: `src/auth/session.ts`", content)
         self.assertEqual(payload["review_readiness"]["changed_file_count"], 1)
         self.assertEqual(payload["review_readiness"]["review_routing"]["codeowners_path"], ".github/CODEOWNERS")
+        self.assertEqual(payload["review_readiness"]["decision"]["risk_level"], "high")
+        self.assertEqual(payload["review_readiness"]["decision"]["decision"], "owner_review_required")
 
     def test_review_readiness_can_diff_against_base_ref(self) -> None:
         workspace = self.copy_fixture("in-progress-repo")
@@ -257,6 +259,8 @@ class RelayRuntimeTests(unittest.TestCase):
         self.assertEqual(payload["review_readiness"]["base_ref"], "main")
         self.assertEqual(payload["review_readiness"]["change_source"], "base_ref_diff")
         self.assertEqual(payload["review_readiness"]["changed_file_count"], 1)
+        self.assertEqual(payload["review_readiness"]["decision"]["risk_level"], "high")
+        self.assertEqual(payload["review_readiness"]["decision"]["decision"], "owner_review_required")
 
     def test_reviewer_pack_wraps_pr_comment_and_rubric(self) -> None:
         workspace = self.copy_fixture("stuck-repo")

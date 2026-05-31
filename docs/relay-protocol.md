@@ -271,7 +271,7 @@ Required headings:
 
 Indexing guidance:
 
-- Index changed-file count, `base_ref`, `change_source`, large-scope warning, sensitive paths, CODEOWNERS-suggested reviewers, unowned paths, and recommended review decision.
+- Index changed-file count, `base_ref`, `change_source`, large-scope warning, sensitive paths, CODEOWNERS-suggested reviewers, unowned paths, and structured `decision` fields: `risk_level`, `decision`, and `recommended_action`.
 - Treat this as the smallest machine-readable review gate; read `pr-comment.md` when a GitHub-ready narrative is needed.
 
 ### `.relay/pr-comment.md`
