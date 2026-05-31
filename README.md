@@ -156,7 +156,7 @@ Relay renders three starter packs:
 
 For full setup steps, success checks, and troubleshooting, see [docs/install.md](docs/install.md).
 
-See [docs/demo-usage.md](docs/demo-usage.md) for a concrete PR triage and stuck-recovery example, and [docs/pr-handoff-example.md](docs/pr-handoff-example.md) for the first fixture-backed GitHub PR handoff. The demo GIF is generated from real Relay runtime output; its storyboard and acceptance criteria live in [docs/demo-storyboard.md](docs/demo-storyboard.md).
+See [docs/demo-usage.md](docs/demo-usage.md) for a concrete PR triage flow, [docs/pr-handoff-example.md](docs/pr-handoff-example.md) for the first fixture-backed GitHub PR handoff, and [docs/stuck-recovery-walkthrough.md](docs/stuck-recovery-walkthrough.md) for the `continue -> needs_review -> recovery handoff` path. The demo GIF is generated from real Relay runtime output; its storyboard and acceptance criteria live in [docs/demo-storyboard.md](docs/demo-storyboard.md).
 
 ### Option B: develop the plugin itself
 
@@ -205,6 +205,7 @@ Relay is intentionally narrow in v1. It already covers:
 - maintainer handoff generation
 - GitHub PR comment generation
 - release checklist generation
+- stuck recovery walkthrough from real runtime output
 - automation pack rendering
 - fixture-backed tests for empty, in-progress, and stuck repositories
 
