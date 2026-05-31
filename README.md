@@ -9,7 +9,7 @@
 
 Relay for Codex is an open-source maintainer workflow layer for long-running Codex work: triage, review, stuck recovery, and release handoff.
 
-Relay does not try to run agents, replace Codex Goals, or become another kanban board. It gives every long-running Codex run a maintainer-readable handoff inside the repo.
+Relay does not try to run agents, replace Codex Goals, become another kanban board, or compete with local-first memory tools. It is a narrow Codex App-native handoff adapter: after a Codex run, it produces GitHub-ready maintainer artifacts inside the repo.
 
 ![Relay demo: repo state to handoff and release checklist](docs/assets/relay-demo.gif)
 
@@ -17,24 +17,24 @@ If Relay saves you from session drift or endless test churn, give the repo a sta
 
 ## Why this exists
 
-Codex can move fast inside a thread. The failure mode starts later:
+Codex Goals can keep work moving inside a thread. The failure mode starts later, when that work has to become something a maintainer can review, merge, or release:
 
-- the thread loses context
-- the repo has no durable task memory
-- the agent keeps testing instead of progressing
-- you cannot tell whether Codex should continue, pause, recover, or ask for help
+- the thread summary is hard to reuse in GitHub
+- the PR description misses evidence, risks, or review notes
+- release readiness lives in chat instead of the repo
+- a future maintainer cannot tell what changed, what was checked, and what still needs review
 
-Relay exists for the moment after agent work:
+Relay exists for the moment after a Codex Goal or agent run:
 
 ```text
-issue/task -> Codex run -> Relay verdict -> PR handoff -> release gate
+issue/task -> Codex Goal/run -> repo evidence -> PR comment or release gate
 ```
 
 It answers one maintainer question:
 
-> "Can I trust where this repo is now, and what should happen next?"
+> "What can I paste into GitHub so a maintainer understands what happened, what was checked, and what still needs review?"
 
-Relay adds a thin repo-local layer on top of Codex App:
+Relay adds a thin repo-local packaging layer on top of Codex App:
 
 - repo-local state under `.relay/`
 - a four-state verdict:
@@ -43,8 +43,8 @@ Relay adds a thin repo-local layer on top of Codex App:
   - `needs_human`
   - `needs_review`
 - lightweight hooks for activity tracking
-- recovery-first behavior when work starts to churn
-- automation packs that keep checking the project after the current thread goes quiet
+- recovery notes when work starts to churn
+- handoff and release artifacts that can be reused in PRs and release notes
 
 ## Is this already solved?
 
@@ -64,10 +64,10 @@ Relay's narrow job is downstream of them: after an agent run touches a repositor
 Not:  "Run my agents."
 Not:  "Remember everything."
 Not:  "Replace my issue tracker."
-Yes:  "Tell me whether this repo should continue, recover, review, or release."
+Yes:  "Turn this Codex run into a maintainer-readable PR or release handoff."
 ```
 
-If that handoff does not make a maintainer faster or more confident, Relay should shrink or change. The current product bet is intentionally small.
+If that handoff is not better than asking Codex to summarize the thread, Relay should shrink, pivot, or stop. The current product bet is intentionally small.
 
 ## What makes Relay different
 
@@ -80,7 +80,7 @@ If that handoff does not make a maintainer faster or more confident, Relay shoul
 - Small surface area
   - Relay focuses on keeping work moving. It does not try to become another prompt marketplace or agent framework.
 
-The product strategy lives in [docs/product-strategy.md](docs/product-strategy.md), the validation plan lives in [docs/validation-plan.md](docs/validation-plan.md), and the `.relay/` artifact protocol lives in [docs/relay-protocol.md](docs/relay-protocol.md). The short version: Relay should be the repo-local flight recorder and handoff layer for long-running Codex work, not a clone of broader multi-agent control planes.
+The product strategy lives in [docs/product-strategy.md](docs/product-strategy.md), the stricter market map lives in [docs/market-map.md](docs/market-map.md), community pain research lives in [docs/community-research.md](docs/community-research.md), the validation plan lives in [docs/validation-plan.md](docs/validation-plan.md), and the `.relay/` artifact protocol lives in [docs/relay-protocol.md](docs/relay-protocol.md). The short version: Relay should be a GitHub handoff adapter for Codex-heavy work, not a clone of broader multi-agent control planes, memory engines, or local-first evidence ledgers.
 
 ## Core pieces
 
@@ -95,21 +95,23 @@ Turns the current repository into a Relay-managed workspace by creating:
 - `.relay/automations.md`
 - `.relay/events.jsonl`
 
-### 2. Progress Monitor
+### 2. Handoff Monitor
 
-The runtime inspects repo context, recent events, and repeated failure patterns to decide whether Codex should:
+The runtime inspects repo context, recent events, and repeated failure patterns to package the current work state as:
 
 - continue
 - pause
 - escalate to a human
 - switch into recovery mode
 
+That status is an input to PR and release handoff, not a replacement for Codex Goals.
+
 ### 3. Automation Packs
 
 Relay renders three starter packs:
 
 - `Continue Working`
-  - Check the repo regularly and only create a new Codex follow-up when the verdict still says `continue`.
+  - Preserve a clear follow-up note when the repo state says more work is safe.
 - `Daily Triage`
   - Produce a concise daily project status summary.
 - `Stuck Recovery`
@@ -121,7 +123,7 @@ Relay renders three starter packs:
 2. In a repo, run `Enable Relay in this repo`.
 3. Relay creates `.relay/` and infers the project stack, commands, queue, and guardrails.
 4. The `PostToolUse` hook records events into `.relay/events.jsonl`.
-5. `inspect-relay-state` or `continue-with-relay` uses the latest verdict before doing more work.
+5. `inspect-relay-state` or `continue-with-relay` reads the latest verdict before more work is requested.
 6. `recover-stuck-project` rewrites the queue into smaller, recovery-first steps when the repo is stuck.
 7. `generate-relay-handoff` writes `.relay/handoff.md` for PR, release, or future-Codex pickup.
 8. `generate-release-checklist` writes `.relay/release-checklist.md` before tags or GitHub releases.
@@ -217,23 +219,23 @@ Bug reports, repro cases, workflow ideas, and pull requests are welcome. Start w
 
 ## Launch notes
 
-If you want this project to travel, do not just ship code. Ship a clear before/after story, a real stuck-repo demo, and a short clip that shows Relay changing the verdict from churn to recovery. A maintainer-facing launch checklist lives in [docs/launch-playbook.md](docs/launch-playbook.md), and the first runtime-generated demo lives in [docs/assets/relay-demo.gif](docs/assets/relay-demo.gif).
+If you want this project to travel, do not just ship code. Ship a clear before/after story, a real PR/release handoff demo, and a short clip that shows Relay turning Codex work into a maintainer-readable artifact. A maintainer-facing launch checklist lives in [docs/launch-playbook.md](docs/launch-playbook.md), and the first runtime-generated demo lives in [docs/assets/relay-demo.gif](docs/assets/relay-demo.gif).
 
 ## 中文简介
 
-Relay for Codex 是一个专门为 Codex App 设计的项目推进插件。它不是另一个 prompt 包，也不是 CLI loop 的移植版，而是给 Codex 增加一层“项目状态控制”：
+Relay for Codex 是一个专门为 Codex App 设计的维护者交接插件。它不是另一个 prompt 包，也不是 Codex Goals 的替代品，而是在 Codex 跑完之后，把工作整理成 GitHub PR / release 能直接复用的交接材料：
 
 - 把项目状态落到仓库本地的 `.relay/` 文件里
-- 自动判断现在应该继续、暂停、需要人工，还是进入恢复模式
-- 在发现反复失败、空转测试、重复提问时，不再盲目继续跑
-- 给出适合 Codex App 的 automation packs
+- 把验证、风险、review focus 和下一步写成可审阅的 handoff
+- 在发现反复失败、空转测试、重复提问时，明确标出需要人工 review 的点
+- 给出适合 PR 更新、release checklist 和后续 Codex App 跟进的材料
 
 ### 它解决的问题
 
-- Codex 做长任务时容易丢状态
-- 线程结束后没有可持续的项目记忆
-- 经常出现“在测，但没有推进”
-- 你看不出来现在到底该继续，还是该停下来处理卡点
+- Codex 线程里的结论很难直接搬到 GitHub
+- PR 描述容易漏掉测试、风险和人工 review 点
+- release 前的检查步骤散落在聊天记录里
+- 后来的维护者不知道哪些已经做过、哪些还需要看
 
 ### 快速开始
 
@@ -248,10 +250,10 @@ Relay for Codex 是一个专门为 Codex App 设计的项目推进插件。它�
 
 ### 为什么更容易被 star
 
-因为它讲的不是“更多 agent 配置”，而是一个更具体的结果：
+因为它讲的不是“再造一个 agent runtime”，而是一个更具体的结果：
 
-- 让 Codex 在长任务里不容易跑偏
-- 让仓库里有可见、可交接、可继续推进的状态
-- 让用户知道什么时候该继续，什么时候该停
+- 把 Codex 的长任务输出变成维护者能审阅的 GitHub 交接物
+- 让仓库里有可见、可交接、可发布前检查的状态
+- 避开 Codex Goals、memory tools 和 kanban products 已经占住的地盘
 
 License: MIT
