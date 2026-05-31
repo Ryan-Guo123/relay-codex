@@ -4,7 +4,9 @@ Relay for Codex is a local workflow layer for Codex App projects. It writes repo
 
 ## Supported versions
 
-Security fixes are accepted for the latest `0.1.x` release line.
+Security fixes are accepted for the latest `0.1.x` release line and the current `main` branch.
+
+Older tags are not supported unless the fix can be applied without changing the public artifact format or install flow.
 
 ## Reporting a vulnerability
 
@@ -16,6 +18,35 @@ Use one of these paths:
 2. If private reporting is not available, open a minimal public issue that says a security report is available and asks for a private contact path.
 
 For ordinary hardening ideas that do not expose sensitive details, public issues are welcome.
+
+Expected response:
+
+- acknowledgement target: 7 days
+- initial triage target: 14 days
+- public advisory or release note: after a fix is available, when disclosure would not put users at extra risk
+
+This is a small open-source project, so these are targets rather than service-level guarantees.
+
+## In scope
+
+Security reports are in scope when they involve:
+
+- Relay reading files outside the intended repository root
+- Relay writing outside `.relay/` without explicit maintainer action
+- generated `.relay/` artifacts capturing secrets, private account data, or raw logs unexpectedly
+- GitHub Actions trial workflows weakening checksum verification, token scope, or artifact boundaries
+- runtime changes that allow network writes, publishing, pushing, or messaging without the normal Codex/GitHub approval flow
+- release artifacts, install instructions, or plugin metadata that could cause maintainers to run untrusted code unexpectedly
+
+## Out of scope
+
+These are usually not security issues by themselves:
+
+- generated handoff text that is incomplete, noisy, or strategically wrong
+- a reviewer choosing to commit `.relay/` files from a private repository after seeing the warning
+- normal GitHub token permissions granted by a repository owner to their own workflows
+- attacks that require already having write access to the target repository
+- social-engineering requests for stars, sponsorship, or maintainer attention
 
 ## Threat model
 
@@ -39,6 +70,8 @@ Relay should not assume:
 - permission to publish, send messages, push code, or change cloud state without the user's normal Codex/GitHub approval flow
 - that automation should continue when the project verdict is `paused`, `needs_human`, or `needs_review`
 
+The copy-paste external trial workflow is also part of the trust boundary. It should stay pinned to a release artifact, verify the runtime checksum before execution, and upload only the generated Relay artifacts needed for review.
+
 ## Data handling boundaries
 
 The runtime is intentionally stdlib-only and repo-local. It should:
@@ -50,6 +83,8 @@ The runtime is intentionally stdlib-only and repo-local. It should:
 - treat generated automation prompts as reviewable suggestions, not silent authorization
 
 Maintainers should review `.relay/` before committing it from private or sensitive projects.
+
+If Relay is used on a regulated, confidential, or customer-data-bearing repository, prefer a disposable branch or external trial first and inspect the generated bundle before sharing it with anyone outside the repository.
 
 ## Security-sensitive changes
 
