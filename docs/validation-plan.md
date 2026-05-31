@@ -25,6 +25,7 @@ Evidence:
 - `.relay/state.md` shows a current verdict.
 - `.relay/handoff.md` summarizes progress, risk, verification, and next action.
 - `.relay/pr-comment.md` turns the handoff into a GitHub-ready review note.
+- `.relay/reviewer-pack.md` turns the PR handoff into an outside-review request with a rubric.
 - A reviewer can explain the next action after reading only the README demo and generated Relay files.
 
 Pass condition:
@@ -88,6 +89,7 @@ Evidence:
 
 - An outside maintainer, contributor, teammate, or evaluator compares `.relay/pr-comment.md` with a normal Codex/manual summary.
 - The reviewer records whether the output was reused, edited heavily, ignored, or confusing.
+- `.relay/reviewer-pack.md` packages the handoff, reviewer prompt, comparison placeholder, scoring rubric, and outcome choices.
 - The feedback is captured through the `Relay handoff feedback` issue template.
 
 Pass condition:
@@ -184,6 +186,7 @@ real PR/task -> relay pr-comment -> outside reviewer comparison -> feedback issu
 Artifacts:
 
 - `.relay/pr-comment.md`
+- `.relay/reviewer-pack.md`
 - normal Codex/manual summary for comparison
 - `Relay handoff feedback` issue
 - follow-up decision: keep, simplify, rename, or remove
