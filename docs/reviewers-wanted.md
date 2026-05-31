@@ -5,6 +5,7 @@ Relay needs outside maintainer feedback.
 The product is only useful if someone who did not run the Codex thread can still understand the generated handoff.
 
 If you are sharing this request with another maintainer, use the drafts in [outreach-copy.md](outreach-copy.md).
+If you only have a minute, start with the [60-second quick verdict](reviewer-quick-verdict.md).
 If you want to review the format before installing anything, start with [reviewer-pack-example.md](reviewer-pack-example.md).
 
 ## Who This Is For
@@ -17,6 +18,8 @@ You are a good reviewer if you:
 - have ever had to reconstruct what an agent did from a long thread
 
 ## 10-Minute Review
+
+For a no-install first impression, use [reviewer-quick-verdict.md](reviewer-quick-verdict.md). Only count it as validation if the reviewer records a public outcome.
 
 1. Skim [round1-reviewer-request.md](round1-reviewer-request.md), [reviewer-pack-example.md](reviewer-pack-example.md), download the `relay-validation-bundle` artifact from a Relay PR, or pick a real PR or maintenance task.
 2. Generate a Relay reviewer pack:
