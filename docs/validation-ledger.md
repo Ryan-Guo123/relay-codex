@@ -10,7 +10,7 @@ Snapshot date: 2026-05-31.
 | --- | ---: | --- |
 | GitHub stars | 1 | `gh repo view Ryan-Guo123/relay-codex` on 2026-05-31 |
 | Forks | 0 | `gh repo view Ryan-Guo123/relay-codex` on 2026-05-31 |
-| Open validation issues | 1 | [#24 Test Relay handoff with an outside maintainer](https://github.com/Ryan-Guo123/relay-codex/issues/24) |
+| Open validation issues | 2 | [#24 Test Relay handoff with an outside maintainer](https://github.com/Ryan-Guo123/relay-codex/issues/24) and [#39 Run validation round 1 with an outside reviewer](https://github.com/Ryan-Guo123/relay-codex/issues/39) |
 | Outside reviewer outcomes | 0 | No `reused`, `edited_heavily`, `ignored`, or `confusing` feedback yet |
 | External repo trials | 0 | No linked outside PR, issue, workflow artifact, or commit yet |
 | Money signals | 0 | No sponsor, donation, paid setup request, or hosted-feature request yet |
@@ -32,6 +32,17 @@ Weak evidence:
 - AI-generated praise.
 - Synthetic demo reactions without a real review task.
 - Traffic or impressions without a reviewer outcome.
+
+## Feedback Triage
+
+Every outside feedback issue should be labeled with exactly one outcome:
+
+- `outcome:reused`
+- `outcome:edited_heavily`
+- `outcome:ignored`
+- `outcome:confusing`
+
+Use `needs-ledger-update` until the issue is copied into this ledger, then remove it after the ledger row is merged. The full triage protocol lives in [feedback-triage.md](feedback-triage.md).
 
 ## Round 1 Validation Plan
 

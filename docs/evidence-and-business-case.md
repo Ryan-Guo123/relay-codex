@@ -39,7 +39,7 @@ The adjacent market has attention. The following public repository metrics were 
 | [openai/symphony](https://github.com/openai/symphony) | agent work orchestration | 24,855 | 2,475 | 0 | 2026-05-29 | Platform-level task-to-run orchestration is becoming crowded. |
 | [rohitg00/agentmemory](https://github.com/rohitg00/agentmemory) | agent memory | 19,972 | 1,646 | 91 | 2026-05-29 | Persistent memory for coding agents has substantial interest. |
 | [Conway-Research/automaton](https://github.com/Conway-Research/automaton) | autonomous agent | 4,570 | 979 | 121 | 2026-05-30 | Memorable autonomy stories can attract attention, but this is not Relay's desired path. |
-| [Ryan-Guo123/relay-codex](https://github.com/Ryan-Guo123/relay-codex) | Codex handoff adapter | 1 | 0 | 1 | 2026-05-31 | Relay itself has no external traction yet. |
+| [Ryan-Guo123/relay-codex](https://github.com/Ryan-Guo123/relay-codex) | Codex handoff adapter | 1 | 0 | 2 | 2026-05-31 | Relay itself has no external traction yet. |
 
 `Issues count` is the `issues.totalCount` value returned by GitHub CLI; treat it as a rough activity signal, not as a normalized support or quality metric. Stars are attention, not revenue.
 
