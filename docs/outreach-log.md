@@ -106,4 +106,4 @@ Do not test a paid setup ask until:
 - positive outcomes: at least 1
 - or a maintainer explicitly asks for setup/support after seeing a Relay artifact
 
-If 3 targeted asks produce no reply, pause and change the target segment or artifact instead of sending more asks.
+If 3 targeted asks produce no reply, run [no-response-pivot.md](no-response-pivot.md), pause this target segment, and change the target segment or artifact instead of sending more asks.

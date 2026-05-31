@@ -72,7 +72,7 @@ Negative evidence is not failure of the research process. It is the point of thi
 
 1. Wait for replies on the three public targeted asks already sent.
 2. If any reviewer replies, record the outcome before changing the product.
-3. If all three asks produce no reply after 7 days, stop outreach in that segment and change the artifact or target segment before any new feature work.
+3. If all three asks produce no reply after 7 days, run [no-response-pivot.md](no-response-pivot.md), stop outreach in that segment, and change the artifact or target segment before any new feature work.
 
 Do not ask for stars, sponsorship, or paid setup during this gate.
 

@@ -121,7 +121,7 @@ Round 1 is negative evidence if:
 - reviewers say an existing AI PR review tool already solves the job
 - reviewers ask for a board, memory engine, or autonomous runtime instead of a handoff artifact
 
-If negative evidence appears, do not add features. Simplify the artifact, change the target segment, or stop the product direction.
+If negative evidence appears, do not add features. Simplify the artifact, change the target segment, or stop the product direction. If all three targeted asks receive no response, run the [no-response pivot checklist](no-response-pivot.md) before sending another ask.
 
 ## What Not To Count
 
