@@ -15,7 +15,7 @@ Relay does not try to run agents, replace Codex Goals, become another kanban boa
 
 If Relay saves you from session drift or endless test churn, give the repo a star.
 
-Outside reviewers wanted: if you review AI-generated PRs, use [docs/reviewers-wanted.md](docs/reviewers-wanted.md) to test a generated handoff or skim the [sample reviewer pack](docs/reviewer-pack-example.md), then file a `Relay handoff feedback` issue. Blunt negative feedback is welcome.
+Outside reviewers wanted: if you review AI-generated PRs, use [docs/reviewers-wanted.md](docs/reviewers-wanted.md) to test a generated handoff, skim the [Round 1 reviewer request](docs/round1-reviewer-request.md), or skim the [sample reviewer pack](docs/reviewer-pack-example.md), then file a `Relay handoff feedback` issue. Blunt negative feedback is welcome.
 
 ## Why this exists
 
