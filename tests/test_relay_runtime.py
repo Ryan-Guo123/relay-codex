@@ -126,11 +126,22 @@ class RelayRuntimeTests(unittest.TestCase):
         package_json.write_text(package_json.read_text(encoding="utf-8").replace("in-progress-repo", "relay-pr-test"), encoding="utf-8")
         (workspace / "src").mkdir()
         (workspace / "src" / "app.ts").write_text("export const status = 'ready';\n", encoding="utf-8")
-        self.run_runtime(workspace, "pr-comment")
+        (workspace / "src" / "auth").mkdir()
+        (workspace / "src" / "auth" / "session.ts").write_text("export const token = 'redacted';\n", encoding="utf-8")
+        (workspace / ".github" / "workflows").mkdir(parents=True)
+        (workspace / ".github" / "workflows" / "ci.yml").write_text("name: ci\n", encoding="utf-8")
+        result = self.run_runtime(workspace, "pr-comment")
+        payload = json.loads(result.stdout)
 
         comment = (workspace / ".relay" / "pr-comment.md").read_text(encoding="utf-8")
         self.assertIn("`package.json`", comment)
         self.assertIn("`src/app.ts`", comment)
+        self.assertIn("### Review Readiness", comment)
+        self.assertIn("4 non-Relay changed file(s)", comment)
+        self.assertIn("`src/auth/session.ts` (Auth / permissions)", comment)
+        self.assertIn("`.github/workflows/ci.yml` (CI / automation)", comment)
+        self.assertEqual(payload["review_readiness"]["changed_file_count"], 4)
+        self.assertEqual(len(payload["review_readiness"]["sensitive_paths"]), 2)
         self.assertNotIn("`ackage.json`", comment)
         self.assertNotIn("`.relay/handoff.md`", comment)
         self.assertNotIn("`.relay/state.md`", comment)
@@ -201,7 +212,7 @@ class RelayRuntimeTests(unittest.TestCase):
             "guardrails.md": ("# Relay Guardrails", "## Escalation Rules"),
             "automations.md": ("# Relay Automation Packs", "## Continue Working", "## Daily Triage", "## Stuck Recovery", "## Release Readiness"),
             "handoff.md": ("# Relay Handoff", "## Maintainer Summary", "## Recommended Next Action", "## Safe Handoff Rules"),
-            "pr-comment.md": ("## Relay PR Handoff", "### Current State", "### Verification", "### Recommended Next Action", "### Maintainer Checklist"),
+            "pr-comment.md": ("## Relay PR Handoff", "### Current State", "### Review Readiness", "### Verification", "### Recommended Next Action", "### Maintainer Checklist"),
             "reviewer-pack.md": ("# Relay Reviewer Pack", "## Reviewer Ask", "## Scoring Rubric", "## Required Outcome"),
             "release-checklist.md": ("# Relay Release Checklist", "## Release Posture", "## 2. Verification", "## 5. Human Approval Gates"),
         }

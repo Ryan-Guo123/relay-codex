@@ -1,6 +1,6 @@
 ---
 name: generate-pr-comment
-description: Generate `.relay/pr-comment.md`, a GitHub-ready PR handoff comment derived from Relay state and handoff evidence.
+description: Generate `.relay/pr-comment.md`, a GitHub-ready PR handoff comment with Relay state, handoff evidence, and review-readiness signals.
 ---
 
 # Generate PR Comment
@@ -19,6 +19,7 @@ python3 ../../scripts/relay_runtime.py pr-comment --json
 3. Report:
    - current verdict
    - review posture
+   - review-readiness signals, including sensitive paths or large-scope warnings
    - verification evidence or missing verification
    - risks / review focus
    - recommended next action
