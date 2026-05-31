@@ -87,6 +87,33 @@ class RelayRuntimeTests(unittest.TestCase):
         self.assertIn("pytest failed with error", handoff)
         self.assertIn("Do not continue automatically", handoff)
 
+    def test_pr_comment_writes_github_ready_handoff(self) -> None:
+        workspace = self.copy_fixture("stuck-repo")
+        comment_result = self.run_runtime(workspace, "pr-comment")
+        payload = json.loads(comment_result.stdout)
+        comment_path = Path(payload["pr_comment"])
+        comment = comment_path.read_text(encoding="utf-8")
+        self.assertTrue(comment_path.exists())
+        self.assertEqual(payload["verdict"], "needs_review")
+        self.assertIn("## Relay PR Handoff", comment)
+        self.assertIn("### Verification", comment)
+        self.assertIn("pytest failed with error", comment)
+        self.assertIn("### Risks / Review Focus", comment)
+        self.assertIn("Needs maintainer review before another agent pass", comment)
+        self.assertIn("does not post this comment automatically", comment)
+
+    def test_pr_comment_omits_relay_artifacts_from_changed_files(self) -> None:
+        workspace = self.copy_fixture("in-progress-repo")
+        subprocess.run(["git", "init"], cwd=workspace, capture_output=True, text=True, check=True)
+        (workspace / "src").mkdir()
+        (workspace / "src" / "app.ts").write_text("export const status = 'ready';\n", encoding="utf-8")
+        self.run_runtime(workspace, "pr-comment")
+
+        comment = (workspace / ".relay" / "pr-comment.md").read_text(encoding="utf-8")
+        self.assertIn("`src/app.ts`", comment)
+        self.assertNotIn("`.relay/handoff.md`", comment)
+        self.assertNotIn("`.relay/state.md`", comment)
+
     def test_release_writes_checklist_with_approval_gates(self) -> None:
         workspace = self.copy_fixture("in-progress-repo")
         release_result = self.run_runtime(workspace, "release")
@@ -113,6 +140,7 @@ class RelayRuntimeTests(unittest.TestCase):
         workspace = self.copy_fixture("stuck-repo")
         self.run_runtime(workspace, "enable")
         self.run_runtime(workspace, "handoff")
+        self.run_runtime(workspace, "pr-comment")
         self.run_runtime(workspace, "release")
 
         relay_root = workspace / ".relay"
@@ -123,6 +151,7 @@ class RelayRuntimeTests(unittest.TestCase):
             "guardrails.md": ("# Relay Guardrails", "## Escalation Rules"),
             "automations.md": ("# Relay Automation Packs", "## Continue Working", "## Daily Triage", "## Stuck Recovery", "## Release Readiness"),
             "handoff.md": ("# Relay Handoff", "## Maintainer Summary", "## Recommended Next Action", "## Safe Handoff Rules"),
+            "pr-comment.md": ("## Relay PR Handoff", "### Current State", "### Verification", "### Recommended Next Action", "### Maintainer Checklist"),
             "release-checklist.md": ("# Relay Release Checklist", "## Release Posture", "## 2. Verification", "## 5. Human Approval Gates"),
         }
         for filename, headings in expected.items():

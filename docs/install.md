@@ -66,6 +66,7 @@ You can verify the runtime directly from this repository:
 ```bash
 python3 plugins/relay-codex/scripts/relay_runtime.py enable --root /path/to/target-repo --json
 python3 plugins/relay-codex/scripts/relay_runtime.py inspect --root /path/to/target-repo --json
+python3 plugins/relay-codex/scripts/relay_runtime.py pr-comment --root /path/to/target-repo --json
 ```
 
 Use a disposable test repository if you do not want `.relay/` files in a real project yet.

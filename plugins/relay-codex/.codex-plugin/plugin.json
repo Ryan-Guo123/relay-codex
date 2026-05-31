@@ -1,7 +1,7 @@
 {
   "name": "relay-codex",
-  "version": "0.1.3",
-  "description": "Repo-local maintainer workflow for long-running Codex work.",
+  "version": "0.1.4",
+  "description": "GitHub-ready maintainer handoffs for long-running Codex work.",
   "author": {
     "name": "Ryan-Guo123",
     "url": "https://github.com/Ryan-Guo123"
@@ -20,8 +20,8 @@
   "hooks": "./hooks.json",
   "interface": {
     "displayName": "Relay for Codex",
-    "shortDescription": "Repo-local state, drift detection, and recovery for Codex",
-    "longDescription": "Relay for Codex adds a repo-local maintainer layer around long-running Codex work: inspectable state, progress verdicts, stuck-project recovery, and automation pack recommendations.",
+    "shortDescription": "GitHub-ready handoff artifacts for Codex work",
+    "longDescription": "Relay for Codex turns long-running Codex work into repo-local maintainer artifacts: PR handoff comments, release checklists, review focus, recovery notes, and lightweight evidence.",
     "developerName": "Ryan-Guo123",
     "category": "Coding",
     "capabilities": [
@@ -35,6 +35,7 @@
       "Enable Relay in this repo",
       "Check whether Codex is stuck and what to do next",
       "Generate a Relay handoff for this PR",
+      "Generate a GitHub-ready PR comment with Relay",
       "Generate a release checklist with Relay",
       "Install automations to keep this project moving"
     ],

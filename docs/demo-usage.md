@@ -147,6 +147,51 @@ Expected excerpt when a repo is safe to continue:
 Pick one unchecked item from `.relay/queue.md` and continue with the smallest meaningful change.
 ```
 
+## Step 5: generate the GitHub PR comment
+
+Turn the handoff into a pasteable PR comment draft:
+
+```bash
+python3 plugins/relay-codex/scripts/relay_runtime.py pr-comment --json
+```
+
+Relay writes:
+
+```text
+.relay/pr-comment.md
+```
+
+Expected sections:
+
+- current state and verdict
+- changed files from Git status
+- last successful signal
+- verification evidence or suggested verification
+- risks / review focus
+- recommended next action
+- maintainer checklist
+
+Expected excerpt:
+
+```markdown
+## Relay PR Handoff
+
+### Current State
+
+- Verdict: `needs_review`
+- Review posture: Needs maintainer review before another agent pass.
+
+### Verification
+
+- 2026-04-14T05:10:00+00:00: pytest failed with error on the same login flow assertion
+
+### Recommended Next Action
+
+Inspect the repeated failure or churn signal, then choose one narrow recovery step.
+```
+
+Relay does not post this comment automatically. A maintainer reviews, redacts, and adapts it before sharing it on GitHub.
+
 ## Example PR triage workflow
 
 Use this flow on a real pull request:
@@ -160,7 +205,8 @@ Use this flow on a real pull request:
    - smallest next investigation
    - human decision needed, if any
 5. Run `handoff` and use `.relay/handoff.md` as the maintainer review surface.
-6. Do not install recurring automations until the queue has a clear owner and stop condition.
+6. Run `pr-comment` and compare `.relay/pr-comment.md` against a normal Codex thread summary.
+7. Do not install recurring automations until the queue has a clear owner and stop condition.
 
 ## What this demo proves
 
@@ -168,6 +214,7 @@ Relay is not trying to replace Codex goals. It adds a repo-local handoff surface
 
 - what the PR/release note should say
 - what review focus should be preserved
+- whether a generated GitHub comment is better than reconstructing the thread manually
 - what state another person or agent can pick up later
 
 ## Release handoff

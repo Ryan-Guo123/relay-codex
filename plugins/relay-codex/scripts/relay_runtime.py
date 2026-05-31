@@ -351,6 +351,56 @@ def summarize_last_success(events: list[dict[str, Any]]) -> str:
     return "No substantive Relay event recorded yet."
 
 
+def summarize_verification(events: list[dict[str, Any]], commands: list[str]) -> str:
+    verification_events: list[str] = []
+    for event in events[-8:]:
+        label, _substantive = classify_event(event)
+        summary = event.get("summary", "No summary captured.")
+        timestamp = event.get("timestamp", "unknown-time")
+        normalized = normalize_summary(summary)
+        if label == "test_only" or any(word in normalized for word in ("test", "lint", "build", "typecheck")):
+            verification_events.append(f"- {timestamp}: {summary}")
+
+    if verification_events:
+        return "\n".join(verification_events)
+
+    suggested = [
+        command
+        for command in commands
+        if any(word in command for word in ("test", "lint", "build", "check"))
+    ]
+    if suggested:
+        return "\n".join(f"- Not recorded yet. Suggested: run `{command}`." for command in suggested)
+    return "- No verification command or event captured yet."
+
+
+def summarize_changed_files(root: Path) -> str:
+    status = git_output(root, ["status", "--short", "--untracked-files=all"])
+    if not status:
+        return "- No Git changes detected in the current workspace."
+
+    files: list[str] = []
+    for line in status.splitlines():
+        if len(line) < 4:
+            continue
+        path = line[3:].strip()
+        if " -> " in path:
+            path = path.split(" -> ", 1)[1].strip()
+        if path == RELAY_DIRNAME or path.startswith(f"{RELAY_DIRNAME}/"):
+            continue
+        files.append(path)
+
+    files = dedupe_preserve_order(files)
+    if not files:
+        return "- No non-Relay file changes detected in Git status."
+
+    display = files[:12]
+    lines = [f"- `{path}`" for path in display]
+    if len(files) > len(display):
+        lines.append(f"- ...and {len(files) - len(display)} more file(s).")
+    return "\n".join(lines)
+
+
 def infer_phase(context: dict[str, Any], events: list[dict[str, Any]]) -> str:
     if not events:
         return "setup"
@@ -561,6 +611,83 @@ def write_handoff(root: Path) -> dict[str, Any]:
     events = load_jsonl(relay_root / "events.jsonl")
     write_text(relay_root / "handoff.md", render_handoff(context, events, inspection))
     return {**inspection, "handoff": str(relay_root / "handoff.md")}
+
+
+def render_pr_comment(context: dict[str, Any], events: list[dict[str, Any]], inspection: dict[str, Any]) -> str:
+    reasons = inspection["reasons"]
+    reason_lines = "\n".join(f"- {reason}" for reason in reasons) if reasons else "- No active blocker signals."
+    recent = summarize_recent_events(events, limit=4)
+    last_success = summarize_last_success(events)
+    verification = summarize_verification(events, context["commands"])
+    changed_files = summarize_changed_files(Path(inspection["root"]))
+    verdict = inspection["verdict"]
+
+    if verdict == "continue":
+        posture = "Ready for maintainer review or one focused follow-up task."
+        next_action = "Review the changed files and pick one remaining queue item if more work is needed."
+    elif verdict == "paused":
+        posture = "No automatic follow-up should be scheduled until the queue is intentionally reopened."
+        next_action = "Confirm whether the PR is complete or needs a new explicit task."
+    elif verdict == "needs_human":
+        posture = "Blocked on a human decision before more implementation work."
+        next_action = "Resolve the missing product, credential, approval, or scope input."
+    else:
+        posture = "Needs maintainer review before another agent pass."
+        next_action = "Inspect the repeated failure or churn signal, then choose one narrow recovery step."
+
+    return f"""## Relay PR Handoff
+
+Relay converted the current Codex run state into a GitHub-ready review note. It does not post this comment automatically.
+
+### Current State
+
+- Project: `{context["project_name"]}`
+- Branch: `{context["git_branch"]}`
+- Verdict: `{verdict}`
+- Review posture: {posture}
+- Generated: {iso_now()}
+
+### What Changed
+
+{changed_files}
+
+### Last Successful Signal
+
+- {last_success}
+
+### Verification
+
+{verification}
+
+### Risks / Review Focus
+
+{reason_lines}
+
+### Recent Relay Events
+
+{recent}
+
+### Recommended Next Action
+
+{next_action}
+
+### Maintainer Checklist
+
+- [ ] Confirm the changed files match the PR intent.
+- [ ] Confirm verification evidence is present or run the suggested command.
+- [ ] Resolve any `needs_human` or `needs_review` signal before merge.
+- [ ] Paste or adapt this note into the PR only after removing sensitive context.
+"""
+
+
+def write_pr_comment(root: Path) -> dict[str, Any]:
+    handoff_payload = write_handoff(root)
+    context = detect_repo_context(root)
+    relay_root = relay_dir(root)
+    events = load_jsonl(relay_root / "events.jsonl")
+    target = relay_root / "pr-comment.md"
+    write_text(target, render_pr_comment(context, events, handoff_payload))
+    return {**handoff_payload, "pr_comment": str(target)}
 
 
 def render_release_checklist(context: dict[str, Any], inspection: dict[str, Any]) -> str:
@@ -781,6 +908,16 @@ def cmd_handoff(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_pr_comment(args: argparse.Namespace) -> int:
+    payload = write_pr_comment(args.root.resolve())
+    if args.json:
+        print_json(payload)
+    else:
+        print(f"Relay PR comment written to {payload['pr_comment']}")
+        print(f"Verdict: {payload['verdict']}")
+    return 0
+
+
 def cmd_release(args: argparse.Namespace) -> int:
     payload = write_release_checklist(args.root.resolve())
     if args.json:
@@ -824,6 +961,7 @@ def build_parser() -> argparse.ArgumentParser:
         ("inspect", cmd_inspect),
         ("recover", cmd_recover),
         ("handoff", cmd_handoff),
+        ("pr-comment", cmd_pr_comment),
         ("release", cmd_release),
         ("automations", cmd_automations),
         ("hook-posttooluse", cmd_hook),
