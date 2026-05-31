@@ -250,7 +250,7 @@ python3 plugins/relay-codex/scripts/relay_runtime.py pr-comment
 Purpose:
 
 - Turn the current Relay handoff into a GitHub-ready PR comment draft.
-- Preserve verdict, changed files, review-readiness signals, verification evidence, risks, recent events, and next action in a pasteable format.
+- Preserve verdict, changed files, review-readiness signals, CODEOWNERS routing hints, verification evidence, risks, recent events, and next action in a pasteable format.
 
 Ownership:
 
@@ -272,7 +272,7 @@ Required headings:
 
 Indexing guidance:
 
-- Index verdict, review posture, changed files, sensitive-path warnings, large-scope warnings, verification evidence, risks, and recommended next action.
+- Index verdict, review posture, changed files, sensitive-path warnings, large-scope warnings, CODEOWNERS-suggested reviewers, verification evidence, risks, and recommended next action.
 - Treat this as a PR surface, not a complete project memory or merge approval.
 
 ### `.relay/reviewer-pack.md`

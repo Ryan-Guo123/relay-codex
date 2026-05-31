@@ -105,7 +105,12 @@ class RelayRuntimeTests(unittest.TestCase):
     def test_pr_comment_omits_relay_artifacts_from_changed_files(self) -> None:
         workspace = self.copy_fixture("in-progress-repo")
         subprocess.run(["git", "init"], cwd=workspace, capture_output=True, text=True, check=True)
-        subprocess.run(["git", "add", "package.json"], cwd=workspace, capture_output=True, text=True, check=True)
+        (workspace / ".github").mkdir()
+        (workspace / ".github" / "CODEOWNERS").write_text(
+            "/src/auth/* @security-team\n.github/workflows/* @platform-team\n",
+            encoding="utf-8",
+        )
+        subprocess.run(["git", "add", "package.json", ".github/CODEOWNERS"], cwd=workspace, capture_output=True, text=True, check=True)
         subprocess.run(
             [
                 "git",
@@ -128,7 +133,7 @@ class RelayRuntimeTests(unittest.TestCase):
         (workspace / "src" / "app.ts").write_text("export const status = 'ready';\n", encoding="utf-8")
         (workspace / "src" / "auth").mkdir()
         (workspace / "src" / "auth" / "session.ts").write_text("export const token = 'redacted';\n", encoding="utf-8")
-        (workspace / ".github" / "workflows").mkdir(parents=True)
+        (workspace / ".github" / "workflows").mkdir(parents=True, exist_ok=True)
         (workspace / ".github" / "workflows" / "ci.yml").write_text("name: ci\n", encoding="utf-8")
         result = self.run_runtime(workspace, "pr-comment")
         payload = json.loads(result.stdout)
@@ -140,8 +145,17 @@ class RelayRuntimeTests(unittest.TestCase):
         self.assertIn("4 non-Relay changed file(s)", comment)
         self.assertIn("`src/auth/session.ts` (Auth / permissions)", comment)
         self.assertIn("`.github/workflows/ci.yml` (CI / automation)", comment)
+        self.assertIn("Review routing from `.github/CODEOWNERS`", comment)
+        self.assertIn("@security-team: `src/auth/session.ts`", comment)
+        self.assertIn("@platform-team: `.github/workflows/ci.yml`", comment)
         self.assertEqual(payload["review_readiness"]["changed_file_count"], 4)
         self.assertEqual(len(payload["review_readiness"]["sensitive_paths"]), 2)
+        routing = payload["review_readiness"]["review_routing"]
+        self.assertEqual(routing["codeowners_path"], ".github/CODEOWNERS")
+        self.assertEqual(
+            {entry["owner"] for entry in routing["suggested_reviewers"]},
+            {"@platform-team", "@security-team"},
+        )
         self.assertNotIn("`ackage.json`", comment)
         self.assertNotIn("`.relay/handoff.md`", comment)
         self.assertNotIn("`.relay/state.md`", comment)
