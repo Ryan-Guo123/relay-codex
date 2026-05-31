@@ -23,27 +23,23 @@ Snapshot date: 2026-05-31.
 | --- | ---: | --- |
 | Relay stars | 1 | No traction signal yet. |
 | Relay forks | 0 | No adoption signal yet. |
-| Open validation issues | 2 | Validation process exists, but outcomes are still pending. |
+| Open validation issues | 3 | Validation process exists, but outcomes are still pending. |
 | Outside reviewer outcomes | 0 | Core product usefulness is unproven. |
 | External repo trials | 0 | No proof that Relay works outside this repository. |
 | Money signals | 0 | No evidence for sponsorship, setup support, or revenue. |
 
 ## Market Context
 
-The broader market has attention, but that does not validate Relay.
+The broader market has attention, but that does not validate Relay. The adjacent traction snapshot lives in [evidence-and-business-case.md](evidence-and-business-case.md) so this experiment does not need a stale duplicate star table.
 
-| Project | Current Signal | Why Relay Should Not Copy It |
-| --- | --- | --- |
-| [mattpocock/skills](https://github.com/mattpocock/skills) | 112,466 stars, 9,875 forks | Skills libraries win through broad reusable workflows; Relay should stay narrower. |
-| [paperclipai/paperclip](https://github.com/paperclipai/paperclip) | 68,394 stars, 12,653 forks | Broad agent control planes are already memorable and crowded. |
-| [warpdotdev/warp](https://github.com/warpdotdev/warp) | 60,658 stars, 4,843 forks | Agentic development environments own the interactive workspace. |
-| [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | 47,239 stars, 5,239 forks | Production-grade agent skills are a category, but Relay should not become a skills pack. |
-| [BloopAI/vibe-kanban](https://github.com/BloopAI/vibe-kanban) | 26,674 stars, 2,805 forks | Agent boards already own planning, branches, terminals, previews, and PR creation. |
-| [openai/symphony](https://github.com/openai/symphony) | 24,857 stars, 2,475 forks | Project-to-autonomous-run orchestration is upstream from Relay's handoff layer. |
-| [rohitg00/agentmemory](https://github.com/rohitg00/agentmemory) | 19,992 stars, 1,650 forks | Persistent memory is a different product with stronger dedicated players. |
-| [Conway-Research/automaton](https://github.com/Conway-Research/automaton) | 4,569 stars, 979 forks | Extreme autonomy is memorable, but not Relay's safe maintainer workflow. |
+Use that market context only to avoid obvious duplication:
 
-Captured with GitHub CLI on 2026-05-31. Stars and forks are attention signals, not proof of willingness to use or pay for Relay.
+- skills libraries show reusable workflows can spread, but Relay should not become a broad skills pack
+- Paperclip, vibe-kanban, Warp, and Symphony-style projects own agent control, boards, workspaces, and orchestration
+- agentmemory, Kage, Recall, and codemem-style tools own memory and continuity
+- Copilot code review, CodeRabbit, Graphite, Qodo, PR-Agent, and Greptile own inline AI PR review
+
+Round 1 is not testing whether these adjacent categories are popular. It is testing whether a reviewer still wants a small pre-review handoff after a Codex run.
 
 ## Non-Duplicated Wedge
 
@@ -85,15 +81,17 @@ Do not ask random developers for stars. Do not ask communities where the request
 
 For each target:
 
-1. Share the stable reviewer request: [round1-reviewer-request.md](round1-reviewer-request.md).
-2. Share one concrete artifact: `.relay/validation-brief.md`, `.relay/review-readiness.md`, `.relay/pr-comment.md`, or a `relay-validation-bundle`.
-3. If the reviewer wants to test a real repository, share the [external repo trial workflow](external-repo-trial.md).
-4. Share a normal Codex/manual summary for comparison.
-5. Ask whether they would use Relay in addition to, before, or instead of Copilot/CodeRabbit/Graphite/Qodo-style AI review.
-6. Ask the reviewer to choose exactly one outcome: `reused`, `edited_heavily`, `ignored`, or `confusing`.
-7. Ask for one product decision: keep, simplify, rename, remove, or retest.
-8. Capture the response through the [Round 1 feedback form](https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feedback.yml) or the general handoff feedback form.
-9. Apply exactly one `outcome:*` label and keep `needs-ledger-update` until [validation-ledger.md](validation-ledger.md) is updated.
+1. If attention is cold, start with [reviewer-quick-verdict.md](reviewer-quick-verdict.md).
+2. If the reviewer has more time, share the stable reviewer request: [round1-reviewer-request.md](round1-reviewer-request.md).
+3. Share one concrete artifact: `.relay/validation-brief.md`, `.relay/review-readiness.md`, `.relay/pr-comment.md`, a `relay-validation-bundle`, or the quick verdict excerpt.
+4. If the reviewer wants to test a real repository, share the [external repo trial workflow](external-repo-trial.md).
+5. Share a normal Codex/manual summary for comparison.
+6. Ask whether they would use Relay in addition to, before, or instead of Copilot/CodeRabbit/Graphite/Qodo-style AI review.
+7. Ask the reviewer to choose exactly one outcome: `reused`, `edited_heavily`, `ignored`, or `confusing`.
+8. Ask for one product decision: keep, simplify, rename, remove, or retest.
+9. Capture the response through the [Round 1 feedback form](https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feedback.yml) or the general handoff feedback form.
+10. Record the review path: `60-second quick verdict`, `Round 1 reviewer request`, `Reviewer pack example`, `External repo trial`, `Real PR handoff`, or `Other`.
+11. Apply exactly one `outcome:*` label and keep `needs-ledger-update` until [validation-ledger.md](validation-ledger.md) is updated.
 
 ## Success Metrics
 
@@ -101,6 +99,7 @@ Round 1 is a success only if:
 
 - at least 1 outside reviewer files or authorizes a public feedback issue
 - the issue compares Relay against a normal summary
+- the issue records the review path
 - the issue has exactly one `outcome:*` label
 - the reviewer can identify changed files, verification, review focus, and next action without reading the full Codex thread
 
