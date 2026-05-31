@@ -2,6 +2,8 @@
 
 Use these short drafts when asking for outside maintainer feedback. Keep the ask small and honest: Relay is not proven until people outside the build thread reuse or reject its handoff.
 
+For the current Round 1 validation ask, use [round1-outreach-message.md](round1-outreach-message.md).
+
 ## One-Line Positioning
 
 Relay for Codex turns long-running Codex work into GitHub-ready maintainer handoffs: what changed, what was verified, what still needs review, and what should happen next.

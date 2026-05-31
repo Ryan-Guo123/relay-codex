@@ -46,7 +46,7 @@ Timebox:
 
 Minimum ask:
 
-- 1 public issue comment, discussion reply, or maintainer DM using [outreach-copy.md](outreach-copy.md).
+- 1 public issue comment, discussion reply, or maintainer DM using [round1-outreach-message.md](round1-outreach-message.md) or [outreach-copy.md](outreach-copy.md).
 - 1 linked reviewer artifact: [round1-reviewer-request.md](round1-reviewer-request.md), [reviewer-pack-example.md](reviewer-pack-example.md), `.relay/validation-brief.md`, `relay-validation-bundle`, or a real PR artifact.
 - 1 follow-up asking for one of: `reused`, `edited_heavily`, `ignored`, `confusing`.
 
@@ -85,6 +85,7 @@ These links are evidence of the problem space, not proof that Relay solves it.
 | --- | --- | --- | --- | --- | --- |
 | 2026-05-31 | GitHub issue #24 | `docs/reviewer-pack-example.md` and Review Readiness artifact path | Open | Pending | Keep open until an outside reviewer records one of the required outcomes. |
 | 2026-05-31 | GitHub issue #39 | [round1-reviewer-request.md](round1-reviewer-request.md), `.relay/validation-brief.md`, or `relay-validation-bundle` from a real PR/task | Open | Pending | Concrete Round 1 validation task. |
+| 2026-05-31 | GitHub issue #39 public ask | [round1-outreach-message.md](round1-outreach-message.md) | Drafted | Pending | Publish as an issue comment, then ask one external reviewer directly. |
 | TBD | Maintainer who reviews AI-generated PRs | `docs/reviewers-wanted.md` | Not contacted | Pending | Ask for a 10-minute comparison, not a star. |
 | TBD | Community thread about AI PR review fatigue | `docs/reviewer-pack-example.md` | Not contacted | Pending | Reply only where self-promotion is allowed and the thread asks for tools/workflows. |
 | TBD | Agent workflow tool builder | `docs/review-readiness.schema.json` | Not contacted | Pending | Ask whether the JSON payload is useful for integration. |
