@@ -14,7 +14,7 @@ Relay for Codex is intentionally small. Contributions should make the project sh
 
 ## Validating Relay as an outside reviewer
 
-If you did not run the Codex session, your feedback is especially useful. Use [docs/external-maintainer-validation.md](docs/external-maintainer-validation.md) and open a `Relay handoff feedback` issue with one of these outcomes:
+If you did not run the Codex session, your feedback is especially useful. Start with [docs/reviewers-wanted.md](docs/reviewers-wanted.md), use [docs/external-maintainer-validation.md](docs/external-maintainer-validation.md), and open a `Relay handoff feedback` issue with one of these outcomes:
 
 - `reused`
 - `edited_heavily`

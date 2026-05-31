@@ -6,6 +6,8 @@ Relay has fixture-backed and real-branch validation. The next question is harder
 
 Use this protocol when asking an outside maintainer, reviewer, or open-source collaborator to judge `.relay/pr-comment.md`.
 
+For the shorter public ask, see [reviewers-wanted.md](reviewers-wanted.md).
+
 ## What To Test
 
 Pick one real maintenance task:
