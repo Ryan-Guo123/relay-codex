@@ -83,7 +83,7 @@ If that handoff is not better than asking Codex to summarize the thread, Relay s
 - Small surface area
   - Relay focuses on keeping work moving. It does not try to become another prompt marketplace or agent framework.
 
-The product strategy lives in [docs/product-strategy.md](docs/product-strategy.md), the stricter market map lives in [docs/market-map.md](docs/market-map.md), community pain research lives in [docs/community-research.md](docs/community-research.md), the evidence and business case lives in [docs/evidence-and-business-case.md](docs/evidence-and-business-case.md), the validation ledger lives in [docs/validation-ledger.md](docs/validation-ledger.md), the validation plan lives in [docs/validation-plan.md](docs/validation-plan.md), outside-review guidance lives in [docs/external-maintainer-validation.md](docs/external-maintainer-validation.md), and the `.relay/` artifact protocol lives in [docs/relay-protocol.md](docs/relay-protocol.md). The short version: Relay should be a GitHub handoff adapter for Codex-heavy work, not a clone of broader multi-agent control planes, memory engines, or local-first evidence ledgers.
+The product strategy lives in [docs/product-strategy.md](docs/product-strategy.md), the stricter market map lives in [docs/market-map.md](docs/market-map.md), community pain research lives in [docs/community-research.md](docs/community-research.md), the evidence and business case lives in [docs/evidence-and-business-case.md](docs/evidence-and-business-case.md), the validation ledger lives in [docs/validation-ledger.md](docs/validation-ledger.md), feedback triage lives in [docs/feedback-triage.md](docs/feedback-triage.md), the validation plan lives in [docs/validation-plan.md](docs/validation-plan.md), outside-review guidance lives in [docs/external-maintainer-validation.md](docs/external-maintainer-validation.md), and the `.relay/` artifact protocol lives in [docs/relay-protocol.md](docs/relay-protocol.md). The short version: Relay should be a GitHub handoff adapter for Codex-heavy work, not a clone of broader multi-agent control planes, memory engines, or local-first evidence ledgers.
 
 ## Core pieces
 
@@ -272,12 +272,14 @@ Relay for Codex 是一个专门为 Codex App 设计的维护者交接插件。�
    - `recover-stuck-project`
    - `install-relay-automations`
 
-### 为什么更容易被 star
+### 为什么值得继续验证
 
 因为它讲的不是“再造一个 agent runtime”，而是一个更具体的结果：
 
 - 把 Codex 的长任务输出变成维护者能审阅的 GitHub 交接物
 - 让仓库里有可见、可交接、可发布前检查的状态
 - 避开 Codex Goals、memory tools 和 kanban products 已经占住的地盘
+
+现在还不能声称它会自然获得很多 star、赞助或收入；这些必须由外部 reviewer 的 `reused`、`edited_heavily`、`ignored` 或 `confusing` 反馈来验证。
 
 License: MIT

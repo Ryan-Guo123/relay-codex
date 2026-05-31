@@ -121,3 +121,5 @@ Each feedback issue should link:
 - the product decision
 
 This keeps Relay honest: external validation should decide the next feature, not internal enthusiasm.
+
+After a feedback issue is opened, apply exactly one public outcome label and keep `needs-ledger-update` until the issue has been recorded in [validation-ledger.md](validation-ledger.md). See [feedback-triage.md](feedback-triage.md) for the full protocol.

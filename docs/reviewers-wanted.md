@@ -62,3 +62,5 @@ Relay should keep `pr-comment` only if outside reviewers say it saves review or 
 If reviewers ignore it, find it confusing, or only reuse one section, Relay should simplify, rename, or remove the artifact instead of expanding the product.
 
 That is the point of this validation: the product direction should be decided by real maintainer review, not internal enthusiasm.
+
+Each feedback issue is triaged with one public outcome label and copied into [validation-ledger.md](validation-ledger.md). The triage rules live in [feedback-triage.md](feedback-triage.md).

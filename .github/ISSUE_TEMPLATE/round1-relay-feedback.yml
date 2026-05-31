@@ -4,6 +4,8 @@ title: "Round 1 feedback: "
 labels:
   - validation
   - feedback
+  - round-1
+  - needs-ledger-update
 body:
   - type: markdown
     attributes:
