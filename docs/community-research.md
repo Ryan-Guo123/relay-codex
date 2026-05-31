@@ -54,6 +54,25 @@ Implication for Relay:
 
 This is the strongest current wedge. Relay should not try to make more agent work happen. It should make agent work cheaper to review by producing a compact, evidence-backed PR handoff with changed files, verification, risk focus, and the next human decision.
 
+### 0a. Bot comments can add noise instead of reducing review work
+
+Repeated pattern:
+
+- teams already use AI reviewers and reviewer bots
+- more comments do not necessarily make the human decision easier
+- high-volume bot feedback can increase resolution time
+- reviewers still need targeted, relevant evidence rather than another wall of comments
+
+External evidence:
+
+- GitHub says agent PR volume is already saturating human review bandwidth and recommends checking scope, CI changes, risky files, and context before deep review.
+- A 2026 MSR paper on reviewer bots in agentic PR workflows found that higher bot activity volume is associated with longer PR resolution time and lower average feedback quality.
+- Reddit and maintainer discussions repeatedly frame the bottleneck as review queue, scope, verification, and human judgment rather than raw code generation.
+
+Implication for Relay:
+
+Relay should stay low-volume. It should generate one pre-review handoff or PR comment that routes attention, not dozens of inline comments. If reviewers want bug-finding comments, Relay should defer to AI PR review tools.
+
 ### 1. New sessions start blind
 
 Repeated pattern:
@@ -366,9 +385,12 @@ If Relay is not clearly better for PR/release GitHub surfaces, archive or reposi
 - Planning / git checkpoint / test gate thread: https://www.reddit.com/r/AI_Agents/comments/1tr652d/how_i_stopped_babysitting_claude_code_and_codex/
 - Context-rot feature suggestion: https://www.reddit.com/r/ClaudeAI/comments/1t8batc/feature_suggestion_proactive_contextrot_detection/
 - Agent PR review burden thread: https://www.reddit.com/r/github/comments/1rofktt/is_ai_coding_making_pull_requests_harder_to_review/
+- Reddit, AI Made My Team Write 21% More Code. The Review Queue Doubled.: https://www.reddit.com/r/coding/comments/1rxaht2/ai_made_my_team_write_21_more_code_the_review/
+- ITK Community, AI generated pull requests overwhelming, hard to review carefully: https://discourse.itk.org/t/ai-generated-pull-requests-overwhelming-hard-to-review-carefully/7728
 - Open source AI slop / maintainer burden thread: https://www.reddit.com/r/opensource/comments/1q3f89b/open_source_is_being_ddosed_by_ai_slop_and_github/
 - GitHub agent PR review guidance: https://github.blog/ai-and-ml/generative-ai/agent-pull-requests-are-everywhere-heres-how-to-review-them/
 - MSR 2026 agent PR failure study: https://arxiv.org/abs/2601.15195
+- MSR 2026 reviewer-bot feedback study: https://arxiv.org/abs/2604.24450
 - CONTINUE.md: https://continue.md/
 - Maestro: https://github.com/ReinaMacCredy/maestro
 - AICTX: https://aictx.org/

@@ -31,15 +31,15 @@ The adjacent market has attention. The following public repository metrics were 
 
 | Repository | Category | Stars | Forks | Issues count | Last pushed | Signal |
 | --- | --- | ---: | ---: | ---: | --- | --- |
-| [mattpocock/skills](https://github.com/mattpocock/skills) | agent skills | 112,424 | 9,870 | 48 | 2026-05-28 | Small reusable skills can travel extremely well. |
-| [paperclipai/paperclip](https://github.com/paperclipai/paperclip) | agent control plane | 68,387 | 12,650 | 1,770 | 2026-05-30 | Broad "manage agents at work" positioning has major attention. |
-| [warpdotdev/warp](https://github.com/warpdotdev/warp) | agentic dev environment | 60,646 | 4,841 | 3,576 | 2026-05-31 | Developers accept agentic workflow inside existing dev surfaces. |
-| [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | agent skills | 47,232 | 5,239 | 43 | 2026-05-28 | Production-grade agent workflow packaging has obvious demand. |
-| [BloopAI/vibe-kanban](https://github.com/BloopAI/vibe-kanban) | agent board | 26,674 | 2,805 | 376 | 2026-04-24 | Local boards for coding agents are a real category. |
-| [openai/symphony](https://github.com/openai/symphony) | agent work orchestration | 24,855 | 2,475 | 0 | 2026-05-29 | Platform-level task-to-run orchestration is becoming crowded. |
-| [rohitg00/agentmemory](https://github.com/rohitg00/agentmemory) | agent memory | 19,972 | 1,646 | 91 | 2026-05-29 | Persistent memory for coding agents has substantial interest. |
+| [mattpocock/skills](https://github.com/mattpocock/skills) | agent skills | 112,566 | 9,887 | 48 | 2026-05-28 | Small reusable skills can travel extremely well. |
+| [paperclipai/paperclip](https://github.com/paperclipai/paperclip) | agent control plane | 68,407 | 12,654 | 1,771 | 2026-05-30 | Broad "manage agents at work" positioning has major attention. |
+| [warpdotdev/warp](https://github.com/warpdotdev/warp) | agentic dev environment | 60,667 | 4,842 | 3,578 | 2026-05-31 | Developers accept agentic workflow inside existing dev surfaces. |
+| [addyosmani/agent-skills](https://github.com/addyosmani/agent-skills) | agent skills | 47,262 | 5,242 | 43 | 2026-05-28 | Production-grade agent workflow packaging has obvious demand. |
+| [BloopAI/vibe-kanban](https://github.com/BloopAI/vibe-kanban) | agent board | 26,677 | 2,805 | 376 | 2026-04-24 | Local boards for coding agents are a real category. |
+| [openai/symphony](https://github.com/openai/symphony) | agent work orchestration | 24,860 | 2,475 | 0 | 2026-05-29 | Platform-level task-to-run orchestration is becoming crowded. |
+| [rohitg00/agentmemory](https://github.com/rohitg00/agentmemory) | agent memory | 20,014 | 1,655 | 91 | 2026-05-29 | Persistent memory for coding agents has substantial interest. |
 | [Conway-Research/automaton](https://github.com/Conway-Research/automaton) | autonomous agent | 4,570 | 979 | 121 | 2026-05-30 | Memorable autonomy stories can attract attention, but this is not Relay's desired path. |
-| [Ryan-Guo123/relay-codex](https://github.com/Ryan-Guo123/relay-codex) | Codex handoff adapter | 1 | 0 | 2 | 2026-05-31 | Relay itself has no external traction yet. |
+| [Ryan-Guo123/relay-codex](https://github.com/Ryan-Guo123/relay-codex) | Codex handoff adapter | 1 | 0 | 4 | 2026-05-31 | Relay itself has no external traction yet. |
 
 `Issues count` is the `issues.totalCount` value returned by GitHub CLI; treat it as a rough activity signal, not as a normalized support or quality metric. Stars are attention, not revenue.
 
@@ -50,6 +50,21 @@ Interpretation:
 - The strongest crowded categories are already owned by better-known projects.
 - Relay should not try to win by being a smaller board, memory engine, or goal runner.
 
+### 2026-05-31 evidence refresh
+
+The external evidence tightened the product boundary rather than widening it.
+
+- OpenAI Codex Goals explicitly target long-running work with a verifiable stopping condition. That makes Relay's original "continue or stop the work" premise redundant inside Codex.
+- Claude Managed Agents describes a managed harness for long-running asynchronous tasks with sessions, event streams, cloud or self-hosted sandboxes, files, web access, and stateful history. That makes a Relay-managed runtime or orchestration layer a bad direction.
+- Anthropic's Managed Agents engineering writeup argues that harness assumptions go stale as models improve. Relay should therefore avoid encoding a broad harness and keep any behavior small, inspectable, and replaceable.
+- GitHub's agent-PR review guidance says agent pull requests are already saturating review bandwidth, that more than one in five GitHub code reviews involve an agent, and that reviewers need context and judgment before trusting a clean-looking diff.
+- Community threads and maintainer discussions repeat the same bottleneck: AI makes code and PRs cheaper to create, but review, scope control, and verification remain scarce.
+- A 2026 MSR paper on reviewer bots in agentic PR workflows found that more bot comments are associated with longer PR resolution times and lower average feedback quality. This argues against Relay becoming another high-volume commenting bot.
+
+Decision:
+
+Relay should not build runtime, board, memory, or AI-review depth. The only evidence-backed experiment is a low-volume, pre-review handoff artifact that tells a maintainer what changed, what was verified, what is risky, and whether the PR should be reviewed, split, or sent back.
+
 ### Review pain evidence
 
 Public review pain is the strongest support for Relay's current wedge.
@@ -58,6 +73,7 @@ Public review pain is the strongest support for Relay's current wedge.
 - The same GitHub article says GitHub Copilot code review had processed over 60 million reviews and that more than one in five GitHub code reviews involve an agent.
 - A 2026 MSR paper on message-code inconsistency analyzed 23,247 agentic PRs and found that unreliable PR descriptions hurt acceptance rate and merge time.
 - Another 2026 MSR paper analyzed 8,031 agentic PRs touching CI/CD configuration and showed that workflow files are a measurable agent-change surface.
+- A 2026 MSR paper on reviewer-bot feedback analyzed 7,416 bot comments on 4,532 agentic PRs and found that higher bot activity volume is associated with longer resolution time and lower average feedback quality.
 - Reddit and community threads repeatedly complain that AI makes PRs faster to create but harder to review, especially when scope is broad, evidence is weak, or reviewers have to reconstruct context.
 
 Interpretation:
@@ -257,5 +273,8 @@ The public evidence queue lives in [validation-ledger.md](validation-ledger.md).
 - Tomasz Tunguz, Software After AI: https://tomtunguz.com/harnessing-ai
 - arXiv 2601.04886, Analyzing Message-Code Inconsistency in AI Coding Agent-Authored Pull Requests: https://arxiv.org/abs/2601.04886
 - arXiv 2601.17413, When AI Agents Touch CI/CD Configurations: https://arxiv.org/abs/2601.17413
+- arXiv 2604.24450, On the Footprints of Reviewer Bots Feedback on Agentic Pull Requests in OSS GitHub Repositories: https://arxiv.org/abs/2604.24450
 - Reddit, Is AI coding making pull requests harder to review?: https://www.reddit.com/r/github/comments/1rofktt/is_ai_coding_making_pull_requests_harder_to_review/
 - Reddit, AI-generated PRs are faster to write but slower to review: https://www.reddit.com/r/ClaudeCode/comments/1roy3o0/aigenerated_prs_are_faster_to_write_but_slower_to/
+- Reddit, AI Made My Team Write 21% More Code. The Review Queue Doubled.: https://www.reddit.com/r/coding/comments/1rxaht2/ai_made_my_team_write_21_more_code_the_review/
+- ITK Community, AI generated pull requests overwhelming, hard to review carefully: https://discourse.itk.org/t/ai-generated-pull-requests-overwhelming-hard-to-review-carefully/7728
