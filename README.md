@@ -211,6 +211,7 @@ Relay is intentionally narrow in v1. It already covers:
 - recovery queue generation
 - maintainer handoff generation
 - GitHub PR comment generation
+- review-readiness signals for changed-file count and sensitive paths
 - outside reviewer pack generation
 - release checklist generation
 - stuck recovery walkthrough from real runtime output

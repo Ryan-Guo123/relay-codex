@@ -18,7 +18,12 @@ Runtime result:
   "project": "relay-reviewer-pack-example",
   "verdict": "needs_review",
   "event_count": 3,
-  "stack": ["Node.js"]
+  "stack": ["Node.js"],
+  "review_readiness": {
+    "changed_file_count": 0,
+    "large_change": false,
+    "sensitive_paths": []
+  }
 }
 ```
 
@@ -39,12 +44,16 @@ Please compare the Relay handoff below with a normal Codex/manual summary for th
 
 Could you tell what changed, what was verified, what still needs review, and what the next action should be?
 
+Could you also tell whether the changed-file scope and sensitive-path scan are enough to decide who should review this PR?
+
 Please be blunt: would you reuse this, edit it heavily, ignore it, or ask for a different format?
 
 ## Relay Handoff To Review
 
 ```markdown
 ## Relay PR Handoff
+
+Relay converted the current Codex run state into a GitHub-ready review note. It does not post this comment automatically.
 
 ### Current State
 
@@ -56,6 +65,11 @@ Please be blunt: would you reuse this, edit it heavily, ignore it, or ask for a 
 ### What Changed
 
 - No Git changes detected in the current workspace.
+
+### Review Readiness
+
+- Scope: No non-Relay Git changes detected.
+- Review signal: Use this artifact as a handoff sample, not as proof that code changed.
 
 ### Last Successful Signal
 
@@ -71,9 +85,23 @@ Please be blunt: would you reuse this, edit it heavily, ignore it, or ask for a 
 
 - Relay detected repeated test-only churn without enough evidence of forward progress.
 
+### Recent Relay Events
+
+- 2026-04-14T05:00:00+00:00: `bash` - pytest failed with error on the same login flow assertion
+- 2026-04-14T05:05:00+00:00: `bash` - pytest failed with error on the same login flow assertion
+- 2026-04-14T05:10:00+00:00: `bash` - pytest failed with error on the same login flow assertion
+
 ### Recommended Next Action
 
 Inspect the repeated failure or churn signal, then choose one narrow recovery step.
+
+### Maintainer Checklist
+
+- [ ] Confirm the changed files match the PR intent.
+- [ ] Check any sensitive paths or large-scope warning before requesting review.
+- [ ] Confirm verification evidence is present or run the suggested command.
+- [ ] Resolve any `needs_human` or `needs_review` signal before merge.
+- [ ] Paste or adapt this note into the PR only after removing sensitive context.
 ```
 
 ## Compare Against
@@ -87,6 +115,7 @@ Paste or link the normal Codex/manual summary here before sending this pack to a
 | Changed files are clear |  |  |
 | Verification is reviewable |  |  |
 | Review focus points to the right risk |  |  |
+| Review readiness signals are useful |  |  |
 | Next action is directly actionable |  |  |
 | GitHub fit is pasteable |  |  |
 

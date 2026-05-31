@@ -39,6 +39,15 @@ TEST_PATTERNS = (
     "cargo test",
     "go test",
 )
+REVIEW_SENSITIVE_PATHS = (
+    ("CI / automation", re.compile(r"(^|/)(\.github/workflows|\.gitlab-ci\.yml|circle\.yml|azure-pipelines\.yml|Jenkinsfile)")),
+    ("Secrets / environment", re.compile(r"(^|/)(\.env|\.npmrc|\.pypirc|secrets?|credentials?)", re.IGNORECASE)),
+    ("Auth / permissions", re.compile(r"(^|/)(auth|oauth|permission|policy|rbac|session|token|jwt)(/|\.|-|_)", re.IGNORECASE)),
+    ("Security", re.compile(r"(^|/)(security|crypto|csrf|cors|csp|sanitize|encrypt|decrypt)(/|\.|-|_)", re.IGNORECASE)),
+    ("Deploy / infrastructure", re.compile(r"(^|/)(Dockerfile|docker-compose|vercel\.json|wrangler\.toml|terraform|infra|deploy|k8s|helm)(/|\.|-|_)?", re.IGNORECASE)),
+    ("Database / migrations", re.compile(r"(^|/)(migrations?|schema|prisma|supabase)(/|\.|-|_)", re.IGNORECASE)),
+    ("Dependency manifest", re.compile(r"(^|/)(package-lock\.json|pnpm-lock\.yaml|yarn\.lock|requirements\.txt|poetry\.lock|Cargo\.lock|Gemfile\.lock)$")),
+)
 
 
 @dataclass(frozen=True)
@@ -374,14 +383,14 @@ def summarize_verification(events: list[dict[str, Any]], commands: list[str]) ->
     return "- No verification command or event captured yet."
 
 
-def summarize_changed_files(root: Path) -> str:
+def collect_changed_files(root: Path) -> list[str]:
     git_top_level = git_output(root, ["rev-parse", "--show-toplevel"])
     if git_top_level and Path(git_top_level).resolve() != root.resolve() and not (root / ".git").exists():
-        return "- No Git changes detected in the current workspace."
+        return []
 
     status = git_output(root, ["status", "--short", "--untracked-files=all"])
     if not status:
-        return "- No Git changes detected in the current workspace."
+        return []
 
     files: list[str] = []
     for line in status.splitlines():
@@ -394,15 +403,67 @@ def summarize_changed_files(root: Path) -> str:
             continue
         files.append(path)
 
-    files = dedupe_preserve_order(files)
+    return dedupe_preserve_order(files)
+
+
+def summarize_changed_files(root: Path) -> str:
+    files = collect_changed_files(root)
     if not files:
-        return "- No non-Relay file changes detected in Git status."
+        return "- No Git changes detected in the current workspace."
 
     display = files[:12]
     lines = [f"- `{path}`" for path in display]
     if len(files) > len(display):
         lines.append(f"- ...and {len(files) - len(display)} more file(s).")
     return "\n".join(lines)
+
+
+def detect_sensitive_review_paths(files: list[str]) -> list[tuple[str, str]]:
+    matches: list[tuple[str, str]] = []
+    for path in files:
+        normalized = path.strip()
+        for label, pattern in REVIEW_SENSITIVE_PATHS:
+            if pattern.search(normalized):
+                matches.append((label, normalized))
+                break
+    return matches
+
+
+def summarize_review_readiness(root: Path) -> tuple[str, dict[str, Any]]:
+    files = collect_changed_files(root)
+    sensitive_paths = detect_sensitive_review_paths(files)
+    file_count = len(files)
+    large_change = file_count > 12
+
+    if not files:
+        lines = [
+            "- Scope: No non-Relay Git changes detected.",
+            "- Review signal: Use this artifact as a handoff sample, not as proof that code changed.",
+        ]
+    else:
+        scope = "large review surface" if large_change else "focused review surface"
+        lines = [f"- Scope: {file_count} non-Relay changed file(s), {scope}."]
+        if sensitive_paths:
+            lines.append("- Sensitive paths detected:")
+            for label, path in sensitive_paths[:8]:
+                lines.append(f"  - `{path}` ({label})")
+            if len(sensitive_paths) > 8:
+                lines.append(f"  - ...and {len(sensitive_paths) - 8} more sensitive path(s).")
+        else:
+            lines.append("- Sensitive paths detected: none from Relay's default path scan.")
+        if large_change:
+            lines.append("- Review signal: Consider splitting the PR or asking for a tighter summary before deep review.")
+        elif sensitive_paths:
+            lines.append("- Review signal: Ask a maintainer familiar with the sensitive area to inspect before merge.")
+        else:
+            lines.append("- Review signal: Changed-file scope looks small enough for normal maintainer review.")
+
+    metadata = {
+        "changed_file_count": file_count,
+        "large_change": large_change,
+        "sensitive_paths": [{"label": label, "path": path} for label, path in sensitive_paths],
+    }
+    return "\n".join(lines), metadata
 
 
 def infer_phase(context: dict[str, Any], events: list[dict[str, Any]]) -> str:
@@ -624,6 +685,7 @@ def render_pr_comment(context: dict[str, Any], events: list[dict[str, Any]], ins
     last_success = summarize_last_success(events)
     verification = summarize_verification(events, context["commands"])
     changed_files = summarize_changed_files(Path(inspection["root"]))
+    review_readiness, _readiness_metadata = summarize_review_readiness(Path(inspection["root"]))
     verdict = inspection["verdict"]
 
     if verdict == "continue":
@@ -655,6 +717,10 @@ Relay converted the current Codex run state into a GitHub-ready review note. It 
 
 {changed_files}
 
+### Review Readiness
+
+{review_readiness}
+
 ### Last Successful Signal
 
 - {last_success}
@@ -678,6 +744,7 @@ Relay converted the current Codex run state into a GitHub-ready review note. It 
 ### Maintainer Checklist
 
 - [ ] Confirm the changed files match the PR intent.
+- [ ] Check any sensitive paths or large-scope warning before requesting review.
 - [ ] Confirm verification evidence is present or run the suggested command.
 - [ ] Resolve any `needs_human` or `needs_review` signal before merge.
 - [ ] Paste or adapt this note into the PR only after removing sensitive context.
@@ -690,8 +757,9 @@ def write_pr_comment(root: Path) -> dict[str, Any]:
     relay_root = relay_dir(root)
     events = load_jsonl(relay_root / "events.jsonl")
     target = relay_root / "pr-comment.md"
+    _review_readiness, readiness_metadata = summarize_review_readiness(root)
     write_text(target, render_pr_comment(context, events, handoff_payload))
-    return {**handoff_payload, "pr_comment": str(target)}
+    return {**handoff_payload, "pr_comment": str(target), "review_readiness": readiness_metadata}
 
 
 def render_reviewer_pack(context: dict[str, Any], pr_comment: str, inspection: dict[str, Any]) -> str:
@@ -709,6 +777,8 @@ I am testing whether Relay's generated PR handoff is useful for maintainers.
 Please compare the Relay handoff below with a normal Codex/manual summary for the same PR or task.
 
 Could you tell what changed, what was verified, what still needs review, and what the next action should be?
+
+Could you also tell whether the changed-file scope and sensitive-path scan are enough to decide who should review this PR?
 
 Please be blunt: would you reuse this, edit it heavily, ignore it, or ask for a different format?
 
@@ -735,6 +805,7 @@ Score each item from 1 to 5.
 | Changed files are clear |  |  |
 | Verification is reviewable |  |  |
 | Review focus points to the right risk |  |  |
+| Review readiness signals are useful |  |  |
 | Next action is directly actionable |  |  |
 | GitHub fit is pasteable |  |  |
 
