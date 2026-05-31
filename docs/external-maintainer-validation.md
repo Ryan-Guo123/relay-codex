@@ -36,7 +36,7 @@ If the branch is already committed or running in CI, add `--base-ref origin/main
 On GitHub PRs, the `Review Readiness` workflow also publishes `.relay/review-readiness.md` to the Actions job summary and uploads two artifacts:
 
 - `relay-review-readiness`: `.relay/review-readiness.md` and `relay-review-readiness.json`
-- `relay-validation-bundle`: `.relay/handoff.md`, `.relay/pr-comment.md`, `.relay/reviewer-pack.md`, `.relay/validation-brief.md`, `relay-review-readiness.json`, and `relay-validation-brief.json`
+- `relay-validation-bundle`: `.relay/review-readiness.md`, `.relay/handoff.md`, `.relay/pr-comment.md`, `.relay/reviewer-pack.md`, `.relay/validation-brief.md`, `relay-review-readiness.json`, and `relay-validation-brief.json`
 
 2. Read `.relay/review-readiness.md`, the `Review Readiness` job summary, or the `relay-review-readiness` Actions artifact from the PR.
 3. Read `.relay/pr-comment.md`.
