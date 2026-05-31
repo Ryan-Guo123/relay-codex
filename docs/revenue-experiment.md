@@ -102,3 +102,5 @@ Relay should not build paid infrastructure for any row before its "Build Only If
 ## Next Action
 
 The next revenue-related action is not selling. It is getting one outside reviewer outcome through [external-repo-trial.md](external-repo-trial.md) or [round1-reviewer-request.md](round1-reviewer-request.md).
+
+Track every ask in [outreach-log.md](outreach-log.md) before treating the revenue gates as moved.
