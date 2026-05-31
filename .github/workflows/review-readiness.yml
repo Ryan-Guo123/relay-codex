@@ -1,0 +1,36 @@
+name: Review Readiness
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  relay-review-readiness:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Generate Relay review readiness
+        run: |
+          BASE_REF="origin/${GITHUB_BASE_REF:-main}"
+          python3 plugins/relay-codex/scripts/relay_runtime.py review-readiness --base-ref "$BASE_REF" --json | tee relay-review-readiness.json
+
+      - name: Upload Relay review readiness artifacts
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: relay-review-readiness
+          path: |
+            .relay/review-readiness.md
+            relay-review-readiness.json
+          if-no-files-found: warn
