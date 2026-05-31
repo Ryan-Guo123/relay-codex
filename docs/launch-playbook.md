@@ -37,6 +37,7 @@ Do not claim that story is proven until the [validation ledger](validation-ledge
 - one real PR where Review Readiness ran in GitHub Actions
 - one reviewer-pack example that can be judged without installing Relay
 - one generated `.relay/validation-brief.md` for the real reviewer ask
+- one external repo trial workflow that can run without installing the Codex App plugin
 - one public validation issue asking for `reused`, `edited_heavily`, `ignored`, or `confusing`
 
 ## Best channels

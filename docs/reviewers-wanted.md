@@ -36,6 +36,8 @@ python3 plugins/relay-codex/scripts/relay_runtime.py validation-brief --json
 5. Compare the two without reading the full agent thread.
 6. Open the [Round 1 feedback form](https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feedback.yml) or a `Relay handoff feedback` issue.
 
+If you want to test Relay on a real outside repository without installing the Codex App plugin, use [external-repo-trial.md](external-repo-trial.md).
+
 ## What To Judge
 
 Please be direct. Relay needs negative signal as much as positive signal.
