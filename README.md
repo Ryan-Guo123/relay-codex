@@ -15,6 +15,8 @@ Relay does not try to run agents, replace Codex Goals, become another kanban boa
 
 If Relay saves you from session drift or endless test churn, give the repo a star.
 
+Outside reviewers wanted: if you review AI-generated PRs, use [docs/reviewers-wanted.md](docs/reviewers-wanted.md) to test a generated handoff and file a `Relay handoff feedback` issue. Blunt negative feedback is welcome.
+
 ## Why this exists
 
 Codex Goals can keep work moving inside a thread. The failure mode starts later, when that work has to become something a maintainer can review, merge, or release:
@@ -160,7 +162,7 @@ For full setup steps, success checks, and troubleshooting, see [docs/install.md]
 
 See [docs/demo-usage.md](docs/demo-usage.md) for a concrete PR triage flow, [docs/pr-handoff-example.md](docs/pr-handoff-example.md) for the first fixture-backed GitHub PR handoff, and [docs/stuck-recovery-walkthrough.md](docs/stuck-recovery-walkthrough.md) for the `continue -> needs_review -> recovery handoff` path. The demo GIF is generated from real Relay runtime output; its storyboard and acceptance criteria live in [docs/demo-storyboard.md](docs/demo-storyboard.md).
 
-If you are reviewing Relay from outside the project, use [docs/external-maintainer-validation.md](docs/external-maintainer-validation.md) and the `Relay handoff feedback` issue template. Honest "ignored" or "confusing" feedback is more useful than polite praise.
+If you are reviewing Relay from outside the project, start with [docs/reviewers-wanted.md](docs/reviewers-wanted.md), then use [docs/external-maintainer-validation.md](docs/external-maintainer-validation.md) and the `Relay handoff feedback` issue template. Honest "ignored" or "confusing" feedback is more useful than polite praise.
 
 ### Option B: develop the plugin itself
 
