@@ -8,6 +8,8 @@ Snapshot date: 2026-05-31.
 
 Run this checklist on **2026-06-07**.
 
+Tracking issue: [#60 Run June 7 no-response pivot review](https://github.com/Ryan-Guo123/relay-codex/issues/60).
+
 ## Public Asks To Check
 
 | Ask | Link | Segment | What To Check |
