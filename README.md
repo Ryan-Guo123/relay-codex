@@ -11,6 +11,8 @@ Relay for Codex is an open-source maintainer workflow layer for long-running Cod
 
 Relay for Codex is an App-native project relay for heavy Codex workflows. It gives Codex a repo-local memory, a progress verdict, recovery heuristics, and automation packs so long-running work stops drifting, looping, or asking the same question twice.
 
+![Relay demo: repo state to handoff and release checklist](docs/assets/relay-demo.gif)
+
 If Relay saves you from session drift or endless test churn, give the repo a star.
 
 ## Why this exists
@@ -117,7 +119,7 @@ Relay renders three starter packs:
 
 For full setup steps, success checks, and troubleshooting, see [docs/install.md](docs/install.md).
 
-See [docs/demo-usage.md](docs/demo-usage.md) for a concrete PR triage and stuck-recovery example. The first GIF/video target is storyboarded in [docs/demo-storyboard.md](docs/demo-storyboard.md).
+See [docs/demo-usage.md](docs/demo-usage.md) for a concrete PR triage and stuck-recovery example. The demo GIF is generated from real Relay runtime output; its storyboard and acceptance criteria live in [docs/demo-storyboard.md](docs/demo-storyboard.md).
 
 ### Option B: develop the plugin itself
 
@@ -169,7 +171,7 @@ Relay is intentionally narrow in v1. It already covers:
 Planned next:
 
 - packaged marketplace distribution once the plugin leaves local-bundle install
-- better screenshots and real-world demos
+- higher-quality narrated walkthrough after the first runtime-generated GIF
 - more opinionated automation setup
 - stronger review queue handoff patterns
 - a tighter boundary with Codex's native goal and continuation features
@@ -180,7 +182,7 @@ Bug reports, repro cases, workflow ideas, and pull requests are welcome. Start w
 
 ## Launch notes
 
-If you want this project to travel, do not just ship code. Ship a clear before/after story, a real stuck-repo demo, and a short clip that shows Relay changing the verdict from churn to recovery. A maintainer-facing launch checklist lives in [docs/launch-playbook.md](docs/launch-playbook.md), and the first demo storyboard lives in [docs/demo-storyboard.md](docs/demo-storyboard.md).
+If you want this project to travel, do not just ship code. Ship a clear before/after story, a real stuck-repo demo, and a short clip that shows Relay changing the verdict from churn to recovery. A maintainer-facing launch checklist lives in [docs/launch-playbook.md](docs/launch-playbook.md), and the first runtime-generated demo lives in [docs/assets/relay-demo.gif](docs/assets/relay-demo.gif).
 
 ## 中文简介
 

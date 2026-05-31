@@ -306,7 +306,7 @@ Relay can beat native goals in one narrow place:
 3. Stuck Recovery Demo
    - Record or script a fixture where repeated failure events flip the verdict to `needs_review`.
    - Show the queue rewrite.
-   - Use it to close issue #2 when a real GIF/video exists.
+   - Use it as the next production-quality walkthrough after the first runtime-generated GIF.
 
 4. Public Proof Loop
    - Keep small PRs visible.
