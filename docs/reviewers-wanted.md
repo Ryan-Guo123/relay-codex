@@ -34,7 +34,7 @@ python3 plugins/relay-codex/scripts/relay_runtime.py validation-brief --json
 3. Open `.relay/reviewer-pack.md` or `.relay/validation-brief.md`.
 4. Add or link a normal Codex/manual summary in the `Compare Against` section.
 5. Compare the two without reading the full agent thread.
-6. Open a `Relay handoff feedback` issue.
+6. Open the [Round 1 feedback form](https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feedback.yml) or a `Relay handoff feedback` issue.
 
 ## What To Judge
 

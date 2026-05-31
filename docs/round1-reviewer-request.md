@@ -29,6 +29,10 @@ Please record one outcome:
 
 Negative feedback is useful. The question is whether Relay saves review reconstruction time, not whether the repository looks polished.
 
+Submit feedback here:
+
+https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feedback.yml
+
 ## Task Being Reviewed
 
 PR #42 fixed the validation bundle uploaded by the Review Readiness workflow.
@@ -164,6 +168,10 @@ Choose one:
 - `edited_heavily`: the structure helped, but the content needed major edits.
 - `ignored`: the Relay handoff did not help.
 - `confusing`: you could not tell what to do with it.
+
+Open the Round 1 feedback form after choosing:
+
+https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feedback.yml
 
 ## Feedback Questions
 
