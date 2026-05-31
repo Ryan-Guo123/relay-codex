@@ -2,6 +2,20 @@
 
 This is the target for the first short demo GIF or video. It should prove Relay's narrow wedge without making the product look like another agent runtime, kanban board, or memory engine.
 
+Current demo asset:
+
+```text
+docs/assets/relay-demo.gif
+```
+
+Regenerate it with:
+
+```bash
+python3 tools/render_demo_gif.py
+```
+
+The renderer requires Pillow. It copies the `in-progress-repo` fixture, runs the real Relay runtime commands, and builds the GIF from generated `.relay` files.
+
 ## Demo Goal
 
 Show that Relay turns a long-running Codex task into a maintainer-readable handoff.
@@ -133,6 +147,8 @@ Issue #2 can close when the repository has a real GIF or video that:
 - includes at least one real verification command
 - makes the Codex Goals boundary clear
 - is linked from the README near the demo usage docs
+
+`docs/assets/relay-demo.gif` now satisfies these criteria for the first public demo. A future hand-recorded video can improve production quality, but it should not block the initial issue.
 
 ## Optional Longer Demo
 
