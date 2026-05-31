@@ -41,6 +41,7 @@ jobs:
               echo
               echo "The workflow uploaded a validation bundle with:"
               echo
+              echo "- .relay/review-readiness.md"
               echo "- .relay/handoff.md"
               echo "- .relay/pr-comment.md"
               echo "- .relay/reviewer-pack.md"
@@ -74,6 +75,7 @@ jobs:
         with:
           name: relay-validation-bundle
           path: |
+            .relay/review-readiness.md
             .relay/handoff.md
             .relay/pr-comment.md
             .relay/reviewer-pack.md
