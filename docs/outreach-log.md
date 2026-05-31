@@ -8,7 +8,7 @@ Snapshot date: 2026-05-31.
 
 | Metric | Current | Counts When |
 | --- | ---: | --- |
-| Targeted asks sent | 0 | A specific outside maintainer/reviewer receives a relevant ask. |
+| Targeted asks sent | 1 | A specific outside maintainer/reviewer receives a relevant ask. |
 | Replies received | 0 | The target responds with any useful signal. |
 | Reviewers accepted | 0 | The target agrees to review a Relay artifact or run the trial workflow. |
 | External trial workflows run | 0 | A repository outside `Ryan-Guo123/relay-codex` runs the trial workflow on a real PR/task. |
@@ -24,7 +24,7 @@ Do not count stars, internal PRs, release activity, or owner comments as funnel 
 | Date | Target Segment | Public / Private | Artifact | Ask | Status | Reply | Outcome | AI Review Fit | Money Signal | Next Step |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | TBD | Maintainer reviewing AI-generated PRs | Private or public | [external-repo-trial.md](external-repo-trial.md) | Run one PR trial or review the generated bundle. | Not sent | Pending | Pending | Pending | No | Pick one specific maintainer; do not mass-post. |
-| TBD | GitHub Community coding-agent workflow thread | Public | [round1-reviewer-request.md](round1-reviewer-request.md) | Ask whether the handoff adds value before/alongside AI review tools. | Not sent | Pending | Pending | Pending | No | Post only if resource-sharing is welcome. |
+| 2026-05-31 | GitHub Community coding-agent workflow thread | Public | [round1-reviewer-request.md](round1-reviewer-request.md), [external-repo-trial.md](external-repo-trial.md) | Ask whether the handoff adds value before/alongside AI review tools. | Sent | Pending | Pending | Pending | No | Wait 7 days, then mark `No response` or follow up once if a reviewer accepts. |
 | TBD | Agent workflow builder | Private or public | [review-readiness.schema.json](review-readiness.schema.json) | Ask whether the schema is useful or already covered by their stack. | Not sent | Pending | Pending | Pending | No | Ask for schema critique, not adoption. |
 
 ## Status Values

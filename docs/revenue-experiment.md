@@ -12,6 +12,7 @@ Evidence:
 
 - GitHub stars: 1
 - Forks: 0
+- Targeted asks sent: 1
 - Outside reviewer outcomes: 0
 - External repo trials: 0
 - Repeat usage: 0
