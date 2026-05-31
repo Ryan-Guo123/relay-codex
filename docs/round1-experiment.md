@@ -87,12 +87,13 @@ For each target:
 
 1. Share the stable reviewer request: [round1-reviewer-request.md](round1-reviewer-request.md).
 2. Share one concrete artifact: `.relay/validation-brief.md`, `.relay/review-readiness.md`, `.relay/pr-comment.md`, or a `relay-validation-bundle`.
-3. Share a normal Codex/manual summary for comparison.
-4. Ask whether they would use Relay in addition to, before, or instead of Copilot/CodeRabbit/Graphite/Qodo-style AI review.
-5. Ask the reviewer to choose exactly one outcome: `reused`, `edited_heavily`, `ignored`, or `confusing`.
-6. Ask for one product decision: keep, simplify, rename, remove, or retest.
-7. Capture the response through the [Round 1 feedback form](https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feedback.yml) or the general handoff feedback form.
-8. Apply exactly one `outcome:*` label and keep `needs-ledger-update` until [validation-ledger.md](validation-ledger.md) is updated.
+3. If the reviewer wants to test a real repository, share the [external repo trial workflow](external-repo-trial.md).
+4. Share a normal Codex/manual summary for comparison.
+5. Ask whether they would use Relay in addition to, before, or instead of Copilot/CodeRabbit/Graphite/Qodo-style AI review.
+6. Ask the reviewer to choose exactly one outcome: `reused`, `edited_heavily`, `ignored`, or `confusing`.
+7. Ask for one product decision: keep, simplify, rename, remove, or retest.
+8. Capture the response through the [Round 1 feedback form](https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feedback.yml) or the general handoff feedback form.
+9. Apply exactly one `outcome:*` label and keep `needs-ledger-update` until [validation-ledger.md](validation-ledger.md) is updated.
 
 ## Success Metrics
 

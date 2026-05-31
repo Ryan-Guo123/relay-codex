@@ -88,6 +88,10 @@ The JSON artifact follows the compatibility contract in [review-readiness.schema
 
 Use a disposable test repository if you do not want `.relay/` files in a real project yet.
 
+## GitHub Actions trial without installing
+
+If you maintain another repository and only want to test Relay on one pull request, use the copy-paste workflow in [external-repo-trial.md](external-repo-trial.md). It downloads the runtime from the `v0.1.13` release tag, generates a validation bundle, and uploads artifacts without installing the Codex App plugin.
+
 ## Common problems
 
 ### The plugin does not appear in Codex App

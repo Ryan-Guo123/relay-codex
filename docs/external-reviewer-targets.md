@@ -15,6 +15,7 @@ Do not mass-post. Do not ask for stars. Do not ask for sponsorship. Ask for one 
 
 - Stable reviewer packet: [round1-reviewer-request.md](round1-reviewer-request.md)
 - Experiment protocol: [round1-experiment.md](round1-experiment.md)
+- External repo trial workflow: [external-repo-trial.md](external-repo-trial.md)
 - Public ask copy: [round1-outreach-message.md](round1-outreach-message.md)
 - Feedback form: [Round 1 Relay feedback](https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feedback.yml)
 - Tracking issue: [#39 Run validation round 1 with an outside reviewer](https://github.com/Ryan-Guo123/relay-codex/issues/39)

@@ -1,0 +1,69 @@
+name: Relay External Trial
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  relay-external-trial:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Download Relay runtime
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/Ryan-Guo123/relay-codex/v0.1.13/plugins/relay-codex/scripts/relay_runtime.py -o relay_runtime.py
+          python3 -m py_compile relay_runtime.py
+
+      - name: Generate Relay validation bundle
+        run: |
+          BASE_REF="origin/${GITHUB_BASE_REF:-main}"
+          python3 relay_runtime.py validation-brief --base-ref "$BASE_REF" --json | tee relay-validation-brief.json
+
+      - name: Publish Relay review readiness summary
+        if: always()
+        run: |
+          if [ -f .relay/review-readiness.md ]; then
+            cat .relay/review-readiness.md >> "$GITHUB_STEP_SUMMARY"
+            {
+              echo
+              echo "## Relay External Trial"
+              echo
+              echo "This run generated a Relay validation bundle for outside maintainer feedback."
+              echo
+              echo "Compare the generated Relay handoff with the normal PR summary and record:"
+              echo
+              echo "- outcome: reused, edited_heavily, ignored, or confusing"
+              echo "- AI review fit: in_addition, before_review, instead, not_needed, or unsure"
+            } >> "$GITHUB_STEP_SUMMARY"
+          else
+            {
+              echo "# Relay External Trial"
+              echo
+              echo "Relay did not generate .relay/review-readiness.md."
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
+      - name: Upload Relay validation bundle
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: relay-validation-bundle
+          path: |
+            .relay/review-readiness.md
+            .relay/handoff.md
+            .relay/pr-comment.md
+            .relay/reviewer-pack.md
+            .relay/validation-brief.md
+            relay-validation-brief.json
+          if-no-files-found: warn
