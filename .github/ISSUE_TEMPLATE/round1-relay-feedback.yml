@@ -10,8 +10,15 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this form after reading the Round 1 reviewer request:
+        Use this form after judging one Round 1 artifact.
+
+        60-second quick verdict:
+        https://github.com/Ryan-Guo123/relay-codex/blob/main/docs/reviewer-quick-verdict.md
+
+        Full Round 1 reviewer request:
         https://github.com/Ryan-Guo123/relay-codex/blob/main/docs/round1-reviewer-request.md
+
+        Pick the matching review path below so quick verdicts, reviewer packets, real PR handoffs, and external repo trials stay separate in the evidence ledger.
 
         Please be blunt. `ignored` and `confusing` are useful outcomes.
   - type: dropdown
