@@ -25,15 +25,17 @@ Do not use a synthetic demo as the main evidence. Synthetic demos are useful for
 
 ```bash
 python3 plugins/relay-codex/scripts/relay_runtime.py handoff --json
+python3 plugins/relay-codex/scripts/relay_runtime.py review-readiness --json
 python3 plugins/relay-codex/scripts/relay_runtime.py pr-comment --json
 python3 plugins/relay-codex/scripts/relay_runtime.py reviewer-pack --json
 ```
 
-2. Read `.relay/pr-comment.md`.
-3. Read `.relay/reviewer-pack.md`.
-4. Add or link the plain Codex summary or manual PR summary in the `Compare Against` section.
-5. Remove secrets, customer data, private links, or internal context.
-6. Ask one reviewer to compare both without reading the full Codex thread.
+2. Read `.relay/review-readiness.md`.
+3. Read `.relay/pr-comment.md`.
+4. Read `.relay/reviewer-pack.md`.
+5. Add or link the plain Codex summary or manual PR summary in the `Compare Against` section.
+6. Remove secrets, customer data, private links, or internal context.
+7. Ask one reviewer to compare both without reading the full Codex thread.
 
 ## Reviewer Prompt
 
@@ -45,6 +47,8 @@ I am testing whether Relay's generated PR handoff is useful for maintainers.
 Please compare this Relay handoff with a normal Codex/manual summary.
 
 Could you tell what changed, what was verified, what still needs review, and what the next action should be?
+
+Could you also tell whether the review-readiness gate helped decide who should review it or whether the PR should be split?
 
 Please be blunt: would you reuse this, edit it heavily, ignore it, or ask for a different format?
 ```

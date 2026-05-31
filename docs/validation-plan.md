@@ -40,6 +40,7 @@ Question:
 Evidence:
 
 - `.relay/state.md` shows a current verdict.
+- `.relay/review-readiness.md` shows changed-file scope, sensitive paths, and suggested review routing.
 - `.relay/handoff.md` summarizes progress, risk, verification, and next action.
 - `.relay/pr-comment.md` turns the handoff into a GitHub-ready review note.
 - `.relay/reviewer-pack.md` turns the PR handoff into an outside-review request with a rubric.
@@ -203,6 +204,7 @@ real PR/task -> relay pr-comment -> outside reviewer comparison -> feedback issu
 Artifacts:
 
 - `.relay/pr-comment.md`
+- `.relay/review-readiness.md`
 - `.relay/reviewer-pack.md`
 - normal Codex/manual summary for comparison
 - `Relay handoff feedback` issue

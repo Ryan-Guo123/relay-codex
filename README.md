@@ -46,7 +46,7 @@ Relay adds a thin repo-local packaging layer on top of Codex App:
   - `needs_review`
 - lightweight hooks for activity tracking
 - recovery notes when work starts to churn
-- PR comment, reviewer pack, handoff, and release artifacts that can be reused in GitHub
+- PR comment, review-readiness, reviewer pack, handoff, and release artifacts that can be reused in GitHub
 
 ## Is this already solved?
 
@@ -128,10 +128,11 @@ Relay renders three starter packs:
 5. `inspect-relay-state` or `continue-with-relay` reads the latest verdict before more work is requested.
 6. `recover-stuck-project` rewrites the queue into smaller, recovery-first steps when the repo is stuck.
 7. `generate-relay-handoff` writes `.relay/handoff.md` for PR, release, or future-Codex pickup.
-8. `generate-pr-comment` writes `.relay/pr-comment.md` as a pasteable GitHub review note.
-9. `generate-reviewer-pack` writes `.relay/reviewer-pack.md` for outside maintainer validation.
-10. `generate-release-checklist` writes `.relay/release-checklist.md` before tags or GitHub releases.
-11. `install-relay-automations` turns the current state into repeatable Codex App follow-up.
+8. `generate-review-readiness` writes `.relay/review-readiness.md` as a review routing gate.
+9. `generate-pr-comment` writes `.relay/pr-comment.md` as a pasteable GitHub review note.
+10. `generate-reviewer-pack` writes `.relay/reviewer-pack.md` for outside maintainer validation.
+11. `generate-release-checklist` writes `.relay/release-checklist.md` before tags or GitHub releases.
+12. `install-relay-automations` turns the current state into repeatable Codex App follow-up.
 
 ## Example `.relay/` snapshot
 
@@ -142,6 +143,7 @@ Relay renders three starter packs:
   queue.md         -> The next concrete tasks
   guardrails.md    -> When to stop, escalate, or recover
   handoff.md       -> Maintainer-ready PR or release handoff
+  review-readiness.md -> Changed-file scope, sensitive paths, and reviewer routing
   pr-comment.md    -> GitHub-ready PR review comment draft
   reviewer-pack.md -> Outside reviewer prompt, rubric, and handoff excerpt
   release-checklist.md -> Verification, versioning, tag, and approval steps
@@ -181,6 +183,7 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 - `inspect-relay-state`
 - `recover-stuck-project`
 - `generate-relay-handoff`
+- `generate-review-readiness`
 - `generate-pr-comment`
 - `generate-reviewer-pack`
 - `generate-release-checklist`
@@ -210,6 +213,7 @@ Relay is intentionally narrow in v1. It already covers:
 - stuck-project detection
 - recovery queue generation
 - maintainer handoff generation
+- standalone review-readiness artifact generation
 - GitHub PR comment generation
 - review-readiness signals for changed-file count, sensitive paths, and CODEOWNERS routing
 - outside reviewer pack generation
