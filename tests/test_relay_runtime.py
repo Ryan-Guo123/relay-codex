@@ -87,12 +87,25 @@ class RelayRuntimeTests(unittest.TestCase):
         self.assertIn("pytest failed with error", handoff)
         self.assertIn("Do not continue automatically", handoff)
 
+    def test_release_writes_checklist_with_approval_gates(self) -> None:
+        workspace = self.copy_fixture("in-progress-repo")
+        release_result = self.run_runtime(workspace, "release")
+        payload = json.loads(release_result.stdout)
+        checklist_path = Path(payload["release_checklist"])
+        checklist = checklist_path.read_text(encoding="utf-8")
+        self.assertTrue(checklist_path.exists())
+        self.assertIn("# Relay Release Checklist", checklist)
+        self.assertIn("## 2. Verification", checklist)
+        self.assertIn("Run `npm run test`", checklist)
+        self.assertIn("## 5. Human Approval Gates", checklist)
+        self.assertIn("Human confirms this release should be public", checklist)
+
     def test_automation_packs_are_rendered(self) -> None:
         workspace = self.copy_fixture("empty-repo")
         packs_result = self.run_runtime(workspace, "automations")
         payload = json.loads(packs_result.stdout)
         names = [pack["name"] for pack in payload["packs"]]
-        self.assertEqual(names, ["Continue Working", "Daily Triage", "Stuck Recovery"])
+        self.assertEqual(names, ["Continue Working", "Daily Triage", "Stuck Recovery", "Release Readiness"])
         automations_doc = (workspace / ".relay" / "automations.md").read_text(encoding="utf-8")
         self.assertIn("Daily Triage", automations_doc)
 

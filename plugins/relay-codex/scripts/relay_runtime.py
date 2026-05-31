@@ -90,6 +90,19 @@ AUTOMATION_PACKS = (
             "If the verdict is needs_review or needs_human, produce a recovery brief with the likely cause, the smallest next investigation, and the point where a human should step in."
         ),
     ),
+    AutomationPack(
+        key="release-readiness",
+        name="Release Readiness",
+        summary="Generate a release checklist before tagging or publishing a GitHub release.",
+        cadence="Before every public release",
+        destination="thread",
+        trigger="Use when a maintainer is preparing a tag, GitHub release, launch note, or release handoff.",
+        prompt=(
+            "Inspect `.relay/state.md`, `.relay/queue.md`, `.relay/handoff.md`, and `.relay/release-checklist.md` if present. "
+            "Generate or refresh the release checklist. Do not tag, push tags, publish a GitHub release, or announce externally unless the user explicitly approves that release action. "
+            "If the verdict is needs_human or needs_review, explain what must be reviewed before release."
+        ),
+    ),
 )
 
 
@@ -550,6 +563,82 @@ def write_handoff(root: Path) -> dict[str, Any]:
     return {**inspection, "handoff": str(relay_root / "handoff.md")}
 
 
+def render_release_checklist(context: dict[str, Any], inspection: dict[str, Any]) -> str:
+    commands = context["commands"]
+    test_commands = [command for command in commands if "test" in command]
+    if not test_commands and (Path(inspection["root"]) / "tests").exists():
+        test_commands = ["python3 -m unittest discover -s tests -p 'test_*.py'"]
+    test_lines = "\n".join(f"- [ ] Run `{command}` and record the result." for command in test_commands)
+    if not test_lines:
+        test_lines = "- [ ] Identify the smallest project-specific smoke test and record why it is sufficient."
+
+    if inspection["verdict"] in {"needs_human", "needs_review"}:
+        release_posture = "Do not release until the verdict is reviewed and the blocker is resolved or explicitly accepted."
+    elif inspection["verdict"] == "paused":
+        release_posture = "Release is possible only if the queue is intentionally complete and the changelog is clear."
+    else:
+        release_posture = "Release can proceed after tests, changelog, and human approval are complete."
+
+    return f"""# Relay Release Checklist
+
+- Project: {context["project_name"]}
+- Current verdict: `{inspection["verdict"]}`
+- Generated: {iso_now()}
+
+## Release Posture
+
+{release_posture}
+
+## 1. Scope
+
+- [ ] Name the release type: patch, minor, major, docs-only, or internal.
+- [ ] List the merged PRs or commits included in this release.
+- [ ] Confirm no unrelated work is bundled into the release.
+
+## 2. Verification
+
+{test_lines}
+- [ ] Run `git status --short` and confirm the release branch is clean.
+- [ ] Confirm generated `.relay/` files do not contain secrets or private context.
+
+## 3. Version And Tag
+
+- [ ] Update the package or plugin version if behavior changed.
+- [ ] Choose the exact tag, for example `v0.1.3`.
+- [ ] Create an annotated tag only after verification passes.
+- [ ] Push the tag to GitHub.
+
+## 4. Release Notes
+
+- [ ] Summarize what changed in user-facing language.
+- [ ] Explain why the change matters.
+- [ ] Link merged PRs and closed issues.
+- [ ] State any known limitations or follow-up work.
+
+## 5. Human Approval Gates
+
+- [ ] Human confirms this release should be public.
+- [ ] Human confirms the release notes are accurate.
+- [ ] Human confirms any external announcements, demos, or posts before they are published.
+
+## 6. After Release
+
+- [ ] Check that the GitHub release page renders correctly.
+- [ ] Check that linked issues closed as expected.
+- [ ] Add a follow-up issue only for real remaining work.
+- [ ] Do not publish another patch release unless there is a meaningful merged change.
+"""
+
+
+def write_release_checklist(root: Path) -> dict[str, Any]:
+    inspection = inspect_relay(root)
+    context = detect_repo_context(root)
+    relay_root = relay_dir(root)
+    target = relay_root / "release-checklist.md"
+    write_text(target, render_release_checklist(context, inspection))
+    return {**inspection, "release_checklist": str(target)}
+
+
 def recover_relay(root: Path) -> dict[str, Any]:
     inspection = inspect_relay(root)
     relay_root = relay_dir(root)
@@ -692,6 +781,16 @@ def cmd_handoff(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_release(args: argparse.Namespace) -> int:
+    payload = write_release_checklist(args.root.resolve())
+    if args.json:
+        print_json(payload)
+    else:
+        print(f"Relay release checklist written to {payload['release_checklist']}")
+        print(f"Verdict: {payload['verdict']}")
+    return 0
+
+
 def cmd_automations(args: argparse.Namespace) -> int:
     root = args.root.resolve()
     ensure_relay_workspace(root)
@@ -725,6 +824,7 @@ def build_parser() -> argparse.ArgumentParser:
         ("inspect", cmd_inspect),
         ("recover", cmd_recover),
         ("handoff", cmd_handoff),
+        ("release", cmd_release),
         ("automations", cmd_automations),
         ("hook-posttooluse", cmd_hook),
     ):
