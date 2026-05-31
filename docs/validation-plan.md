@@ -78,6 +78,23 @@ Pass condition:
 
 - A maintainer can restate Relay as "handoff evidence after agent work" instead of "another agent manager."
 
+### 5. Outside reviewers actually reuse the handoff
+
+Question:
+
+> Does someone outside the current Codex/build thread reuse the generated PR handoff?
+
+Evidence:
+
+- An outside maintainer, contributor, teammate, or evaluator compares `.relay/pr-comment.md` with a normal Codex/manual summary.
+- The reviewer records whether the output was reused, edited heavily, ignored, or confusing.
+- The feedback is captured through the `Relay handoff feedback` issue template.
+
+Pass condition:
+
+- At least one outside reviewer can identify changed files, verification, review focus, and next action without reading the full Codex thread.
+- The reviewer says the Relay handoff saved review or summary reconstruction time.
+
 ## Validation Workflows
 
 ### Workflow A: PR Handoff
@@ -151,6 +168,30 @@ Measure:
 
 - Did the checklist catch version, test, notes, tag, and human approval steps?
 
+### Workflow D: External Reviewer Feedback
+
+Use when:
+
+- A real PR or repo task has a generated `.relay/pr-comment.md`.
+- Someone outside the active build thread can review it.
+
+Path:
+
+```text
+real PR/task -> relay pr-comment -> outside reviewer comparison -> feedback issue -> product decision
+```
+
+Artifacts:
+
+- `.relay/pr-comment.md`
+- normal Codex/manual summary for comparison
+- `Relay handoff feedback` issue
+- follow-up decision: keep, simplify, rename, or remove
+
+Measure:
+
+- Did the outside reviewer reuse the artifact or find it clearer than reconstructing the Codex thread?
+
 ## Develop Candidates
 
 Only build these after the workflows above are clear.
@@ -207,6 +248,7 @@ Relay should shrink or pivot if:
 - maintainers still prefer plain GitHub issue checklists
 - the demo reads as another generic agent-productivity tool
 - `.relay/` files feel like stale documentation instead of useful state
+- outside reviewers mark the handoff as ignored or confusing after real PR trials
 - users ask for a board, runtime, or memory system more than they ask for handoff evidence
 - Codex native features expose repo-local evidence and release handoff directly
 - Maestro/Kage/Recall-style tools prove the same handoff use case with stronger adoption

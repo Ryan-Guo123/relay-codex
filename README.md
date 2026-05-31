@@ -80,7 +80,7 @@ If that handoff is not better than asking Codex to summarize the thread, Relay s
 - Small surface area
   - Relay focuses on keeping work moving. It does not try to become another prompt marketplace or agent framework.
 
-The product strategy lives in [docs/product-strategy.md](docs/product-strategy.md), the stricter market map lives in [docs/market-map.md](docs/market-map.md), community pain research lives in [docs/community-research.md](docs/community-research.md), the validation plan lives in [docs/validation-plan.md](docs/validation-plan.md), and the `.relay/` artifact protocol lives in [docs/relay-protocol.md](docs/relay-protocol.md). The short version: Relay should be a GitHub handoff adapter for Codex-heavy work, not a clone of broader multi-agent control planes, memory engines, or local-first evidence ledgers.
+The product strategy lives in [docs/product-strategy.md](docs/product-strategy.md), the stricter market map lives in [docs/market-map.md](docs/market-map.md), community pain research lives in [docs/community-research.md](docs/community-research.md), the validation plan lives in [docs/validation-plan.md](docs/validation-plan.md), outside-review guidance lives in [docs/external-maintainer-validation.md](docs/external-maintainer-validation.md), and the `.relay/` artifact protocol lives in [docs/relay-protocol.md](docs/relay-protocol.md). The short version: Relay should be a GitHub handoff adapter for Codex-heavy work, not a clone of broader multi-agent control planes, memory engines, or local-first evidence ledgers.
 
 ## Core pieces
 
@@ -158,6 +158,8 @@ For full setup steps, success checks, and troubleshooting, see [docs/install.md]
 
 See [docs/demo-usage.md](docs/demo-usage.md) for a concrete PR triage flow, [docs/pr-handoff-example.md](docs/pr-handoff-example.md) for the first fixture-backed GitHub PR handoff, and [docs/stuck-recovery-walkthrough.md](docs/stuck-recovery-walkthrough.md) for the `continue -> needs_review -> recovery handoff` path. The demo GIF is generated from real Relay runtime output; its storyboard and acceptance criteria live in [docs/demo-storyboard.md](docs/demo-storyboard.md).
 
+If you are reviewing Relay from outside the project, use [docs/external-maintainer-validation.md](docs/external-maintainer-validation.md) and the `Relay handoff feedback` issue template. Honest "ignored" or "confusing" feedback is more useful than polite praise.
+
 ### Option B: develop the plugin itself
 
 1. Open this repository in Codex App.
@@ -214,6 +216,7 @@ Planned next:
 - packaged marketplace distribution once the plugin leaves local-bundle install
 - higher-quality narrated walkthrough after the first runtime-generated GIF
 - validation workflows for PR handoff, stuck recovery, and release handoff
+- outside maintainer feedback through the `Relay handoff feedback` issue template
 - more opinionated automation setup
 - stronger review queue handoff patterns
 - a tighter boundary with Codex's native goal and continuation features
