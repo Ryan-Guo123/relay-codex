@@ -4,6 +4,8 @@ This is the outbound ask for Relay validation Round 1.
 
 It should be used with [round1-reviewer-request.md](round1-reviewer-request.md). The goal is to collect one outside reviewer outcome, not stars, praise, or broad product advice.
 
+Use [external-reviewer-targets.md](external-reviewer-targets.md) to decide where the ask is appropriate.
+
 ## Public Ask
 
 ```text
