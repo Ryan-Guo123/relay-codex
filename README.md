@@ -89,7 +89,8 @@ Relay renders three starter packs:
 5. `inspect-relay-state` or `continue-with-relay` uses the latest verdict before doing more work.
 6. `recover-stuck-project` rewrites the queue into smaller, recovery-first steps when the repo is stuck.
 7. `generate-relay-handoff` writes `.relay/handoff.md` for PR, release, or future-Codex pickup.
-8. `install-relay-automations` turns the current state into repeatable Codex App follow-up.
+8. `generate-release-checklist` writes `.relay/release-checklist.md` before tags or GitHub releases.
+9. `install-relay-automations` turns the current state into repeatable Codex App follow-up.
 
 ## Example `.relay/` snapshot
 
@@ -100,6 +101,7 @@ Relay renders three starter packs:
   queue.md         -> The next concrete tasks
   guardrails.md    -> When to stop, escalate, or recover
   handoff.md       -> Maintainer-ready PR or release handoff
+  release-checklist.md -> Verification, versioning, tag, and approval steps
   automations.md   -> Suggested automation packs
   events.jsonl     -> Lightweight event log from hooks
 ```
@@ -134,6 +136,7 @@ python3 -m unittest discover -s tests -p 'test_*.py'
 - `inspect-relay-state`
 - `recover-stuck-project`
 - `generate-relay-handoff`
+- `generate-release-checklist`
 - `install-relay-automations`
 
 ## Repository layout
@@ -159,6 +162,7 @@ Relay is intentionally narrow in v1. It already covers:
 - stuck-project detection
 - recovery queue generation
 - maintainer handoff generation
+- release checklist generation
 - automation pack rendering
 - fixture-backed tests for empty, in-progress, and stuck repositories
 

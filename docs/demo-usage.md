@@ -169,3 +169,29 @@ Relay is not trying to replace Codex goals. It adds a repo-local audit trail and
 - why Codex should continue
 - why Codex should stop
 - what state another person or agent can pick up later
+
+## Release handoff
+
+When the work is ready to ship, generate a release checklist instead of rebuilding release steps from memory:
+
+```bash
+python3 plugins/relay-codex/scripts/relay_runtime.py release --json
+```
+
+Relay writes:
+
+```text
+.relay/release-checklist.md
+```
+
+The checklist covers:
+
+- release scope
+- verification commands
+- clean working tree check
+- version and tag steps
+- release notes
+- human approval gates
+- post-release checks
+
+If the current verdict is `needs_human` or `needs_review`, the checklist tells the maintainer not to release until that state is reviewed.
