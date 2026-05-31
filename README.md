@@ -80,7 +80,7 @@ If that handoff does not make a maintainer faster or more confident, Relay shoul
 - Small surface area
   - Relay focuses on keeping work moving. It does not try to become another prompt marketplace or agent framework.
 
-The product strategy lives in [docs/product-strategy.md](docs/product-strategy.md), and the validation plan lives in [docs/validation-plan.md](docs/validation-plan.md). The short version: Relay should be the repo-local flight recorder and handoff layer for long-running Codex work, not a clone of broader multi-agent control planes.
+The product strategy lives in [docs/product-strategy.md](docs/product-strategy.md), the validation plan lives in [docs/validation-plan.md](docs/validation-plan.md), and the `.relay/` artifact protocol lives in [docs/relay-protocol.md](docs/relay-protocol.md). The short version: Relay should be the repo-local flight recorder and handoff layer for long-running Codex work, not a clone of broader multi-agent control planes.
 
 ## Core pieces
 

@@ -109,6 +109,30 @@ class RelayRuntimeTests(unittest.TestCase):
         automations_doc = (workspace / ".relay" / "automations.md").read_text(encoding="utf-8")
         self.assertIn("Daily Triage", automations_doc)
 
+    def test_generated_artifacts_keep_protocol_headings(self) -> None:
+        workspace = self.copy_fixture("stuck-repo")
+        self.run_runtime(workspace, "enable")
+        self.run_runtime(workspace, "handoff")
+        self.run_runtime(workspace, "release")
+
+        relay_root = workspace / ".relay"
+        expected = {
+            "mission.md": ("# Relay Mission", "## Success Definition", "## Observed Context", "## Human Notes"),
+            "state.md": ("# Relay State", "## Recent Progress", "## Current Signals"),
+            "queue.md": ("# Relay Queue", "## Next Tasks", "## Why Relay Chose This"),
+            "guardrails.md": ("# Relay Guardrails", "## Escalation Rules"),
+            "automations.md": ("# Relay Automation Packs", "## Continue Working", "## Daily Triage", "## Stuck Recovery", "## Release Readiness"),
+            "handoff.md": ("# Relay Handoff", "## Maintainer Summary", "## Recommended Next Action", "## Safe Handoff Rules"),
+            "release-checklist.md": ("# Relay Release Checklist", "## Release Posture", "## 2. Verification", "## 5. Human Approval Gates"),
+        }
+        for filename, headings in expected.items():
+            content = (relay_root / filename).read_text(encoding="utf-8")
+            for heading in headings:
+                self.assertIn(heading, content, f"{filename} missing {heading}")
+
+        first_event = (relay_root / "events.jsonl").read_text(encoding="utf-8").splitlines()[0]
+        self.assertIn("timestamp", json.loads(first_event))
+
 
 if __name__ == "__main__":
     unittest.main()

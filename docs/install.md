@@ -101,5 +101,6 @@ Relay state is repo-local so it can be inspected and handed off. In private or s
 ## Where to go next
 
 - [Demo usage example](demo-usage.md)
+- [Relay artifact protocol](relay-protocol.md)
 - [Security policy and threat model](../SECURITY.md)
 - [Launch playbook](launch-playbook.md)
