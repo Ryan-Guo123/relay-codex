@@ -248,6 +248,8 @@ Command:
 python3 plugins/relay-codex/scripts/relay_runtime.py review-readiness
 ```
 
+For clean PR checkouts, pass `--base-ref origin/main` or another fetched base ref so Relay reads committed branch changes instead of `git status`.
+
 Purpose:
 
 - Turn current changed-file scope, sensitive-path matches, and CODEOWNERS routing into a standalone review gate.
@@ -269,7 +271,7 @@ Required headings:
 
 Indexing guidance:
 
-- Index changed-file count, large-scope warning, sensitive paths, CODEOWNERS-suggested reviewers, unowned paths, and recommended review decision.
+- Index changed-file count, `base_ref`, `change_source`, large-scope warning, sensitive paths, CODEOWNERS-suggested reviewers, unowned paths, and recommended review decision.
 - Treat this as the smallest machine-readable review gate; read `pr-comment.md` when a GitHub-ready narrative is needed.
 
 ### `.relay/pr-comment.md`
@@ -279,6 +281,8 @@ Command:
 ```bash
 python3 plugins/relay-codex/scripts/relay_runtime.py pr-comment
 ```
+
+For clean PR checkouts, pass `--base-ref origin/main` to make the `What Changed` and `Review Readiness` sections use committed branch diff instead of `git status`.
 
 Purpose:
 

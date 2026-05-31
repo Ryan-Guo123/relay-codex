@@ -71,6 +71,13 @@ python3 plugins/relay-codex/scripts/relay_runtime.py pr-comment --root /path/to/
 python3 plugins/relay-codex/scripts/relay_runtime.py reviewer-pack --root /path/to/target-repo --json
 ```
 
+For a clean PR checkout or GitHub Actions job, compare committed changes against a base ref:
+
+```bash
+python3 plugins/relay-codex/scripts/relay_runtime.py review-readiness --root /path/to/target-repo --base-ref origin/main --json
+python3 plugins/relay-codex/scripts/relay_runtime.py pr-comment --root /path/to/target-repo --base-ref origin/main --json
+```
+
 Use a disposable test repository if you do not want `.relay/` files in a real project yet.
 
 ## Common problems

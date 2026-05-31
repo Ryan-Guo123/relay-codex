@@ -385,10 +385,21 @@ def summarize_verification(events: list[dict[str, Any]], commands: list[str]) ->
     return "- No verification command or event captured yet."
 
 
-def collect_changed_files(root: Path) -> list[str]:
+def collect_changed_files(root: Path, base_ref: str | None = None) -> list[str]:
     git_top_level = git_output(root, ["rev-parse", "--show-toplevel"])
     if git_top_level and Path(git_top_level).resolve() != root.resolve() and not (root / ".git").exists():
         return []
+
+    if base_ref:
+        diff = git_output(root, ["diff", "--name-only", "--diff-filter=ACMRTUXB", f"{base_ref}...HEAD"])
+        if not diff:
+            diff = git_output(root, ["diff", "--name-only", "--diff-filter=ACMRTUXB", f"{base_ref}..HEAD"])
+        files = [
+            line.strip()
+            for line in diff.splitlines()
+            if line.strip() and line.strip() != RELAY_DIRNAME and not line.strip().startswith(f"{RELAY_DIRNAME}/")
+        ]
+        return dedupe_preserve_order(files)
 
     status = git_output(root, ["status", "--short", "--untracked-files=all"])
     if not status:
@@ -408,9 +419,11 @@ def collect_changed_files(root: Path) -> list[str]:
     return dedupe_preserve_order(files)
 
 
-def summarize_changed_files(root: Path) -> str:
-    files = collect_changed_files(root)
+def summarize_changed_files(root: Path, base_ref: str | None = None) -> str:
+    files = collect_changed_files(root, base_ref=base_ref)
     if not files:
+        if base_ref:
+            return f"- No Git changes detected against `{base_ref}`."
         return "- No Git changes detected in the current workspace."
 
     display = files[:12]
@@ -517,21 +530,23 @@ def summarize_review_routing(root: Path, files: list[str]) -> tuple[list[str], d
     return lines, metadata
 
 
-def summarize_review_readiness(root: Path) -> tuple[str, dict[str, Any]]:
-    files = collect_changed_files(root)
+def summarize_review_readiness(root: Path, base_ref: str | None = None) -> tuple[str, dict[str, Any]]:
+    files = collect_changed_files(root, base_ref=base_ref)
     sensitive_paths = detect_sensitive_review_paths(files)
     file_count = len(files)
     large_change = file_count > 12
     routing_lines, routing_metadata = summarize_review_routing(root, files)
 
     if not files:
+        scope_note = f"No non-Relay Git changes detected against `{base_ref}`." if base_ref else "No non-Relay Git changes detected."
         lines = [
-            "- Scope: No non-Relay Git changes detected.",
+            f"- Scope: {scope_note}",
             "- Review signal: Use this artifact as a handoff sample, not as proof that code changed.",
         ]
     else:
         scope = "large review surface" if large_change else "focused review surface"
-        lines = [f"- Scope: {file_count} non-Relay changed file(s), {scope}."]
+        source = f" against `{base_ref}`" if base_ref else ""
+        lines = [f"- Scope: {file_count} non-Relay changed file(s){source}, {scope}."]
         if sensitive_paths:
             lines.append("- Sensitive paths detected:")
             for label, path in sensitive_paths[:8]:
@@ -550,6 +565,8 @@ def summarize_review_readiness(root: Path) -> tuple[str, dict[str, Any]]:
 
     metadata = {
         "changed_file_count": file_count,
+        "base_ref": base_ref,
+        "change_source": "base_ref_diff" if base_ref else "git_status",
         "large_change": large_change,
         "sensitive_paths": [{"label": label, "path": path} for label, path in sensitive_paths],
         "review_routing": routing_metadata,
@@ -829,14 +846,14 @@ def write_handoff(root: Path) -> dict[str, Any]:
     return {**inspection, "handoff": str(relay_root / "handoff.md")}
 
 
-def render_pr_comment(context: dict[str, Any], events: list[dict[str, Any]], inspection: dict[str, Any]) -> str:
+def render_pr_comment(context: dict[str, Any], events: list[dict[str, Any]], inspection: dict[str, Any], base_ref: str | None = None) -> str:
     reasons = inspection["reasons"]
     reason_lines = "\n".join(f"- {reason}" for reason in reasons) if reasons else "- No active blocker signals."
     recent = summarize_recent_events(events, limit=4)
     last_success = summarize_last_success(events)
     verification = summarize_verification(events, context["commands"])
-    changed_files = summarize_changed_files(Path(inspection["root"]))
-    review_readiness, _readiness_metadata = summarize_review_readiness(Path(inspection["root"]))
+    changed_files = summarize_changed_files(Path(inspection["root"]), base_ref=base_ref)
+    review_readiness, _readiness_metadata = summarize_review_readiness(Path(inspection["root"]), base_ref=base_ref)
     verdict = inspection["verdict"]
 
     if verdict == "continue":
@@ -902,23 +919,23 @@ Relay converted the current Codex run state into a GitHub-ready review note. It 
 """
 
 
-def write_pr_comment(root: Path) -> dict[str, Any]:
+def write_pr_comment(root: Path, base_ref: str | None = None) -> dict[str, Any]:
     handoff_payload = write_handoff(root)
     context = detect_repo_context(root)
     relay_root = relay_dir(root)
     events = load_jsonl(relay_root / "events.jsonl")
     target = relay_root / "pr-comment.md"
-    _review_readiness, readiness_metadata = summarize_review_readiness(root)
-    write_text(target, render_pr_comment(context, events, handoff_payload))
+    _review_readiness, readiness_metadata = summarize_review_readiness(root, base_ref=base_ref)
+    write_text(target, render_pr_comment(context, events, handoff_payload, base_ref=base_ref))
     return {**handoff_payload, "pr_comment": str(target), "review_readiness": readiness_metadata}
 
 
-def write_review_readiness(root: Path) -> dict[str, Any]:
+def write_review_readiness(root: Path, base_ref: str | None = None) -> dict[str, Any]:
     inspection = inspect_relay(root)
     context = detect_repo_context(root)
     relay_root = relay_dir(root)
     target = relay_root / "review-readiness.md"
-    summary, readiness_metadata = summarize_review_readiness(root)
+    summary, readiness_metadata = summarize_review_readiness(root, base_ref=base_ref)
     payload = {**inspection, "review_readiness": readiness_metadata}
     write_text(target, render_review_readiness(context, payload, summary))
     return {**payload, "review_readiness_artifact": str(target)}
@@ -1223,7 +1240,7 @@ def cmd_handoff(args: argparse.Namespace) -> int:
 
 
 def cmd_pr_comment(args: argparse.Namespace) -> int:
-    payload = write_pr_comment(args.root.resolve())
+    payload = write_pr_comment(args.root.resolve(), base_ref=args.base_ref)
     if args.json:
         print_json(payload)
     else:
@@ -1233,7 +1250,7 @@ def cmd_pr_comment(args: argparse.Namespace) -> int:
 
 
 def cmd_review_readiness(args: argparse.Namespace) -> int:
-    payload = write_review_readiness(args.root.resolve())
+    payload = write_review_readiness(args.root.resolve(), base_ref=args.base_ref)
     if args.json:
         print_json(payload)
     else:
@@ -1304,6 +1321,7 @@ def build_parser() -> argparse.ArgumentParser:
     ):
         command = subparsers.add_parser(name)
         command.add_argument("--root", type=Path, default=Path.cwd())
+        command.add_argument("--base-ref", default=None)
         command.add_argument("--json", action="store_true")
         command.set_defaults(func=handler)
     return parser
