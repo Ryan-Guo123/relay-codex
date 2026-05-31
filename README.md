@@ -180,6 +180,12 @@ If you are reviewing Relay from outside the project, start with [docs/reviewers-
 python3 -m unittest discover -s tests -p 'test_*.py'
 ```
 
+To run the runtime tests directly:
+
+```bash
+python3 -m unittest tests.test_relay_runtime
+```
+
 ## Included skills
 
 - `enable-relay`
