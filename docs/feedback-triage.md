@@ -22,16 +22,27 @@ Supporting labels:
 | `round-1` | Feedback belongs to the first outside-review validation round. |
 | `needs-ledger-update` | The issue has not yet been copied into [validation-ledger.md](validation-ledger.md). |
 
+Every feedback issue should also record AI PR review fit:
+
+| Value | Meaning |
+| --- | --- |
+| `in_addition` | Relay gives context or provenance the AI review tool does not. |
+| `before_review` | Relay helps decide whether a PR is ready before any reviewer or review bot spends time. |
+| `instead` | Relay is enough for this small handoff without another AI review layer. |
+| `not_needed` | Existing AI PR review tools already solve this job. |
+| `unsure` | The reviewer needs to test both on a real PR. |
+
 ## Triage Steps
 
 1. Confirm the reviewer is outside the current Relay build thread.
 2. Confirm the issue links or pastes the artifact being judged.
 3. Confirm the issue compares Relay against a normal Codex, manual, or GitHub PR summary.
-4. Apply exactly one `outcome:*` label.
-5. Keep `needs-ledger-update` until the issue is added to [validation-ledger.md](validation-ledger.md).
-6. Update the ledger with the reviewer relationship, artifact, outcome, and product decision.
-7. Remove `needs-ledger-update` after the ledger row is committed.
-8. Close the feedback issue only after the ledger update is merged.
+4. Confirm the issue records AI PR review fit.
+5. Apply exactly one `outcome:*` label.
+6. Keep `needs-ledger-update` until the issue is added to [validation-ledger.md](validation-ledger.md).
+7. Update the ledger with the reviewer relationship, artifact, outcome, AI review fit, and product decision.
+8. Remove `needs-ledger-update` after the ledger row is committed.
+9. Close the feedback issue only after the ledger update is merged.
 
 ## Evidence Rules
 
