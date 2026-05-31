@@ -14,6 +14,23 @@ That handoff should make it easier to review, comment on, resume, or release the
 
 ## What Must Be Proven
 
+### 0. Review readiness is the right problem
+
+Question:
+
+> Is the bottleneck really maintainer review after agent work, not agent continuation?
+
+Evidence:
+
+- Community research shows agent PRs are getting larger and harder to review.
+- GitHub guidance says agent PR authors should edit the PR body before requesting review.
+- Research on failed agent PRs points to larger changes, CI failures, weak reviewer engagement, duplicate work, and agent misalignment.
+- Relay's generated reviewer pack gives outside reviewers a concrete artifact to judge before installing anything.
+
+Pass condition:
+
+- At least one outside maintainer or frequent PR reviewer says the artifact helps them decide whether to review, request changes, split scope, or ignore the PR.
+
 ### 1. The handoff is faster than reconstructing context
 
 Question:
