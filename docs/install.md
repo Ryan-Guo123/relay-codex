@@ -78,7 +78,7 @@ python3 plugins/relay-codex/scripts/relay_runtime.py review-readiness --root /pa
 python3 plugins/relay-codex/scripts/relay_runtime.py pr-comment --root /path/to/target-repo --base-ref origin/main --json
 ```
 
-This repository also ships a `Review Readiness` GitHub Actions workflow. On pull requests it generates `.relay/review-readiness.md` and `relay-review-readiness.json`, then uploads both as the `relay-review-readiness` artifact.
+This repository also ships a `Review Readiness` GitHub Actions workflow. On pull requests it generates `.relay/review-readiness.md` and `relay-review-readiness.json`, publishes the Markdown to the workflow job summary, then uploads both files as the `relay-review-readiness` artifact.
 
 Use a disposable test repository if you do not want `.relay/` files in a real project yet.
 
