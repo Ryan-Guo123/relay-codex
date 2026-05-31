@@ -40,6 +40,8 @@ Submit feedback here:
 
 https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feedback.yml
 
+If you only have 60 seconds, use [reviewer-quick-verdict.md](reviewer-quick-verdict.md) first. It is a no-install screen, not a full validation result unless you record the outcome publicly.
+
 ## Task Being Reviewed
 
 PR #42 fixed the validation bundle uploaded by the Review Readiness workflow.
