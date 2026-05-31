@@ -109,6 +109,8 @@ Relay renders three starter packs:
 3. Open the workspace in Codex App and install `Relay for Codex`.
 4. In the target repository, use `Enable Relay in this repo`.
 
+For full setup steps, success checks, and troubleshooting, see [docs/install.md](docs/install.md).
+
 See [docs/demo-usage.md](docs/demo-usage.md) for a concrete PR triage and stuck-recovery example.
 
 ### Option B: develop the plugin itself
@@ -156,7 +158,7 @@ Relay is intentionally narrow in v1. It already covers:
 
 Planned next:
 
-- richer install UX
+- packaged marketplace distribution once the plugin leaves local-bundle install
 - better screenshots and real-world demos
 - more opinionated automation setup
 - stronger review queue handoff patterns
