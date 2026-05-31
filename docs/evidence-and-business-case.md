@@ -216,6 +216,8 @@ The next work should be validation, not feature expansion:
 4. Track every response as `reused`, `edited_heavily`, `ignored`, or `confusing`.
 5. Only release runtime changes when the validation evidence changes the product.
 
+The public evidence queue lives in [validation-ledger.md](validation-ledger.md).
+
 ## Sources
 
 - GitHub Blog, Agent pull requests are everywhere: https://github.blog/ai-and-ml/generative-ai/agent-pull-requests-are-everywhere-heres-how-to-review-them/
