@@ -13,9 +13,9 @@ Relay for Codex turns long-running Codex work into GitHub-ready maintainer hando
 ```text
 I am looking for maintainers who review AI-generated PRs.
 
-Relay for Codex generates a `.relay/reviewer-pack.md` from a branch so someone who did not run the Codex thread can judge the handoff.
+Relay for Codex generates a GitHub-ready handoff so someone who did not run the Codex thread can judge what changed, what was verified, and what still needs review.
 
-The test takes about 10 minutes: compare the Relay handoff with a normal Codex/manual summary and mark it as reused, edited heavily, ignored, or confusing.
+The quick test takes 60 seconds: compare the Relay handoff excerpt with a normal PR summary and mark it as reused, edited heavily, ignored, or confusing. There is also a 10-minute reviewer path if you want to test a fuller packet.
 
 Repo: https://github.com/Ryan-Guo123/relay-codex
 60-second quick verdict: https://github.com/Ryan-Guo123/relay-codex/blob/main/docs/reviewer-quick-verdict.md

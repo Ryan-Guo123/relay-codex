@@ -10,7 +10,7 @@ Snapshot date: 2026-05-31.
 | --- | ---: | --- |
 | GitHub stars | 1 | `gh repo view Ryan-Guo123/relay-codex` on 2026-05-31 |
 | Forks | 0 | `gh repo view Ryan-Guo123/relay-codex` on 2026-05-31 |
-| Open validation issues | 2 | [#24 Test Relay handoff with an outside maintainer](https://github.com/Ryan-Guo123/relay-codex/issues/24) and [#39 Run validation round 1 with an outside reviewer](https://github.com/Ryan-Guo123/relay-codex/issues/39) |
+| Open validation issues | 3 | [#24 Test Relay handoff with an outside maintainer](https://github.com/Ryan-Guo123/relay-codex/issues/24), [#39 Run validation round 1 with an outside reviewer](https://github.com/Ryan-Guo123/relay-codex/issues/39), and [#60 Run June 7 no-response pivot review](https://github.com/Ryan-Guo123/relay-codex/issues/60) |
 | Outside reviewer outcomes | 0 | No `reused`, `edited_heavily`, `ignored`, or `confusing` feedback yet |
 | External repo trials | 0 | No linked outside PR, issue, workflow artifact, or commit yet |
 | Money signals | 0 | No sponsor, donation, paid setup request, or hosted-feature request yet |
@@ -59,7 +59,7 @@ Minimum ask:
 
 - 1 explicit experiment protocol: [round1-experiment.md](round1-experiment.md).
 - 1 public issue comment, discussion reply, or maintainer DM using [round1-outreach-message.md](round1-outreach-message.md) or [outreach-copy.md](outreach-copy.md).
-- 1 linked reviewer artifact: [round1-reviewer-request.md](round1-reviewer-request.md), [reviewer-pack-example.md](reviewer-pack-example.md), `.relay/validation-brief.md`, `relay-validation-bundle`, or a real PR artifact.
+- 1 linked reviewer artifact: [reviewer-quick-verdict.md](reviewer-quick-verdict.md), [round1-reviewer-request.md](round1-reviewer-request.md), [reviewer-pack-example.md](reviewer-pack-example.md), `.relay/validation-brief.md`, `relay-validation-bundle`, or a real PR artifact.
 - 1 follow-up asking for one of: `reused`, `edited_heavily`, `ignored`, `confusing`.
 - 1 follow-up asking whether Relay is useful `in_addition`, `before_review`, `instead`, `not_needed`, or `unsure` compared with AI PR review tools.
 - 1 feedback entry through the [Round 1 feedback form](https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feedback.yml) or the general `Relay handoff feedback` issue form.
@@ -108,8 +108,8 @@ These links are evidence of the problem space, not proof that Relay solves it.
 | 2026-05-31 | GitHub Community discussion #179633 | [round1-reviewer-request.md](round1-reviewer-request.md) and [external-repo-trial.md](external-repo-trial.md) | Sent | Pending | Public targeted ask posted at https://github.com/community/community/discussions/179633#discussioncomment-17120686. This specifically tests whether CodeRabbit/Paragon-style AI review tools make Relay `not_needed`. |
 | 2026-05-31 | GitHub Community discussion #186152 | [round1-reviewer-request.md](round1-reviewer-request.md) and [external-repo-trial.md](external-repo-trial.md) | Sent | Pending | Public targeted ask posted at https://github.com/community/community/discussions/186152#discussioncomment-17120741. This tests whether teams that re-request bot reviews want review-readiness before the next AI review pass. |
 | 2026-06-07 | No-response pivot review | [no-response-pivot.md](no-response-pivot.md) | Scheduled | Pending | Tracking issue: [#60 Run June 7 no-response pivot review](https://github.com/Ryan-Guo123/relay-codex/issues/60), labeled `waiting-on-feedback`. If all three asks have no replies, stop this GitHub Community public-thread segment and change the artifact or target audience before sending another ask. |
-| 2026-05-31 | 60-second reviewer sample | [reviewer-quick-verdict.md](reviewer-quick-verdict.md) | Ready | Pending | Tracking issue: [#62 Prepare 60-second reviewer sample if Round 1 gets no replies](https://github.com/Ryan-Guo123/relay-codex/issues/62), labeled `candidate-pivot`. It lowers review friction but does not count as validation unless an outside reviewer records a public outcome. |
-| TBD | Maintainer who reviews AI-generated PRs | `docs/reviewers-wanted.md` | Not contacted | Pending | Ask for a 10-minute comparison, not a star. |
+| 2026-05-31 | 60-second reviewer sample | [reviewer-quick-verdict.md](reviewer-quick-verdict.md) | Ready | Pending | Tracking issue [#62 Prepare 60-second reviewer sample if Round 1 gets no replies](https://github.com/Ryan-Guo123/relay-codex/issues/62) is closed as prepared. It lowers review friction but does not count as validation unless an outside reviewer records a public outcome. |
+| TBD | Maintainer who reviews AI-generated PRs | `docs/reviewers-wanted.md` or [reviewer-quick-verdict.md](reviewer-quick-verdict.md) | Not contacted | Pending | Ask for a 60-second quick verdict first, not a star. |
 | TBD | Community thread about AI PR review fatigue | `docs/reviewer-pack-example.md` | Not contacted | Pending | Reply only where self-promotion is allowed and the thread asks for tools/workflows. |
 | TBD | Agent workflow tool builder | `docs/review-readiness.schema.json` | Not contacted | Pending | Ask whether the JSON payload is useful for integration. |
 | TBD | External public repo trial | `review-readiness --base-ref origin/main --json` | Not started | Pending | Strongest evidence if the maintainer links a real PR artifact. |
