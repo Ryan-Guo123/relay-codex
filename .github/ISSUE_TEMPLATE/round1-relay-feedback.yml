@@ -1,0 +1,78 @@
+name: Round 1 Relay feedback
+description: Record whether the Round 1 Relay handoff was useful to an outside reviewer.
+title: "Round 1 feedback: "
+labels:
+  - validation
+  - feedback
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form after reading the Round 1 reviewer request:
+        https://github.com/Ryan-Guo123/relay-codex/blob/main/docs/round1-reviewer-request.md
+
+        Please be blunt. `ignored` and `confusing` are useful outcomes.
+  - type: dropdown
+    id: reviewer_relationship
+    attributes:
+      label: Reviewer relationship
+      description: Pick the closest description.
+      options:
+        - Outside maintainer
+        - Outside contributor
+        - Frequent PR reviewer
+        - Teammate who did not run Codex
+        - User evaluating Relay
+        - Other
+    validations:
+      required: true
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: Outcome
+      description: What would you do with the Relay handoff?
+      options:
+        - reused
+        - edited_heavily
+        - ignored
+        - confusing
+    validations:
+      required: true
+  - type: textarea
+    id: comparison
+    attributes:
+      label: Relay vs normal PR summary
+      description: Was the Relay handoff better, worse, or different from the normal PR summary in the reviewer request?
+      placeholder: "Relay helped with changed files, but the normal summary was easier to paste..."
+    validations:
+      required: true
+  - type: textarea
+    id: rubric
+    attributes:
+      label: Rubric scores
+      description: Score each item from 1 to 5 and add short notes where useful.
+      value: |
+        - Changed files:
+        - Verification:
+        - Review focus:
+        - Review readiness signal:
+        - Next action:
+        - GitHub fit:
+    validations:
+      required: true
+  - type: textarea
+    id: missing_or_noisy
+    attributes:
+      label: What was missing or noisy?
+      description: Name anything that should be removed, shortened, or added before Relay asks another reviewer.
+      placeholder: "The verification section was too thin; the sensitive-path warning was useful..."
+    validations:
+      required: true
+  - type: textarea
+    id: product_decision
+    attributes:
+      label: Product decision
+      description: What should Relay do next based on your feedback?
+      placeholder: "Keep the review-readiness gate, simplify the PR handoff, test again on a larger PR..."
+    validations:
+      required: true
