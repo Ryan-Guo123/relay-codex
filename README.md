@@ -198,6 +198,12 @@ To regenerate the main handoff and outside-validation artifacts:
 make validation-bundle
 ```
 
+To smoke test fixture-backed artifact generation without changing the source fixture:
+
+```bash
+make fixture-bundle
+```
+
 ## Included skills
 
 - `enable-relay`

@@ -2,7 +2,7 @@ PYTHON ?= python3
 RELAY_RUNTIME := plugins/relay-codex/scripts/relay_runtime.py
 ROOT ?= .
 
-.PHONY: verify test test-runtime review-readiness validation-bundle
+.PHONY: verify test test-runtime review-readiness validation-bundle fixture-bundle
 
 verify:
 	git diff --check
@@ -23,3 +23,6 @@ validation-bundle:
 	$(PYTHON) $(RELAY_RUNTIME) pr-comment --root $(ROOT) --json
 	$(PYTHON) $(RELAY_RUNTIME) reviewer-pack --root $(ROOT) --json
 	$(PYTHON) $(RELAY_RUNTIME) validation-brief --root $(ROOT) --json
+
+fixture-bundle:
+	$(PYTHON) tools/fixture_bundle_smoke.py
