@@ -229,6 +229,25 @@ It answers:
 - What should a human maintainer review before the next run?
 - What is the smallest next action for PR or release handoff?
 
+### Confidence level
+
+This is still a product bet, not a proven category.
+
+Relay is likely useful if:
+
+- a maintainer uses Codex often enough that work spans multiple threads, PRs, or release steps
+- the repo needs a durable handoff that GitHub reviewers can inspect
+- the hard part is deciding whether to continue, recover, review, or release after agent work
+
+Relay is probably not useful if:
+
+- the user only runs one-off coding prompts
+- the project already has a full agent board and does not need repo-local handoff files
+- a plain GitHub issue checklist is enough
+- the maintainer does not care about preserving agent-run evidence in the repository
+
+The validation target is simple: a maintainer should see the README demo and immediately understand one workflow where Relay saves time or reduces review anxiety.
+
 ### Primary user
 
 The first user is not "anyone using agents." It is a maintainer or solo builder who uses Codex heavily enough that work spans threads, branches, PRs, releases, or scheduled follow-ups.
