@@ -117,7 +117,7 @@ Relay renders three starter packs:
 
 For full setup steps, success checks, and troubleshooting, see [docs/install.md](docs/install.md).
 
-See [docs/demo-usage.md](docs/demo-usage.md) for a concrete PR triage and stuck-recovery example.
+See [docs/demo-usage.md](docs/demo-usage.md) for a concrete PR triage and stuck-recovery example. The first GIF/video target is storyboarded in [docs/demo-storyboard.md](docs/demo-storyboard.md).
 
 ### Option B: develop the plugin itself
 
@@ -180,7 +180,7 @@ Bug reports, repro cases, workflow ideas, and pull requests are welcome. Start w
 
 ## Launch notes
 
-If you want this project to travel, do not just ship code. Ship a clear before/after story, a real stuck-repo demo, and a short clip that shows Relay changing the verdict from churn to recovery. A maintainer-facing launch checklist lives in [docs/launch-playbook.md](docs/launch-playbook.md).
+If you want this project to travel, do not just ship code. Ship a clear before/after story, a real stuck-repo demo, and a short clip that shows Relay changing the verdict from churn to recovery. A maintainer-facing launch checklist lives in [docs/launch-playbook.md](docs/launch-playbook.md), and the first demo storyboard lives in [docs/demo-storyboard.md](docs/demo-storyboard.md).
 
 ## 中文简介
 
