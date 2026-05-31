@@ -201,6 +201,63 @@ class RelayRuntimeTests(unittest.TestCase):
         self.assertEqual(payload["review_readiness"]["changed_file_count"], 1)
         self.assertEqual(payload["review_readiness"]["review_routing"]["codeowners_path"], ".github/CODEOWNERS")
 
+    def test_review_readiness_can_diff_against_base_ref(self) -> None:
+        workspace = self.copy_fixture("in-progress-repo")
+        subprocess.run(["git", "init"], cwd=workspace, capture_output=True, text=True, check=True)
+        (workspace / ".github").mkdir()
+        (workspace / ".github" / "CODEOWNERS").write_text(
+            "/src/auth/* @security-team\npackage.json @tooling-team\n",
+            encoding="utf-8",
+        )
+        subprocess.run(["git", "add", "package.json", ".github/CODEOWNERS"], cwd=workspace, capture_output=True, text=True, check=True)
+        subprocess.run(
+            [
+                "git",
+                "-c",
+                "user.email=relay@example.com",
+                "-c",
+                "user.name=Relay Test",
+                "commit",
+                "-m",
+                "Seed main",
+            ],
+            cwd=workspace,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        subprocess.run(["git", "branch", "main"], cwd=workspace, capture_output=True, text=True, check=True)
+        subprocess.run(["git", "switch", "-c", "feature"], cwd=workspace, capture_output=True, text=True, check=True)
+        (workspace / "src" / "auth").mkdir(parents=True)
+        (workspace / "src" / "auth" / "session.ts").write_text("export const status = 'base-ref';\n", encoding="utf-8")
+        subprocess.run(["git", "add", "src/auth/session.ts"], cwd=workspace, capture_output=True, text=True, check=True)
+        subprocess.run(
+            [
+                "git",
+                "-c",
+                "user.email=relay@example.com",
+                "-c",
+                "user.name=Relay Test",
+                "commit",
+                "-m",
+                "Add auth session",
+            ],
+            cwd=workspace,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+
+        result = self.run_runtime(workspace, "review-readiness", "--base-ref", "main")
+        payload = json.loads(result.stdout)
+        content = Path(payload["review_readiness_artifact"]).read_text(encoding="utf-8")
+
+        self.assertIn("1 non-Relay changed file(s) against `main`", content)
+        self.assertIn("@security-team: `src/auth/session.ts`", content)
+        self.assertEqual(payload["review_readiness"]["base_ref"], "main")
+        self.assertEqual(payload["review_readiness"]["change_source"], "base_ref_diff")
+        self.assertEqual(payload["review_readiness"]["changed_file_count"], 1)
+
     def test_reviewer_pack_wraps_pr_comment_and_rubric(self) -> None:
         workspace = self.copy_fixture("stuck-repo")
         pack_result = self.run_runtime(workspace, "reviewer-pack")

@@ -15,6 +15,12 @@ Use this skill when the user wants to know whether a Codex-generated branch is r
 python3 ../../scripts/relay_runtime.py review-readiness --json
 ```
 
+For a clean PR checkout, pass the fetched base ref:
+
+```bash
+python3 ../../scripts/relay_runtime.py review-readiness --base-ref origin/main --json
+```
+
 2. Read `.relay/review-readiness.md`.
 3. Report:
    - changed-file count

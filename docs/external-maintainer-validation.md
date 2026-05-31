@@ -30,6 +30,8 @@ python3 plugins/relay-codex/scripts/relay_runtime.py pr-comment --json
 python3 plugins/relay-codex/scripts/relay_runtime.py reviewer-pack --json
 ```
 
+If the branch is already committed or running in CI, add `--base-ref origin/main` to `review-readiness` and `pr-comment`.
+
 2. Read `.relay/review-readiness.md`.
 3. Read `.relay/pr-comment.md`.
 4. Read `.relay/reviewer-pack.md`.
