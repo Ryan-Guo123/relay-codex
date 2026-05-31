@@ -58,6 +58,7 @@ Partly. The agent-tooling market is crowded:
 - Paperclip, vibe-kanban, and Warp-style workflows make agent work visible through dashboards, boards, branches, and PR UI.
 - agentmemory stores broad cross-agent recall.
 - skills packs package reusable engineering workflows.
+- AI PR review tools such as Copilot code review, CodeRabbit, Graphite, Qodo, and PR-Agent already own inline review comments and suggested fixes.
 
 Relay should not compete with those layers.
 

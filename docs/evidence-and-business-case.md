@@ -67,6 +67,24 @@ Interpretation:
 - Relay's review-readiness, PR comment, reviewer-pack, and release checklist artifacts point at the right pain.
 - Relay still has to prove that its artifacts are better than asking Codex to summarize the thread.
 
+### Direct AI PR review market
+
+AI PR review is already a commercial and open-source category:
+
+- GitHub Copilot code review is native to the GitHub PR reviewer flow and can leave review comments with suggested changes.
+- CodeRabbit provides automated context-aware PR reviews, PR walkthrough comments, IDE/CLI review, planning, and Slack workflows.
+- Graphite AI reviews focus on real bugs, full-codebase context, actionable suggestions, customization, and analytics.
+- Qodo / Qodo Merge provides AI PR review agents, summaries, improvements, labeling, chat, and policy workflows.
+- PR-Agent is a mature open-source PR review bot with 11,414 stars and 1,537 forks on 2026-05-31.
+- Greptile and similar products have public pricing, which suggests the category can support commercial demand.
+
+Interpretation:
+
+- This is stronger evidence that PR review pain is worth solving.
+- It is also stronger evidence that Relay must not become a generic AI PR reviewer.
+- Relay must test whether maintainers want Codex-run provenance and readiness evidence in addition to, before, or instead of AI review bots.
+- Paid AI review tools are not proof that Relay can earn money. Relay needs its own usage, sponsor, or support signal after a real handoff is used.
+
 ## Competitive Reality
 
 Codex Goals already own thread-scoped continuation:
@@ -86,11 +104,15 @@ Claude Managed Agents and Symphony-style systems point toward larger managed exe
 
 Paperclip, vibe-kanban, Warp, agentmemory, and skills libraries already own much of the broader workflow territory.
 
+Copilot, CodeRabbit, Graphite, Qodo, PR-Agent, and Greptile already own much of the AI PR review territory.
+
 Relay's possible wedge is therefore intentionally small:
 
 > After an agent run touches a repo, Relay produces maintainer-readable GitHub artifacts that survive outside the chat thread.
 
 If users want a board, memory engine, runtime, scheduler, or autonomous PR factory, Relay should point them elsewhere.
+
+If users want inline bug finding, automated suggestions, or a required review bot, Relay should point them to AI PR review tools instead.
 
 ## Relay Evidence Today
 
@@ -221,6 +243,13 @@ The public evidence queue lives in [validation-ledger.md](validation-ledger.md).
 ## Sources
 
 - GitHub Blog, Agent pull requests are everywhere: https://github.blog/ai-and-ml/generative-ai/agent-pull-requests-are-everywhere-heres-how-to-review-them/
+- GitHub Copilot code review docs: https://docs.github.com/en/copilot/how-tos/use-copilot-agents/request-a-code-review/use-code-review
+- CodeRabbit docs: https://docs.coderabbit.ai/
+- CodeRabbit PR walkthroughs: https://docs.coderabbit.ai/pr-reviews/walkthroughs
+- Graphite AI reviews: https://graphite.com/docs/ai-reviews
+- Qodo Merge docs: https://docs.qodo.ai/v1/qodo-merge
+- PR-Agent repository: https://github.com/The-PR-Agent/pr-agent
+- Greptile pricing: https://www.greptile.com/pricing
 - OpenAI Codex Goals: https://developers.openai.com/codex/use-cases/follow-goals
 - OpenAI Cookbook, Using Goals in Codex: https://developers.openai.com/cookbook/examples/codex/using_goals_in_codex
 - Claude Managed Agents overview: https://platform.claude.com/docs/en/managed-agents/overview

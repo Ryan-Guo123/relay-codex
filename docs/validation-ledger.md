@@ -61,6 +61,7 @@ Minimum ask:
 - 1 public issue comment, discussion reply, or maintainer DM using [round1-outreach-message.md](round1-outreach-message.md) or [outreach-copy.md](outreach-copy.md).
 - 1 linked reviewer artifact: [round1-reviewer-request.md](round1-reviewer-request.md), [reviewer-pack-example.md](reviewer-pack-example.md), `.relay/validation-brief.md`, `relay-validation-bundle`, or a real PR artifact.
 - 1 follow-up asking for one of: `reused`, `edited_heavily`, `ignored`, `confusing`.
+- 1 follow-up asking whether Relay is useful `in_addition`, `before_review`, `instead`, or `not_needed` compared with AI PR review tools.
 - 1 feedback entry through the [Round 1 feedback form](https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feedback.yml) or the general `Relay handoff feedback` issue form.
 
 Do not ask for:

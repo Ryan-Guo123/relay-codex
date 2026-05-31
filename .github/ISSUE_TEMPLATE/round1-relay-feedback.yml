@@ -29,6 +29,19 @@ body:
     validations:
       required: true
   - type: dropdown
+    id: ai_review_fit
+    attributes:
+      label: Fit with AI PR review tools
+      description: Would Relay be useful alongside tools like Copilot code review, CodeRabbit, Graphite, Qodo, or PR-Agent?
+      options:
+        - in_addition
+        - before_review
+        - instead
+        - not_needed
+        - unsure
+    validations:
+      required: true
+  - type: dropdown
     id: outcome
     attributes:
       label: Outcome
@@ -44,7 +57,7 @@ body:
     id: comparison
     attributes:
       label: Relay vs normal PR summary
-      description: Was the Relay handoff better, worse, or different from the normal PR summary in the reviewer request?
+      description: Was the Relay handoff better, worse, or different from the normal PR summary in the reviewer request? If you use an AI PR review tool, say whether it already covers this job.
       placeholder: "Relay helped with changed files, but the normal summary was easier to paste..."
     validations:
       required: true

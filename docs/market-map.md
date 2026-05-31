@@ -13,6 +13,7 @@ The crowded areas are:
 - Codex-native goal continuation
 - managed long-running agent sessions
 - agent work boards and PR orchestration
+- AI PR review bots
 - local-first repo memory
 - local-first handoff/evidence ledgers
 - reusable agent skills
@@ -23,7 +24,7 @@ The only potentially useful remaining wedge is smaller:
 
 > A Codex App-native adapter that turns a finished goal/run into GitHub-ready maintainer artifacts: PR comment, release note, review checklist, and minimal `.relay/` evidence bundle.
 
-Even that wedge is not proven. Maestro already covers a larger and more serious version of the local-first evidence/handoff space.
+Even that wedge is not proven. Maestro already covers a larger and more serious version of the local-first evidence/handoff space, and AI PR review tools already own much of the GitHub review surface. The direct AI PR review competitor map lives in [ai-pr-review-competitors.md](ai-pr-review-competitors.md).
 
 ## Competitor Categories
 
@@ -174,6 +175,34 @@ Implication:
 
 Relay should not become a broad skills library. At most, it can ship a few Codex-specific skills that call a very small artifact generator.
 
+### 7. AI PR Review Bots
+
+Examples:
+
+- GitHub Copilot code review
+- CodeRabbit
+- Graphite AI reviews
+- Qodo / Qodo Merge
+- PR-Agent
+- Greptile
+
+What they own:
+
+- inline PR comments
+- suggested changes
+- PR summaries and walkthroughs
+- automatic review requests
+- repository instructions and team rules
+- analytics, pricing, and governance for review automation
+
+Important observation:
+
+This category directly attacks the review bottleneck. CodeRabbit already posts PR walkthrough comments, Copilot is native to GitHub's reviewer flow, Graphite focuses on bug-oriented AI reviews, Qodo supports summaries, labels, and policy workflows, and PR-Agent is a mature open-source PR review bot.
+
+Implication:
+
+Relay should not call itself an AI code reviewer. The only remaining handoff wedge is provenance and readiness around a Codex run: what the agent was asked to do, what changed, what verification exists, what is missing, and what human decision should happen before or beside a code review bot.
+
 ## Strongest Direct Overlaps
 
 | Product | Overlap With Relay | Why It Matters |
@@ -185,6 +214,7 @@ Relay should not become a broad skills library. At most, it can ship a few Codex
 | Optio | ticket-to-merged-PR automation, CI/review feedback loop | Owns broader workflow orchestration |
 | vibe-kanban | board, branch/workspace, diff review, PR creation | Owns the visual planning/review layer |
 | Paperclip | broad agent management/control plane | Owns the memorable "manage agents at work" category |
+| Copilot / CodeRabbit / Graphite / Qodo / PR-Agent | AI PR review, summaries, inline comments, suggested fixes | Directly challenges Relay's GitHub-facing handoff wedge |
 
 ## Product Decision
 
@@ -197,6 +227,8 @@ Relay should not be pitched as:
 - "agent control plane"
 - "agent board"
 - "trust substrate"
+- "AI code reviewer"
+- "PR bug finder"
 
 Those are already occupied or too close to stronger projects.
 
@@ -211,6 +243,8 @@ It takes the state that Codex Goals, Codex threads, or Relay's lightweight files
 - release note draft
 - release checklist
 - concise evidence bundle
+
+It should not generate inline code-review comments or claim to find bugs better than dedicated PR review bots.
 
 This is less ambitious, but it is less duplicated.
 
@@ -236,7 +270,7 @@ This is less ambitious, but it is less duplicated.
 - `pr-comment` command that turns a handoff into a GitHub-ready PR comment
 - explicit "Codex Goal is upstream" section in README
 - examples showing Relay after a Codex Goal run, not instead of one
-- comparison table saying when to use Maestro/Kage/Recall/vibe-kanban instead
+- comparison table saying when to use Maestro/Kage/Recall/vibe-kanban or AI PR review tools instead
 
 ### Consider Removing Later
 
@@ -252,6 +286,7 @@ Relay should be paused or archived if the next validation shows:
 - Codex exposes repo-local PR/release handoff directly
 - the PR comment/release note output is not better than asking Codex to summarize the thread
 - the product cannot be explained without saying "it is like Goals, but..."
+- outside reviewers say Copilot, CodeRabbit, Graphite, Qodo, or PR-Agent already solves the handoff job
 
 ## Current Recommendation
 

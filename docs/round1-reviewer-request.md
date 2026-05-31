@@ -27,6 +27,13 @@ Please record one outcome:
 - `ignored`
 - `confusing`
 
+Also record how Relay fits with AI PR review tools such as Copilot code review, CodeRabbit, Graphite, Qodo, or PR-Agent:
+
+- `in_addition`: Relay gives context/provenance the review bot does not.
+- `before_review`: Relay helps decide whether a PR is ready for any reviewer.
+- `instead`: Relay is enough for this small PR or release handoff.
+- `not_needed`: an existing PR review tool already solves the job.
+
 Negative feedback is useful. The question is whether Relay saves review reconstruction time, not whether the repository looks polished.
 
 Submit feedback here:
@@ -176,10 +183,12 @@ https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feed
 ## Feedback Questions
 
 1. Is the Relay handoff better than the normal PR summary for a reviewer who did not run the Codex thread?
-2. Did the sensitive-path signal help, or was it obvious noise?
-3. Is the "No verification command or event captured yet" line useful honesty, or does it make the artifact feel incomplete?
-4. Would you paste any part of this into a PR comment?
-5. What should be removed or shortened?
+2. Would Relay be useful in addition to, before, or instead of an AI PR review tool?
+3. If you already use Copilot code review, CodeRabbit, Graphite, Qodo, PR-Agent, or a similar tool, does it already cover this job?
+4. Did the sensitive-path signal help, or was it obvious noise?
+5. Is the "No verification command or event captured yet" line useful honesty, or does it make the artifact feel incomplete?
+6. Would you paste any part of this into a PR comment?
+7. What should be removed or shortened?
 
 ## Product Decision Rule
 
