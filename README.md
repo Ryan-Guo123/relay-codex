@@ -9,7 +9,7 @@
 
 Relay for Codex is an open-source maintainer workflow layer for long-running Codex work: triage, review, stuck recovery, and release handoff.
 
-Relay for Codex is an App-native project relay for heavy Codex workflows. It gives Codex a repo-local memory, a progress verdict, recovery heuristics, and automation packs so long-running work stops drifting, looping, or asking the same question twice.
+Relay does not try to run agents, replace Codex Goals, or become another kanban board. It gives every long-running Codex run a maintainer-readable handoff inside the repo.
 
 ![Relay demo: repo state to handoff and release checklist](docs/assets/relay-demo.gif)
 
@@ -24,7 +24,17 @@ Codex can move fast inside a thread. The failure mode starts later:
 - the agent keeps testing instead of progressing
 - you cannot tell whether Codex should continue, pause, recover, or ask for help
 
-Relay adds a thin control layer on top of Codex App:
+Relay exists for the moment after agent work:
+
+```text
+issue/task -> Codex run -> Relay verdict -> PR handoff -> release gate
+```
+
+It answers one maintainer question:
+
+> "Can I trust where this repo is now, and what should happen next?"
+
+Relay adds a thin repo-local layer on top of Codex App:
 
 - repo-local state under `.relay/`
 - a four-state verdict:
@@ -35,6 +45,29 @@ Relay adds a thin control layer on top of Codex App:
 - lightweight hooks for activity tracking
 - recovery-first behavior when work starts to churn
 - automation packs that keep checking the project after the current thread goes quiet
+
+## Is this already solved?
+
+Partly. The agent-tooling market is crowded:
+
+- Codex Goals track a thread-scoped objective and completion contract.
+- Claude Managed Agents and OpenAI Symphony point toward hosted or orchestrated long-running agent work.
+- Paperclip, vibe-kanban, and Warp-style workflows make agent work visible through dashboards, boards, branches, and PR UI.
+- agentmemory stores broad cross-agent recall.
+- skills packs package reusable engineering workflows.
+
+Relay should not compete with those layers.
+
+Relay's narrow job is downstream of them: after an agent run touches a repository, Relay writes the maintainer evidence that should survive the session.
+
+```text
+Not:  "Run my agents."
+Not:  "Remember everything."
+Not:  "Replace my issue tracker."
+Yes:  "Tell me whether this repo should continue, recover, review, or release."
+```
+
+If that handoff does not make a maintainer faster or more confident, Relay should shrink or change. The current product bet is intentionally small.
 
 ## What makes Relay different
 
