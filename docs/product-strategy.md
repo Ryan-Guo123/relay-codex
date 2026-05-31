@@ -29,7 +29,7 @@ What is not ready yet:
 - Relay is not ready for a new patch release just because more research landed.
 - Relay is not ready to claim a finished product category until the demo proves the wedge in one real workflow.
 
-The next gate is Define: turn the research into one primary use case, one demo path, and one public message.
+The next gate is Define: turn the research into one primary use case, one demo path, and one public message. The current validation plan is tracked in [validation-plan.md](validation-plan.md).
 
 ## Discover
 
