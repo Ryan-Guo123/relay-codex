@@ -248,6 +248,31 @@ It should not generate inline code-review comments or claim to find bugs better 
 
 This is less ambitious, but it is less duplicated.
 
+## 2026-05-31 Boundary Refresh
+
+The boundary is now stricter than the first market map:
+
+- Codex Goals owns thread-scoped continuation and the "should the agent keep going?" decision.
+- Claude Managed Agents owns managed long-running sessions, event streams, stateful history, and sandbox execution.
+- Paperclip, vibe-kanban, Warp, and similar tools own visible agent workspaces, boards, and PR surfaces.
+- agentmemory, Kage, Recall, codemem, and related projects own memory and continuity.
+- Copilot code review, CodeRabbit, Graphite, Qodo, PR-Agent, Greptile, and reviewer-bot research own AI review/comment generation.
+
+Relay's survivable surface is therefore not "more agent control." It is a small translation layer between a completed Codex run and GitHub maintainer workflow.
+
+Use this as the current product boundary:
+
+| User asks for | Relay answer |
+| --- | --- |
+| Continue a long Codex task until a stopping condition | Use Codex Goals. |
+| Run autonomous agents in managed sandboxes | Use managed-agent/runtime tools. |
+| Coordinate multiple coding agents visually | Use Paperclip, vibe-kanban, Warp-style workspaces, or an issue tracker. |
+| Remember repo decisions across agents | Use a memory/continuity tool. |
+| Find bugs inline on a PR | Use Copilot, CodeRabbit, Graphite, Qodo, PR-Agent, Greptile, or similar. |
+| Hand a completed Codex run to a maintainer | Test Relay. |
+
+This boundary should be treated as a stop rule. If a feature crosses into a row where Relay says "use X," do not build it unless outside validation proves that the handoff adapter needs that specific capability.
+
 ## What Relay Should Do Next
 
 ### Keep
@@ -292,9 +317,10 @@ Relay should be paused or archived if the next validation shows:
 
 Do one more narrow validation, not a feature buildout:
 
-1. Build `pr-comment` as a Codex App-native handoff adapter.
-2. Test whether the generated PR comment is better than a normal Codex thread summary.
-3. If it is not clearly better, stop expanding Relay and turn the repo into a research artifact or plugin experiment.
+1. Wait for the three public Round 1 asks already sent.
+2. If any reviewer replies, record whether the handoff is `reused`, `edited_heavily`, `ignored`, or `confusing`, plus whether it is `before_review`, `in_addition`, or `not_needed` compared with AI PR review tools.
+3. If no one replies by 2026-06-07, stop that target segment and run the no-response pivot.
+4. Do not build another runtime feature before one outside reviewer outcome exists.
 
 ## Sources
 
