@@ -20,6 +20,7 @@ Do not mass-post. Do not ask for stars. Do not ask for sponsorship. Ask for one 
 - Feedback form: [Round 1 Relay feedback](https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feedback.yml)
 - Tracking issue: [#39 Run validation round 1 with an outside reviewer](https://github.com/Ryan-Guo123/relay-codex/issues/39)
 - Direct AI PR review competitor map: [ai-pr-review-competitors.md](ai-pr-review-competitors.md)
+- Outreach funnel log: [outreach-log.md](outreach-log.md)
 
 ## Targeting Rule
 
@@ -88,6 +89,8 @@ For each ask, update [validation-ledger.md](validation-ledger.md) with:
 - whether the ask was public or private
 - outcome, if any
 - product decision
+
+Also update [outreach-log.md](outreach-log.md) with the ask status, reply, outcome, AI review fit, money signal, and next step.
 
 If the ask is private, record the segment without naming the person.
 

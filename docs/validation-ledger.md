@@ -103,6 +103,7 @@ These links are evidence of the problem space, not proof that Relay solves it.
 | 2026-05-31 | Round 1 feedback form | `round1-relay-feedback.yml` | Ready | Pending | Use this for the first outside reviewer outcome. |
 | 2026-05-31 | External reviewer target list | [external-reviewer-targets.md](external-reviewer-targets.md) | Ready | Pending | Use for one careful targeted ask; do not mass-post. |
 | 2026-05-31 | External repo trial workflow | [external-repo-trial.md](external-repo-trial.md) | Ready | Pending | Copy into one outside repository PR; do not count until the workflow runs and a reviewer records an outcome. |
+| 2026-05-31 | Outreach funnel log | [outreach-log.md](outreach-log.md) | Ready | Pending | Track targeted asks, replies, trials, outcomes, AI review fit, and money signals without counting internal activity as traction. |
 | TBD | Maintainer who reviews AI-generated PRs | `docs/reviewers-wanted.md` | Not contacted | Pending | Ask for a 10-minute comparison, not a star. |
 | TBD | Community thread about AI PR review fatigue | `docs/reviewer-pack-example.md` | Not contacted | Pending | Reply only where self-promotion is allowed and the thread asks for tools/workflows. |
 | TBD | Agent workflow tool builder | `docs/review-readiness.schema.json` | Not contacted | Pending | Ask whether the JSON payload is useful for integration. |
