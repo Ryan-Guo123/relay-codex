@@ -13,6 +13,24 @@ This pass uses the Double Diamond model:
 
 The model matters because Relay sits near crowded territory: Codex now has native goal and continuation features, while Paperclip already covers broad multi-agent operations. Relay has to win a smaller, sharper job.
 
+### Current Double Diamond status
+
+Relay is currently in late Discover and early Define.
+
+What is known:
+
+- The market is real: agents now need durable work records, review gates, release handoff, and recovery paths.
+- The crowded areas are also real: hosted agent runtimes, kanban boards, memory engines, broad skills packs, and autonomous-agent platforms are already occupied.
+- Relay's strongest wedge is repo-local maintainer evidence: small files that say whether work should continue, stop, recover, review, or release.
+
+What is not ready yet:
+
+- Relay is not ready for a larger feature buildout.
+- Relay is not ready for a new patch release just because more research landed.
+- Relay is not ready to claim a finished product category until the demo proves the wedge in one real workflow.
+
+The next gate is Define: turn the research into one primary use case, one demo path, and one public message.
+
 ## Discover
 
 ### What Paperclip proves
@@ -73,12 +91,15 @@ It should avoid a vague "AI productivity" message and keep proving value through
 
 ### What Claude Managed Agents changes
 
-Claude Managed Agents shows that platform vendors are also moving toward managed long-running agents: hosted or self-hosted sandboxes, persistent sessions, event streams, built-in tools, MCP, files, and resumable state. That makes a generic "agent runtime" or "long-running session" pitch weaker for Relay.
+Claude Managed Agents shows that platform vendors are also moving toward managed long-running agents: hosted or self-hosted sandboxes, persistent sessions, event streams, built-in tools, MCP, files, and resumable state. Anthropic's engineering write-up goes further: their durable primitives are session logs, replaceable harnesses, and decoupled sandboxes/tools. The design goal is stable interfaces around long-horizon agent work even as the harness changes.
+
+That makes a generic "agent runtime" or "long-running session" pitch weaker for Relay. It also makes Relay's repo-local layer more important.
 
 Relay should instead stay deliberately local and portable:
 
 - do not compete with managed sandboxes, event streams, or provider-specific agent hosting
 - keep the durable artifact inside the repository, not only inside a vendor session
+- make `.relay/` a small, inspectable session summary that can survive provider, thread, or harness changes
 - make release, PR, and review gates visible in files that GitHub, maintainers, and future agents can inspect
 - treat Codex goals and managed-agent sessions as upstream execution layers that Relay can summarize, audit, and hand off
 
@@ -94,6 +115,104 @@ Relay should not turn that into a generic multi-agent planning product. The usef
 - make review checkpoints visible in `.relay/handoff.md`
 - make "stop and inspect" cheaper than another blind coding pass
 - preserve enough evidence that a maintainer can compare plans or execution paths later
+
+### What agent-skills proves
+
+Addy Osmani's agent-skills project proves there is demand for production-grade agent workflows packaged as reusable skills. Its strongest pattern is not breadth alone; it is the discipline around lifecycle entry points, verification gates, progressive disclosure, and anti-rationalization language that prevents agents from skipping senior-engineering habits.
+
+Relay should learn from that packaging without becoming a general skill library:
+
+- keep Relay skills narrow and maintainer-workflow specific
+- make every Relay skill end with evidence, not vibes
+- use lifecycle verbs users already understand: inspect, recover, hand off, release
+- keep supporting references lazy and small so Codex loads only what it needs
+- avoid competing with broad engineering skill packs; Relay's value is stateful repo handoff
+
+### What agentmemory proves
+
+agentmemory proves that persistent memory for coding agents is a real demand, especially when it is cross-agent, automatic, searchable, benchmarked, and cheap to run. Its center of gravity is recall: remembering architecture decisions, bug fixes, preferences, and session history so agents do not rediscover the same context.
+
+Relay should not compete with a full memory engine:
+
+- do not build vector search, graph memory, or a memory server in the core product
+- avoid claiming that Relay remembers everything
+- store only the maintainer-facing state needed to continue, stop, recover, review, or release
+- make `.relay/` readable by humans first and useful to memory systems second
+- allow future integrations where agentmemory-like tools can index Relay artifacts, rather than replacing them
+
+### What Warp proves
+
+Warp shows that agentic development can be packaged as a visible open-source maintenance workflow, not only as an invisible assistant feature. The useful pattern is issue triage, readiness labels, specs, implementation, PR review, contributor coordination, and public activity around real repository work.
+
+Relay should borrow the maintainer-workflow lesson:
+
+- use GitHub Issues and PRs as the public surface, not a custom dashboard first
+- make readiness explicit with labels or checklist states
+- treat demo activity as real maintenance, not synthetic churn
+- eventually show a compact "issue -> Relay verdict -> handoff -> PR/release" path
+
+### What OpenAI Symphony changes
+
+Symphony is the closest strategic neighbor from OpenAI itself. Its pitch is to turn project work into isolated autonomous implementation runs, connected to work boards, proof of work, CI, PR reviews, complexity analysis, walkthroughs, and safe landing. That is bigger than Codex Goals: it points toward teams managing work instead of supervising coding agents.
+
+Relay should not compete with Symphony-style orchestration:
+
+- do not spawn or schedule isolated implementation runs as the core product
+- do not become a Linear-board or project-management orchestrator
+- treat Symphony-like systems as upstream executors that can produce work
+- make Relay the small downstream layer that records verdict, evidence, handoff, release readiness, and maintainer review state in the repository
+
+If Symphony manages work at the board level, Relay should make each repo handoff trustworthy at the PR/release level.
+
+### What Automaton warns against
+
+Conway Automaton explores the opposite end of the market: continuously running, self-funding, self-modifying, self-replicating agents with wallets, identity, heartbeat loops, survival pressure, and world-write access. It is memorable because the story is extreme.
+
+Relay should not borrow that autonomy story:
+
+- no self-replication, wallet, survival, or autonomous business metaphor
+- no unattended world-write loop as the default product promise
+- keep human approval gates explicit for releases, external announcements, and high-risk actions
+- make "stop and ask for review" a strength, not a weakness
+
+The useful lesson is only the audit trail: if agents can act over long periods, every meaningful state transition needs a durable record.
+
+### What vibe-kanban proves
+
+vibe-kanban proves that a local board for coding agents is a real product category: plan with kanban issues, give each agent a branch/terminal/dev server workspace, review diffs inline, preview the app, create PRs, and merge. It also supports many coding agents, including Codex.
+
+Relay should not build another agent board:
+
+- GitHub Issues and PRs are enough for the first public surface
+- avoid owning terminals, dev servers, previews, and inline review UI
+- make Relay artifacts useful inside board tools rather than replacing them
+- focus the demo on a tiny path: issue or task -> Codex run -> Relay verdict -> PR/release handoff
+
+### What Matt Pocock's skills prove
+
+Matt Pocock's skills project proves another angle on the same market: engineers want small, adaptable skills that preserve control instead of handing the whole process to a rigid framework. Its strongest ideas for Relay are shared project language, grilling/alignment before work, disciplined diagnosis, TDD loops, and compact handoff.
+
+Relay should adopt the packaging style:
+
+- keep skills small enough to inspect and modify
+- teach the repo's vocabulary in `mission.md` and handoff files
+- make diagnosis and recovery loops explicit
+- avoid owning the entire development process; own the relay between runs and maintainers
+
+### Discovery synthesis
+
+| Category | Examples | What they own | Relay stance |
+| --- | --- | --- | --- |
+| Native continuation | Codex Goals | Thread-scoped objective, validation loop, completion criteria | Use as upstream signal; do not compete on "keep going later" |
+| Managed runtimes | Claude Managed Agents, Symphony | Sandboxes, sessions, event logs, isolated implementation runs | Stay downstream and repo-local |
+| Agent control planes | Paperclip, vibe-kanban, Warp/Oz workflows | Boards, agent workspaces, org/team workflows, PR UI | Integrate through GitHub artifacts; do not build a board first |
+| Memory engines | agentmemory | Cross-agent recall, search, auto-capture, benchmarks | Store only maintainer state; allow indexing later |
+| Skills packs | agent-skills, Matt Pocock skills | Reusable engineering process and expert workflows | Keep Relay skills narrow, inspectable, and evidence-driven |
+| Autonomous agents | Automaton | Self-funding, self-modification, survival loops | Reject autonomy metaphor; keep human review gates |
+
+The product boundary after discovery:
+
+> Relay is not the system that runs the agent. Relay is the small repo-local record that lets a maintainer trust, review, resume, or release the work after the agent ran.
 
 ## Define
 
@@ -239,3 +358,11 @@ Avoid:
 - OpenAI Cookbook, Using Goals in Codex: https://developers.openai.com/cookbook/examples/codex/using_goals_in_codex
 - Tom Tunguz, Harnessing AI: https://tomtunguz.com/harnessing-ai
 - Anthropic Claude Managed Agents overview: https://platform.claude.com/docs/en/managed-agents/overview
+- Anthropic Engineering, Scaling Managed Agents: https://www.anthropic.com/engineering/managed-agents
+- Addy Osmani, agent-skills: https://github.com/addyosmani/agent-skills
+- rohitg00, agentmemory: https://github.com/rohitg00/agentmemory
+- Warp: https://github.com/warpdotdev/warp
+- OpenAI Symphony: https://github.com/openai/symphony
+- Conway Research, Automaton: https://github.com/Conway-Research/automaton
+- BloopAI, vibe-kanban: https://github.com/BloopAI/vibe-kanban
+- Matt Pocock, skills: https://github.com/mattpocock/skills
