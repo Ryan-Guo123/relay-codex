@@ -23,7 +23,13 @@ jobs:
       - name: Download Relay runtime
         run: |
           curl -fsSL https://raw.githubusercontent.com/Ryan-Guo123/relay-codex/v0.1.13/plugins/relay-codex/scripts/relay_runtime.py -o relay_runtime.py
+          echo "242e631d6c98a205cfc88fe40620a7c6b96c89117da58336de9d4f094113fd9b  relay_runtime.py" | sha256sum -c -
           python3 -m py_compile relay_runtime.py
+
+      - name: Generate Relay review readiness
+        run: |
+          BASE_REF="origin/${GITHUB_BASE_REF:-main}"
+          python3 relay_runtime.py review-readiness --base-ref "$BASE_REF" --json | tee relay-review-readiness.json
 
       - name: Generate Relay validation bundle
         run: |
@@ -65,5 +71,6 @@ jobs:
             .relay/pr-comment.md
             .relay/reviewer-pack.md
             .relay/validation-brief.md
+            relay-review-readiness.json
             relay-validation-brief.json
           if-no-files-found: warn

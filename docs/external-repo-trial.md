@@ -36,10 +36,21 @@ And one AI review fit answer:
 The workflow:
 
 - checks out the target repository
-- downloads `relay_runtime.py` from the `v0.1.13` release tag
+- downloads `relay_runtime.py` from the `v0.1.13` release tag and verifies its SHA256 checksum
+- runs `review-readiness --base-ref origin/<base-branch>`
 - runs `validation-brief --base-ref origin/<base-branch>`
 - writes a review-readiness summary to the GitHub Actions job summary
 - uploads a `relay-validation-bundle` artifact
+
+The bundle includes:
+
+- `.relay/review-readiness.md`
+- `.relay/handoff.md`
+- `.relay/pr-comment.md`
+- `.relay/reviewer-pack.md`
+- `.relay/validation-brief.md`
+- `relay-review-readiness.json`
+- `relay-validation-brief.json`
 
 It does not:
 
@@ -59,6 +70,14 @@ https://raw.githubusercontent.com/Ryan-Guo123/relay-codex/v0.1.13/plugins/relay-
 ```
 
 Pinning to a tag is more reviewable than running from `main`. Maintainers should still inspect the workflow and runtime before enabling it on sensitive repositories.
+
+The example also checks the downloaded runtime against:
+
+```text
+242e631d6c98a205cfc88fe40620a7c6b96c89117da58336de9d4f094113fd9b
+```
+
+If Relay publishes a new runtime version, update both the tag and checksum in the copied workflow.
 
 ## What To Ask The Reviewer
 

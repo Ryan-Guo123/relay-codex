@@ -48,6 +48,19 @@ body:
     validations:
       required: true
   - type: dropdown
+    id: ai_review_fit
+    attributes:
+      label: Fit with AI PR review tools
+      description: Would Relay be useful alongside tools like Copilot code review, CodeRabbit, Graphite, Qodo, or PR-Agent?
+      options:
+        - in_addition
+        - before_review
+        - instead
+        - not_needed
+        - unsure
+    validations:
+      required: true
+  - type: dropdown
     id: outcome
     attributes:
       label: Outcome
@@ -69,6 +82,7 @@ body:
         - Review focus:
         - Next action:
         - GitHub fit:
+        - Fit with AI PR review tools:
     validations:
       required: true
   - type: textarea
