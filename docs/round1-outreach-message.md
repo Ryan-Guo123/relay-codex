@@ -2,7 +2,7 @@
 
 This is the outbound ask for Relay validation Round 1.
 
-It should be used with [round1-reviewer-request.md](round1-reviewer-request.md). The goal is to collect one outside reviewer outcome, not stars, praise, or broad product advice.
+It should be used with [reviewer-quick-verdict.md](reviewer-quick-verdict.md) for cold asks and [round1-reviewer-request.md](round1-reviewer-request.md) for deeper review. The goal is to collect one outside reviewer outcome, not stars, praise, or broad product advice.
 
 Use [external-reviewer-targets.md](external-reviewer-targets.md) to decide where the ask is appropriate.
 
@@ -13,12 +13,14 @@ I am looking for one maintainer or frequent PR reviewer who has reviewed AI-gene
 
 Relay for Codex is a small open-source tool that turns Codex work into GitHub-ready maintainer handoffs. I am trying to validate whether the handoff is actually useful outside my own workflow.
 
-The test should take about 10 minutes:
+There are two paths:
 
-1. Open the Round 1 reviewer request:
+1. 60-second no-install screen:
+   https://github.com/Ryan-Guo123/relay-codex/blob/main/docs/reviewer-quick-verdict.md
+2. 10-minute Round 1 reviewer request:
    https://github.com/Ryan-Guo123/relay-codex/blob/main/docs/round1-reviewer-request.md
-2. Compare the Relay-generated handoff with the normal PR summary for the same real PR.
-3. Record one outcome: reused, edited_heavily, ignored, or confusing.
+
+The ask is the same either way: compare the Relay-generated handoff with the normal PR summary for the same real PR, then record one outcome: reused, edited_heavily, ignored, or confusing.
 
 Negative feedback is useful. If the Relay handoff is too long, too generic, missing proof, or not better than the normal summary, that is exactly what I need to know before building more.
 ```
@@ -26,11 +28,14 @@ Negative feedback is useful. If the Relay handoff is too long, too generic, miss
 ## Short DM
 
 ```text
-Quick ask: would you be open to spending 10 minutes reviewing a generated PR handoff?
+Quick ask: would you be open to spending 60 seconds on a no-install generated PR handoff sample?
 
 I am validating Relay for Codex, an open-source tool that turns Codex work into GitHub-ready maintainer artifacts. I need one outside reviewer to compare the Relay handoff with a normal PR summary and mark it reused, edited_heavily, ignored, or confusing.
 
-Round 1 reviewer request:
+60-second quick verdict:
+https://github.com/Ryan-Guo123/relay-codex/blob/main/docs/reviewer-quick-verdict.md
+
+Full Round 1 reviewer request:
 https://github.com/Ryan-Guo123/relay-codex/blob/main/docs/round1-reviewer-request.md
 
 Blunt negative feedback is welcome.
@@ -53,7 +58,8 @@ After sending the ask, record:
 
 - URL of the public comment, discussion, issue, or PR.
 - If private, the date and target segment without naming private people.
-- Artifact shared: `round1-reviewer-request.md`.
+- Artifact shared: `reviewer-quick-verdict.md`, `round1-reviewer-request.md`, `external-repo-trial.md`, or another concrete Relay artifact.
+- Review path: `60-second quick verdict`, `Round 1 reviewer request`, `External repo trial`, `Real PR handoff`, or `Other`.
 - Outcome, once received: `reused`, `edited_heavily`, `ignored`, or `confusing`.
 - Product decision: keep, simplify, rename, remove, or test again.
 
