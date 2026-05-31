@@ -57,6 +57,7 @@ Timebox:
 
 Minimum ask:
 
+- 1 explicit experiment protocol: [round1-experiment.md](round1-experiment.md).
 - 1 public issue comment, discussion reply, or maintainer DM using [round1-outreach-message.md](round1-outreach-message.md) or [outreach-copy.md](outreach-copy.md).
 - 1 linked reviewer artifact: [round1-reviewer-request.md](round1-reviewer-request.md), [reviewer-pack-example.md](reviewer-pack-example.md), `.relay/validation-brief.md`, `relay-validation-bundle`, or a real PR artifact.
 - 1 follow-up asking for one of: `reused`, `edited_heavily`, `ignored`, `confusing`.
