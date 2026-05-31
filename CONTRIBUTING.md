@@ -38,6 +38,12 @@ To run the runtime tests directly:
 make test-runtime
 ```
 
+To verify the fixture-backed artifact flow without dirtying the fixture repo:
+
+```bash
+make fixture-bundle
+```
+
 ## Project layout
 
 - `plugins/relay-codex/`
