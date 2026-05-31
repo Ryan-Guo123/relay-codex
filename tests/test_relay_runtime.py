@@ -74,6 +74,19 @@ class RelayRuntimeTests(unittest.TestCase):
         self.assertIn("Recovery Tasks", queue)
         self.assertIn("Restate the last successful change", queue)
 
+    def test_handoff_writes_maintainer_summary(self) -> None:
+        workspace = self.copy_fixture("stuck-repo")
+        handoff_result = self.run_runtime(workspace, "handoff")
+        payload = json.loads(handoff_result.stdout)
+        handoff_path = Path(payload["handoff"])
+        handoff = handoff_path.read_text(encoding="utf-8")
+        self.assertTrue(handoff_path.exists())
+        self.assertEqual(payload["verdict"], "needs_review")
+        self.assertIn("# Relay Handoff", handoff)
+        self.assertIn("## Last Successful Signal", handoff)
+        self.assertIn("pytest failed with error", handoff)
+        self.assertIn("Do not continue automatically", handoff)
+
     def test_automation_packs_are_rendered(self) -> None:
         workspace = self.copy_fixture("empty-repo")
         packs_result = self.run_runtime(workspace, "automations")

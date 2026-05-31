@@ -328,6 +328,16 @@ def summarize_recent_events(events: list[dict[str, Any]], limit: int = 5) -> str
     return "\n".join(lines)
 
 
+def summarize_last_success(events: list[dict[str, Any]]) -> str:
+    for event in reversed(events):
+        _label, substantive = classify_event(event)
+        if substantive:
+            timestamp = event.get("timestamp", "unknown-time")
+            summary = event.get("summary", "No summary captured.")
+            return f"{timestamp}: {summary}"
+    return "No substantive Relay event recorded yet."
+
+
 def infer_phase(context: dict[str, Any], events: list[dict[str, Any]]) -> str:
     if not events:
         return "setup"
@@ -463,6 +473,83 @@ def inspect_relay(root: Path) -> dict[str, Any]:
     }
 
 
+def render_handoff(context: dict[str, Any], events: list[dict[str, Any]], inspection: dict[str, Any]) -> str:
+    reasons = inspection["reasons"]
+    reason_lines = "\n".join(f"- {reason}" for reason in reasons) if reasons else "- No active blocker signals."
+    recent = summarize_recent_events(events, limit=6)
+    last_success = summarize_last_success(events)
+    queue = read_text(relay_dir(Path(inspection["root"])) / "queue.md").strip() or "No queue captured."
+    verdict = inspection["verdict"]
+
+    if verdict == "continue":
+        next_action = "Pick one unchecked item from `.relay/queue.md` and continue with the smallest meaningful change."
+        review_focus = "Confirm the queued task still maps to the PR or release goal before making more edits."
+    elif verdict == "paused":
+        next_action = "Do not schedule more agent work until a new maintainer goal or queue item exists."
+        review_focus = "Check whether the project is actually complete or just missing a next task."
+    elif verdict == "needs_human":
+        next_action = "Ask for the missing product, credential, approval, or scope decision before continuing."
+        review_focus = "Resolve the human decision point explicitly; do not let Codex guess."
+    else:
+        next_action = "Switch to recovery: restate the last success, isolate one failing signal, and stop broad retries."
+        review_focus = "Look for repeated failures, test-only churn, or repeated conclusions before approving more work."
+
+    return f"""# Relay Handoff
+
+- Project: {context["project_name"]}
+- Stack: {", ".join(context["stack"])}
+- Git branch: `{context["git_branch"]}`
+- Verdict: `{verdict}`
+- Generated: {iso_now()}
+
+## Maintainer Summary
+
+Relay generated this handoff so a human maintainer or future Codex run can decide whether to continue, pause, recover, or ask for input before more work happens.
+
+## Last Successful Signal
+
+- {last_success}
+
+## Current Signals
+
+{reason_lines}
+
+## Recent Events
+
+{recent}
+
+## Queue Snapshot
+
+```markdown
+{queue}
+```
+
+## Recommended Next Action
+
+{next_action}
+
+## Review Focus
+
+{review_focus}
+
+## Safe Handoff Rules
+
+- Use Codex goals for the thread objective and completion contract; use Relay handoff for repo-local evidence, review gates, and future pickup.
+- Do not continue automatically when the verdict is `needs_human` or `needs_review`.
+- Keep the next action to one investigation or one implementation move.
+- If this handoff is used in a PR, include the verdict, last successful signal, and recommended next action in the PR note.
+"""
+
+
+def write_handoff(root: Path) -> dict[str, Any]:
+    inspection = inspect_relay(root)
+    context = detect_repo_context(root)
+    relay_root = relay_dir(root)
+    events = load_jsonl(relay_root / "events.jsonl")
+    write_text(relay_root / "handoff.md", render_handoff(context, events, inspection))
+    return {**inspection, "handoff": str(relay_root / "handoff.md")}
+
+
 def recover_relay(root: Path) -> dict[str, Any]:
     inspection = inspect_relay(root)
     relay_root = relay_dir(root)
@@ -595,6 +682,16 @@ def cmd_recover(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_handoff(args: argparse.Namespace) -> int:
+    payload = write_handoff(args.root.resolve())
+    if args.json:
+        print_json(payload)
+    else:
+        print(f"Relay handoff written to {payload['handoff']}")
+        print(f"Verdict: {payload['verdict']}")
+    return 0
+
+
 def cmd_automations(args: argparse.Namespace) -> int:
     root = args.root.resolve()
     ensure_relay_workspace(root)
@@ -627,6 +724,7 @@ def build_parser() -> argparse.ArgumentParser:
         ("enable", cmd_enable),
         ("inspect", cmd_inspect),
         ("recover", cmd_recover),
+        ("handoff", cmd_handoff),
         ("automations", cmd_automations),
         ("hook-posttooluse", cmd_hook),
     ):

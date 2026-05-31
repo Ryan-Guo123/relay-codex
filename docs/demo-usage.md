@@ -90,6 +90,63 @@ Relay rewrites `.relay/queue.md` into a small recovery checklist:
 
 This is the handoff point. A maintainer can inspect the queue and decide whether Codex should continue, pause, or ask for missing input.
 
+## Step 4: generate the PR handoff
+
+Generate a maintainer-ready handoff before continuing or posting a PR update:
+
+```bash
+python3 plugins/relay-codex/scripts/relay_runtime.py handoff --json
+```
+
+Relay writes:
+
+```text
+.relay/handoff.md
+```
+
+The handoff includes:
+
+- current verdict
+- last successful signal
+- current blocker signals
+- recent Relay events
+- queue snapshot
+- recommended next action
+- review focus
+- safe handoff rules
+
+Expected excerpt when a repo is stuck:
+
+```markdown
+# Relay Handoff
+
+- Verdict: `needs_review`
+
+## Last Successful Signal
+
+- No substantive Relay event recorded yet.
+
+## Current Signals
+
+- Relay saw repeated failure signals in recent events.
+
+## Recommended Next Action
+
+Switch to recovery: restate the last success, isolate one failing signal, and stop broad retries.
+```
+
+Expected excerpt when a repo is safe to continue:
+
+```markdown
+# Relay Handoff
+
+- Verdict: `continue`
+
+## Recommended Next Action
+
+Pick one unchecked item from `.relay/queue.md` and continue with the smallest meaningful change.
+```
+
 ## Example PR triage workflow
 
 Use this flow on a real pull request:
@@ -102,7 +159,8 @@ Use this flow on a real pull request:
    - likely stuck point
    - smallest next investigation
    - human decision needed, if any
-5. Do not install recurring automations until the queue has a clear owner and stop condition.
+5. Run `handoff` and use `.relay/handoff.md` as the maintainer review surface.
+6. Do not install recurring automations until the queue has a clear owner and stop condition.
 
 ## What this demo proves
 

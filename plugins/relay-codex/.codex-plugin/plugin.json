@@ -34,6 +34,7 @@
     "defaultPrompt": [
       "Enable Relay in this repo",
       "Check whether Codex is stuck and what to do next",
+      "Generate a Relay handoff for this PR",
       "Install automations to keep this project moving"
     ],
     "brandColor": "#F97316",
