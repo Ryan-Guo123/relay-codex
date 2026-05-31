@@ -18,7 +18,7 @@ That handoff should make it easier to review, comment on, resume, or release the
 
 Relay should not claim that many people will use it, star it, sponsor it, or pay for it until evidence exists outside this repository.
 
-The public gates are tracked in [evidence-and-business-case.md](evidence-and-business-case.md), the revenue gates are tracked in [revenue-experiment.md](revenue-experiment.md), and the first outside-review experiment is specified in [round1-experiment.md](round1-experiment.md). The minimum bar before stronger confidence claims:
+The current Define gate is tracked in [define-gate.md](define-gate.md), the public gates are tracked in [evidence-and-business-case.md](evidence-and-business-case.md), the revenue gates are tracked in [revenue-experiment.md](revenue-experiment.md), and the first outside-review experiment is specified in [round1-experiment.md](round1-experiment.md). The minimum bar before stronger confidence claims:
 
 - 3 outside reviewers read a Relay handoff.
 - At least 2 mark it `reused` or `edited_heavily`.
