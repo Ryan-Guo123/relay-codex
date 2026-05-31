@@ -162,7 +162,7 @@ For full setup steps, success checks, and troubleshooting, see [docs/install.md]
 
 See [docs/demo-usage.md](docs/demo-usage.md) for a concrete PR triage flow, [docs/pr-handoff-example.md](docs/pr-handoff-example.md) for the first fixture-backed GitHub PR handoff, and [docs/stuck-recovery-walkthrough.md](docs/stuck-recovery-walkthrough.md) for the `continue -> needs_review -> recovery handoff` path. The demo GIF is generated from real Relay runtime output; its storyboard and acceptance criteria live in [docs/demo-storyboard.md](docs/demo-storyboard.md).
 
-If you are reviewing Relay from outside the project, start with [docs/reviewers-wanted.md](docs/reviewers-wanted.md), then use [docs/external-maintainer-validation.md](docs/external-maintainer-validation.md) and the `Relay handoff feedback` issue template. Honest "ignored" or "confusing" feedback is more useful than polite praise.
+If you are reviewing Relay from outside the project, start with [docs/reviewers-wanted.md](docs/reviewers-wanted.md), then use [docs/external-maintainer-validation.md](docs/external-maintainer-validation.md) and the `Relay handoff feedback` issue template. If you are sharing the request, [docs/outreach-copy.md](docs/outreach-copy.md) has short drafts. Honest "ignored" or "confusing" feedback is more useful than polite praise.
 
 ### Option B: develop the plugin itself
 

@@ -4,6 +4,8 @@ Relay needs outside maintainer feedback.
 
 The product is only useful if someone who did not run the Codex thread can still understand the generated handoff.
 
+If you are sharing this request with another maintainer, use the drafts in [outreach-copy.md](outreach-copy.md).
+
 ## Who This Is For
 
 You are a good reviewer if you:
