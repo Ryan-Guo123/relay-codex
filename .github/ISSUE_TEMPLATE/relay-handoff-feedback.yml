@@ -1,0 +1,80 @@
+name: Relay handoff feedback
+description: Report whether a generated Relay PR handoff helped an outside maintainer or reviewer.
+title: "Handoff feedback: "
+labels:
+  - validation
+  - feedback
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this when someone outside the current build thread reviews a Relay-generated `.relay/pr-comment.md`.
+        Be blunt. "Ignored" and "confusing" are useful outcomes.
+  - type: input
+    id: pr_or_task
+    attributes:
+      label: PR or task
+      description: Link the PR, branch, issue, or task being reviewed.
+      placeholder: "https://github.com/org/repo/pull/123"
+    validations:
+      required: true
+  - type: dropdown
+    id: reviewer_relationship
+    attributes:
+      label: Reviewer relationship
+      options:
+        - Outside maintainer
+        - Outside contributor
+        - Teammate who did not run Codex
+        - User evaluating Relay
+        - Other
+    validations:
+      required: true
+  - type: textarea
+    id: relay_excerpt
+    attributes:
+      label: Relay handoff excerpt
+      description: Paste the redacted `.relay/pr-comment.md` excerpt or link to it.
+      placeholder: "Paste the generated Current State, Verification, Risks / Review Focus, and Recommended Next Action sections."
+    validations:
+      required: true
+  - type: textarea
+    id: comparison
+    attributes:
+      label: Compared against
+      description: What was the normal Codex/manual summary, and how did Relay compare?
+      placeholder: "Relay was clearer on verification, but the manual summary had better context..."
+    validations:
+      required: true
+  - type: dropdown
+    id: outcome
+    attributes:
+      label: Outcome
+      options:
+        - reused
+        - edited_heavily
+        - ignored
+        - confusing
+    validations:
+      required: true
+  - type: textarea
+    id: rubric
+    attributes:
+      label: Rubric scores
+      description: Score 1-5 for changed files, verification, review focus, next action, and GitHub fit.
+      value: |
+        - Changed files:
+        - Verification:
+        - Review focus:
+        - Next action:
+        - GitHub fit:
+    validations:
+      required: true
+  - type: textarea
+    id: decision
+    attributes:
+      label: Product decision
+      description: What should Relay do next based on this feedback?
+      placeholder: "Keep pr-comment, simplify it, rename it, remove it, or test again with a different task."
+    validations:
+      required: true
