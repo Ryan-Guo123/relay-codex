@@ -45,6 +45,8 @@ Relay adds a thin control layer on top of Codex App:
 - Small surface area
   - Relay focuses on keeping work moving. It does not try to become another prompt marketplace or agent framework.
 
+The product strategy lives in [docs/product-strategy.md](docs/product-strategy.md). The short version: Relay should be the repo-local flight recorder and handoff layer for long-running Codex work, not a clone of broader multi-agent control planes.
+
 ## Core pieces
 
 ### 1. Project Relay
