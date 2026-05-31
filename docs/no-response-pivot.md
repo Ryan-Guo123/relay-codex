@@ -10,6 +10,8 @@ Run this checklist on **2026-06-07**.
 
 Tracking issue: [#60 Run June 7 no-response pivot review](https://github.com/Ryan-Guo123/relay-codex/issues/60).
 
+Issue label: `waiting-on-feedback`.
+
 ## Public Asks To Check
 
 | Ask | Link | Segment | What To Check |
@@ -59,6 +61,8 @@ Instead:
 Use if no one replies because the ask is too much work.
 
 Tracking issue: [#62 Prepare 60-second reviewer sample if Round 1 gets no replies](https://github.com/Ryan-Guo123/relay-codex/issues/62).
+
+Issue label: `candidate-pivot`.
 
 Change the artifact from a full reviewer pack to a 60-second sample:
 
