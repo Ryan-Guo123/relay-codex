@@ -2,7 +2,11 @@ PYTHON ?= python3
 RELAY_RUNTIME := plugins/relay-codex/scripts/relay_runtime.py
 ROOT ?= .
 
-.PHONY: test test-runtime review-readiness validation-bundle
+.PHONY: verify test test-runtime review-readiness validation-bundle
+
+verify:
+	git diff --check
+	$(MAKE) test
 
 test:
 	$(PYTHON) -m unittest discover -s tests -p 'test_*.py'

@@ -177,7 +177,7 @@ If you are reviewing Relay from outside the project, start with [docs/reviewers-
 3. Run the validation suite:
 
 ```bash
-make test
+make verify
 ```
 
 To run the runtime tests directly:

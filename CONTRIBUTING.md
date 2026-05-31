@@ -29,7 +29,7 @@ If you did not run the Codex session, your feedback is especially useful. Start 
 4. Run the test suite:
 
 ```bash
-make test
+make verify
 ```
 
 To run the runtime tests directly:
