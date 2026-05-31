@@ -80,7 +80,7 @@ If that handoff does not make a maintainer faster or more confident, Relay shoul
 - Small surface area
   - Relay focuses on keeping work moving. It does not try to become another prompt marketplace or agent framework.
 
-The product strategy lives in [docs/product-strategy.md](docs/product-strategy.md). The short version: Relay should be the repo-local flight recorder and handoff layer for long-running Codex work, not a clone of broader multi-agent control planes.
+The product strategy lives in [docs/product-strategy.md](docs/product-strategy.md), and the validation plan lives in [docs/validation-plan.md](docs/validation-plan.md). The short version: Relay should be the repo-local flight recorder and handoff layer for long-running Codex work, not a clone of broader multi-agent control planes.
 
 ## Core pieces
 
@@ -186,6 +186,7 @@ plugins/relay-codex/
   skills/
 tests/
 docs/
+tools/
 ```
 
 ## Current status
@@ -205,6 +206,7 @@ Planned next:
 
 - packaged marketplace distribution once the plugin leaves local-bundle install
 - higher-quality narrated walkthrough after the first runtime-generated GIF
+- validation workflows for PR handoff, stuck recovery, and release handoff
 - more opinionated automation setup
 - stronger review queue handoff patterns
 - a tighter boundary with Codex's native goal and continuation features
