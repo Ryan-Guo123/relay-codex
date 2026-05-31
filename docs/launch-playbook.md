@@ -81,6 +81,7 @@ Do not claim that story is proven until the [validation ledger](validation-ledge
 - send one targeted outside-review ask
 - ask for one outcome, not general praise
 - log every response in [validation-ledger.md](validation-ledger.md)
+- keep revenue expectation at $0 unless [revenue-experiment.md](revenue-experiment.md) gates move
 
 ### Day 8 to 14
 

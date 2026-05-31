@@ -238,7 +238,7 @@ The next work should be validation, not feature expansion:
 4. Track every response as `reused`, `edited_heavily`, `ignored`, or `confusing`.
 5. Only release runtime changes when the validation evidence changes the product.
 
-The public evidence queue lives in [validation-ledger.md](validation-ledger.md).
+The public evidence queue lives in [validation-ledger.md](validation-ledger.md). Revenue gates live in [revenue-experiment.md](revenue-experiment.md).
 
 ## Sources
 
