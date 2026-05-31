@@ -25,6 +25,19 @@ jobs:
           BASE_REF="origin/${GITHUB_BASE_REF:-main}"
           python3 plugins/relay-codex/scripts/relay_runtime.py review-readiness --base-ref "$BASE_REF" --json | tee relay-review-readiness.json
 
+      - name: Publish Relay review readiness summary
+        if: always()
+        run: |
+          if [ -f .relay/review-readiness.md ]; then
+            cat .relay/review-readiness.md >> "$GITHUB_STEP_SUMMARY"
+          else
+            {
+              echo "# Relay Review Readiness"
+              echo
+              echo "Relay did not generate .relay/review-readiness.md."
+            } >> "$GITHUB_STEP_SUMMARY"
+          fi
+
       - name: Upload Relay review readiness artifacts
         uses: actions/upload-artifact@v4
         if: always()

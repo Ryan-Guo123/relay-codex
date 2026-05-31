@@ -32,9 +32,9 @@ python3 plugins/relay-codex/scripts/relay_runtime.py reviewer-pack --json
 
 If the branch is already committed or running in CI, add `--base-ref origin/main` to `review-readiness` and `pr-comment`.
 
-On GitHub PRs, the `Review Readiness` workflow also uploads `relay-review-readiness` as an Actions artifact containing `.relay/review-readiness.md` and `relay-review-readiness.json`.
+On GitHub PRs, the `Review Readiness` workflow also publishes `.relay/review-readiness.md` to the Actions job summary and uploads `relay-review-readiness` as an artifact containing the Markdown plus `relay-review-readiness.json`.
 
-2. Read `.relay/review-readiness.md` or download the `relay-review-readiness` Actions artifact from the PR.
+2. Read `.relay/review-readiness.md`, the `Review Readiness` job summary, or the `relay-review-readiness` Actions artifact from the PR.
 3. Read `.relay/pr-comment.md`.
 4. Read `.relay/reviewer-pack.md`.
 5. Add or link the plain Codex summary or manual PR summary in the `Compare Against` section.
