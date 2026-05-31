@@ -29,13 +29,13 @@ If you did not run the Codex session, your feedback is especially useful. Start 
 4. Run the test suite:
 
 ```bash
-python3 -m unittest discover -s tests -p 'test_*.py'
+make test
 ```
 
 To run the runtime tests directly:
 
 ```bash
-python3 -m unittest tests.test_relay_runtime
+make test-runtime
 ```
 
 ## Project layout

@@ -177,13 +177,25 @@ If you are reviewing Relay from outside the project, start with [docs/reviewers-
 3. Run the validation suite:
 
 ```bash
-python3 -m unittest discover -s tests -p 'test_*.py'
+make test
 ```
 
 To run the runtime tests directly:
 
 ```bash
-python3 -m unittest tests.test_relay_runtime
+make test-runtime
+```
+
+To regenerate the local review-readiness artifact:
+
+```bash
+make review-readiness
+```
+
+To regenerate the main handoff and outside-validation artifacts:
+
+```bash
+make validation-bundle
 ```
 
 ## Included skills
