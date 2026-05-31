@@ -24,6 +24,7 @@ Evidence:
 
 - `.relay/state.md` shows a current verdict.
 - `.relay/handoff.md` summarizes progress, risk, verification, and next action.
+- `.relay/pr-comment.md` turns the handoff into a GitHub-ready review note.
 - A reviewer can explain the next action after reading only the README demo and generated Relay files.
 
 Pass condition:
@@ -96,6 +97,7 @@ Artifacts:
 - `.relay/state.md`
 - `.relay/events.jsonl`
 - `.relay/handoff.md`
+- `.relay/pr-comment.md`
 - PR description or comment drafted from the handoff
 
 Measure:
