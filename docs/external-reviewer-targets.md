@@ -14,6 +14,7 @@ Do not mass-post. Do not ask for stars. Do not ask for sponsorship. Ask for one 
 ## Current Validation Assets
 
 - Stable reviewer packet: [round1-reviewer-request.md](round1-reviewer-request.md)
+- 60-second no-install sample: [reviewer-quick-verdict.md](reviewer-quick-verdict.md)
 - Experiment protocol: [round1-experiment.md](round1-experiment.md)
 - External repo trial workflow: [external-repo-trial.md](external-repo-trial.md)
 - Public ask copy: [round1-outreach-message.md](round1-outreach-message.md)
@@ -55,11 +56,14 @@ Do not ask:
 Use this only for a maintainer or reviewer who is plausibly close to the problem:
 
 ```text
-Quick ask: would you be open to spending 10 minutes reviewing a generated PR handoff?
+Quick ask: would you be open to spending 60 seconds on a no-install generated PR handoff sample, or 10 minutes on the full reviewer packet?
 
 I am validating Relay for Codex, an open-source tool that turns Codex work into GitHub-ready maintainer artifacts. I need one outside reviewer to compare the Relay handoff with a normal PR summary and mark it reused, edited_heavily, ignored, or confusing.
 
 I also need to know whether this is useful alongside AI PR review tools like Copilot code review, CodeRabbit, Graphite, Qodo, or PR-Agent, or whether those tools already solve the job.
+
+60-second quick verdict:
+https://github.com/Ryan-Guo123/relay-codex/blob/main/docs/reviewer-quick-verdict.md
 
 Round 1 reviewer request:
 https://github.com/Ryan-Guo123/relay-codex/blob/main/docs/round1-reviewer-request.md
@@ -74,7 +78,7 @@ Blunt negative feedback is welcome.
 
 - Prefer one direct, relevant ask over broad posting.
 - If posting in a public thread, disclose that Relay is your project.
-- Use the stable reviewer request, not a vague repo link.
+- Use the quick verdict or stable reviewer request, not a vague repo link.
 - Ask for `reused`, `edited_heavily`, `ignored`, or `confusing`.
 - Do not argue with negative feedback.
 - If a moderator or maintainer says the ask is unwelcome, stop and record that as a distribution constraint.
@@ -86,6 +90,7 @@ For each ask, update [validation-ledger.md](validation-ledger.md) with:
 - date
 - channel or target segment
 - artifact shared
+- review path
 - whether the ask was public or private
 - outcome, if any
 - product decision

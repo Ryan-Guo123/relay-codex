@@ -66,7 +66,7 @@ Do not claim that story is proven until the [validation ledger](validation-ledge
 - there is a real demo, not only architecture
 - there is a public evidence ledger showing what is and is not validated
 - there is a public experiment protocol with success, failure, and stop rules
-- the reviewer ask is small enough to complete in 10 minutes
+- the reviewer ask has a 60-second no-install screen and a 10-minute deeper path
 
 ## First 14 days
 

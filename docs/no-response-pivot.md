@@ -60,18 +60,18 @@ Instead:
 
 Use if no one replies because the ask is too much work.
 
-Tracking issue: [#62 Prepare 60-second reviewer sample if Round 1 gets no replies](https://github.com/Ryan-Guo123/relay-codex/issues/62).
+Tracking issue: [#62 Prepare 60-second reviewer sample if Round 1 gets no replies](https://github.com/Ryan-Guo123/relay-codex/issues/62), closed after [reviewer-quick-verdict.md](reviewer-quick-verdict.md) shipped.
 
-Issue label: `candidate-pivot`.
+Current status: ready as a lower-friction artifact, but not yet validated.
 
-Change the artifact from a full reviewer pack to a 60-second sample:
+Use the 60-second sample instead of the full reviewer pack:
 
-- one changed-file summary
-- one verification block
-- one "review / split / send back" recommendation
-- one question: "Would you paste this into a PR?"
+- [reviewer-quick-verdict.md](reviewer-quick-verdict.md)
+- review path: `60-second quick verdict`
+- required outcome: `reused`, `edited_heavily`, `ignored`, or `confusing`
+- required AI review fit: `before_review`, `in_addition`, `not_needed`, or `unsure`
 
-Then test only that smaller artifact.
+Then test only that smaller artifact before sending another full reviewer-pack ask.
 
 ### Pivot B: Target Segment Change
 
