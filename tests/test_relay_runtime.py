@@ -275,6 +275,8 @@ class RelayRuntimeTests(unittest.TestCase):
         self.assertIn("## Relay Handoff To Review", pack)
         self.assertIn("## Scoring Rubric", pack)
         self.assertIn("Relay handoff feedback", pack)
+        self.assertIn("Fit with AI PR review tools is clear", pack)
+        self.assertIn("not_needed", pack)
         self.assertIn("Needs maintainer review before another agent pass", pack)
 
     def test_validation_brief_wraps_reviewer_pack_and_required_outcome(self) -> None:
@@ -292,8 +294,11 @@ class RelayRuntimeTests(unittest.TestCase):
         self.assertIn("````markdown", brief)
         self.assertIn(".relay/reviewer-pack.md", brief)
         self.assertIn("reused, edited_heavily, ignored, or confusing", brief)
+        self.assertIn("Copilot code review, CodeRabbit, Graphite, Qodo, or PR-Agent", brief)
+        self.assertIn("Record AI review fit", brief)
         self.assertIn("Update `docs/validation-ledger.md`", brief)
         self.assertIn("Do not ask for stars, sponsorship, or praise", brief)
+        self.assertIn("shrink to a template/schema or stop", brief)
 
     def test_changed_files_ignore_parent_repo_when_root_is_nested_fixture(self) -> None:
         workspace = self.copy_fixture("in-progress-repo")
@@ -350,7 +355,7 @@ class RelayRuntimeTests(unittest.TestCase):
             "handoff.md": ("# Relay Handoff", "## Maintainer Summary", "## Recommended Next Action", "## Safe Handoff Rules"),
             "review-readiness.md": ("# Relay Review Readiness", "## Review Gate", "## Suggested Reviewers", "## Recommended Review Decision"),
             "pr-comment.md": ("## Relay PR Handoff", "### Current State", "### Review Readiness", "### Verification", "### Recommended Next Action", "### Maintainer Checklist"),
-            "reviewer-pack.md": ("# Relay Reviewer Pack", "## Reviewer Ask", "## Scoring Rubric", "## Required Outcome"),
+            "reviewer-pack.md": ("# Relay Reviewer Pack", "## Reviewer Ask", "## Scoring Rubric", "## Required Outcome", "AI PR review tools"),
             "validation-brief.md": ("# Relay Validation Brief", "## Validation Goal", "## Reviewer Pack", "## Feedback To Record", "## Guardrails"),
             "release-checklist.md": ("# Relay Release Checklist", "## Release Posture", "## 2. Verification", "## 5. Human Approval Gates"),
         }

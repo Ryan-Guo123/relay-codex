@@ -993,6 +993,14 @@ Could you also tell whether the changed-file scope and sensitive-path scan are e
 
 Please be blunt: would you reuse this, edit it heavily, ignore it, or ask for a different format?
 
+Also compare Relay with AI PR review tools such as Copilot code review, CodeRabbit, Graphite, Qodo, or PR-Agent:
+
+- `in_addition`: Relay gives context or provenance the review bot does not.
+- `before_review`: Relay helps decide whether a PR is ready for any reviewer.
+- `instead`: Relay is enough for this small PR or release handoff.
+- `not_needed`: an existing AI PR review tool already solves this job.
+- `unsure`: you would need to test both on a real PR first.
+
 ## Relay Handoff To Review
 
 ```markdown
@@ -1019,6 +1027,7 @@ Score each item from 1 to 5.
 | Review readiness signals are useful |  |  |
 | Next action is directly actionable |  |  |
 | GitHub fit is pasteable |  |  |
+| Fit with AI PR review tools is clear |  |  |
 
 ## Required Outcome
 
@@ -1037,6 +1046,7 @@ Open a GitHub issue with the `Relay handoff feedback` template and include:
 - the redacted Relay handoff excerpt
 - the comparison summary
 - the outcome
+- whether Relay is `in_addition`, `before_review`, `instead`, `not_needed`, or `unsure` compared with AI PR review tools
 - the product decision: keep, simplify, rename, remove, or test again
 
 Do not treat this pack as proof of value until someone outside the current build thread responds.
@@ -1096,6 +1106,8 @@ Could you spend about 10 minutes comparing this Relay handoff with a normal Code
 
 Please record one outcome: reused, edited_heavily, ignored, or confusing.
 
+Also record whether Relay is useful in addition to, before, or instead of AI PR review tools such as Copilot code review, CodeRabbit, Graphite, Qodo, or PR-Agent. If an existing review bot already solves this job, mark Relay `not_needed`.
+
 The useful question is not whether the repo looks polished. It is whether this handoff helps you decide what changed, what was verified, what still needs review, and what should happen next.
 ```
 
@@ -1111,6 +1123,7 @@ The useful question is not whether the repo looks polished. It is whether this h
 - Link or paste the redacted Relay handoff.
 - Link or paste the normal Codex/manual summary used for comparison.
 - Record one outcome: `reused`, `edited_heavily`, `ignored`, or `confusing`.
+- Record AI review fit: `in_addition`, `before_review`, `instead`, `not_needed`, or `unsure`.
 - Record whether the reviewer identified changed files, verification, review focus, and next action without reading the full Codex thread.
 - Update `docs/validation-ledger.md` with the result.
 
@@ -1120,6 +1133,7 @@ The useful question is not whether the repo looks polished. It is whether this h
 - Do not count this brief, an internal PR, or a synthetic demo as validation.
 - Redact secrets, customer data, private links, and internal owner names before sharing.
 - If the reviewer marks this `ignored` or `confusing`, treat that as useful product signal.
+- If the reviewer marks Relay `not_needed` compared with an AI PR review tool, shrink to a template/schema or stop instead of adding features.
 """
 
 

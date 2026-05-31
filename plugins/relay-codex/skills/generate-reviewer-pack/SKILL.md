@@ -19,11 +19,13 @@ python3 ../../scripts/relay_runtime.py reviewer-pack --json
 3. Before sharing it:
    - add or link the normal Codex/manual summary in the `Compare Against` section
    - ask whether the review-readiness signals help identify the right reviewer or split point
+   - ask whether Relay is useful in addition to, before, or instead of AI PR review tools
    - redact secrets, private links, customer data, or internal context
    - keep the reviewer outcome options intact
 
 ## Guardrails
 
 - Do not treat the reviewer pack as validation by itself; it is only a request packet.
+- If the reviewer says an existing AI PR review tool already solves the job, record that as a stop-or-shrink signal.
 - Do not send the packet externally without human approval.
 - Record the response in GitHub using the `Relay handoff feedback` issue template.

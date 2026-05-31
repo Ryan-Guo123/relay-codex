@@ -26,10 +26,12 @@ python3 ../../scripts/relay_runtime.py validation-brief --base-ref origin/main -
    - add or link the normal Codex/manual summary in the embedded reviewer pack
    - redact secrets, private links, customer data, or internal owner names
    - keep the outcome choices intact: `reused`, `edited_heavily`, `ignored`, or `confusing`
+   - keep the AI review fit choices intact: `in_addition`, `before_review`, `instead`, `not_needed`, or `unsure`
    - ask for a decision, not praise
 
 ## Guardrails
 
 - Do not treat the validation brief as validation by itself; only an outside reviewer outcome counts.
+- If a reviewer marks Relay `not_needed` compared with an AI PR review tool, record that as negative evidence and shrink the product direction.
 - Do not ask for stars, sponsorship, or money in the validation ask.
 - Record the response in GitHub and update `docs/validation-ledger.md`.
