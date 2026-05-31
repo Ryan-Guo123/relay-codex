@@ -530,6 +530,46 @@ def summarize_review_routing(root: Path, files: list[str]) -> tuple[list[str], d
     return lines, metadata
 
 
+def decide_review_readiness(metadata: dict[str, Any]) -> dict[str, str]:
+    suggested_reviewers = metadata["review_routing"]["suggested_reviewers"]
+    unowned_paths = metadata["review_routing"]["unowned_paths"]
+    if metadata["large_change"]:
+        return {
+            "risk_level": "high",
+            "decision": "split_or_summarize",
+            "recommended_action": "Ask for a split or a tighter maintainer summary before deep review.",
+        }
+    if metadata["sensitive_paths"]:
+        return {
+            "risk_level": "high",
+            "decision": "owner_review_required",
+            "recommended_action": "Route to an owner for the sensitive area before merge.",
+        }
+    if unowned_paths:
+        return {
+            "risk_level": "medium",
+            "decision": "review_unowned_paths",
+            "recommended_action": "Check unowned changed paths and decide who should review them.",
+        }
+    if suggested_reviewers:
+        return {
+            "risk_level": "medium",
+            "decision": "request_codeowners_review",
+            "recommended_action": "Request review from the suggested CODEOWNERS owner(s).",
+        }
+    if metadata["changed_file_count"] == 0:
+        return {
+            "risk_level": "none",
+            "decision": "no_changed_files",
+            "recommended_action": "Treat this as a handoff sample; no code-review gate is available without changed files.",
+        }
+    return {
+        "risk_level": "low",
+        "decision": "normal_review",
+        "recommended_action": "Scope looks small enough for normal maintainer review.",
+    }
+
+
 def summarize_review_readiness(root: Path, base_ref: str | None = None) -> tuple[str, dict[str, Any]]:
     files = collect_changed_files(root, base_ref=base_ref)
     sensitive_paths = detect_sensitive_review_paths(files)
@@ -563,7 +603,7 @@ def summarize_review_readiness(root: Path, base_ref: str | None = None) -> tuple
             lines.append("- Review signal: Changed-file scope looks small enough for normal maintainer review.")
         lines.extend(routing_lines)
 
-    metadata = {
+    metadata: dict[str, Any] = {
         "changed_file_count": file_count,
         "base_ref": base_ref,
         "change_source": "base_ref_diff" if base_ref else "git_status",
@@ -571,6 +611,7 @@ def summarize_review_readiness(root: Path, base_ref: str | None = None) -> tuple
         "sensitive_paths": [{"label": label, "path": path} for label, path in sensitive_paths],
         "review_routing": routing_metadata,
     }
+    metadata["decision"] = decide_review_readiness(metadata)
     return "\n".join(lines), metadata
 
 
@@ -592,16 +633,7 @@ def render_review_readiness(context: dict[str, Any], inspection: dict[str, Any],
     else:
         reviewer_lines = "- No CODEOWNERS file detected."
 
-    if metadata["large_change"]:
-        decision = "Ask for a split or a tighter maintainer summary before deep review."
-    elif metadata["sensitive_paths"]:
-        decision = "Route to an owner for the sensitive area before merge."
-    elif suggested_reviewers:
-        decision = "Request review from the suggested CODEOWNERS owner(s)."
-    elif metadata["changed_file_count"] == 0:
-        decision = "Treat this as a handoff sample; no code-review gate is available without changed files."
-    else:
-        decision = "Scope looks small enough for normal maintainer review."
+    decision = metadata["decision"]["recommended_action"]
 
     return f"""# Relay Review Readiness
 

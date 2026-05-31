@@ -27,6 +27,7 @@ python3 ../../scripts/relay_runtime.py review-readiness --base-ref origin/main -
    - sensitive paths
    - CODEOWNERS routing hints
    - unowned changed paths
+   - JSON `risk_level` and `decision`
    - recommended review decision
 
 ## Guardrails
