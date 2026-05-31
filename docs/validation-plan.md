@@ -26,7 +26,7 @@ The public gates are tracked in [evidence-and-business-case.md](evidence-and-bus
 - 10 stars come from accounts not controlled by the maintainer after public sharing.
 - 1 money signal appears only after real usage, such as sponsorship interest, setup support, or a paid hosted-feature request.
 
-If these gates do not move after targeted outreach, Relay should shrink, pivot, or stop instead of adding more features.
+If these gates do not move after targeted outreach, Relay should shrink, pivot, or stop instead of adding more features. Track each ask and outcome in [validation-ledger.md](validation-ledger.md).
 
 ### 0. Review readiness is the right problem
 
