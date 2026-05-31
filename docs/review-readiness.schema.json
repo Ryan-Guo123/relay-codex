@@ -1,0 +1,138 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Ryan-Guo123/relay-codex/blob/main/docs/review-readiness.schema.json",
+  "title": "Relay Review Readiness Payload",
+  "type": "object",
+  "required": [
+    "root",
+    "relay_dir",
+    "project",
+    "verdict",
+    "reasons",
+    "event_count",
+    "open_tasks",
+    "stack",
+    "review_readiness",
+    "review_readiness_artifact"
+  ],
+  "properties": {
+    "root": { "type": "string" },
+    "relay_dir": { "type": "string" },
+    "project": { "type": "string" },
+    "verdict": {
+      "type": "string",
+      "enum": ["continue", "paused", "needs_human", "needs_review"]
+    },
+    "reasons": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "event_count": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "open_tasks": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "stack": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "review_readiness_artifact": { "type": "string" },
+    "review_readiness": {
+      "type": "object",
+      "required": [
+        "changed_file_count",
+        "base_ref",
+        "change_source",
+        "large_change",
+        "sensitive_paths",
+        "review_routing",
+        "decision"
+      ],
+      "properties": {
+        "changed_file_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "base_ref": {
+          "type": ["string", "null"]
+        },
+        "change_source": {
+          "type": "string",
+          "enum": ["git_status", "base_ref_diff"]
+        },
+        "large_change": {
+          "type": "boolean"
+        },
+        "sensitive_paths": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["label", "path"],
+            "properties": {
+              "label": { "type": "string" },
+              "path": { "type": "string" }
+            },
+            "additionalProperties": false
+          }
+        },
+        "review_routing": {
+          "type": "object",
+          "required": ["codeowners_path", "suggested_reviewers", "unowned_paths"],
+          "properties": {
+            "codeowners_path": {
+              "type": ["string", "null"]
+            },
+            "suggested_reviewers": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "required": ["owner", "paths"],
+                "properties": {
+                  "owner": { "type": "string" },
+                  "paths": {
+                    "type": "array",
+                    "items": { "type": "string" }
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "unowned_paths": {
+              "type": "array",
+              "items": { "type": "string" }
+            }
+          },
+          "additionalProperties": false
+        },
+        "decision": {
+          "type": "object",
+          "required": ["risk_level", "decision", "recommended_action"],
+          "properties": {
+            "risk_level": {
+              "type": "string",
+              "enum": ["none", "low", "medium", "high"]
+            },
+            "decision": {
+              "type": "string",
+              "enum": [
+                "no_changed_files",
+                "normal_review",
+                "request_codeowners_review",
+                "review_unowned_paths",
+                "owner_review_required",
+                "split_or_summarize"
+              ]
+            },
+            "recommended_action": { "type": "string" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": true
+}

@@ -14,6 +14,20 @@ That handoff should make it easier to review, comment on, resume, or release the
 
 ## What Must Be Proven
 
+### Traction gates before confidence claims
+
+Relay should not claim that many people will use it, star it, sponsor it, or pay for it until evidence exists outside this repository.
+
+The public gates are tracked in [evidence-and-business-case.md](evidence-and-business-case.md). The minimum bar before stronger confidence claims:
+
+- 3 outside reviewers read a Relay handoff.
+- At least 2 mark it `reused` or `edited_heavily`.
+- 1 external public repository runs `review-readiness` or `pr-comment` in a real PR or issue.
+- 10 stars come from accounts not controlled by the maintainer after public sharing.
+- 1 money signal appears only after real usage, such as sponsorship interest, setup support, or a paid hosted-feature request.
+
+If these gates do not move after targeted outreach, Relay should shrink, pivot, or stop instead of adding more features.
+
 ### 0. Review readiness is the right problem
 
 Question:
