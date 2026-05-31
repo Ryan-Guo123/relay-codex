@@ -18,6 +18,7 @@ Do not mass-post. Do not ask for stars. Do not ask for sponsorship. Ask for one 
 - Public ask copy: [round1-outreach-message.md](round1-outreach-message.md)
 - Feedback form: [Round 1 Relay feedback](https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feedback.yml)
 - Tracking issue: [#39 Run validation round 1 with an outside reviewer](https://github.com/Ryan-Guo123/relay-codex/issues/39)
+- Direct AI PR review competitor map: [ai-pr-review-competitors.md](ai-pr-review-competitors.md)
 
 ## Targeting Rule
 
@@ -55,6 +56,8 @@ Use this only for a maintainer or reviewer who is plausibly close to the problem
 Quick ask: would you be open to spending 10 minutes reviewing a generated PR handoff?
 
 I am validating Relay for Codex, an open-source tool that turns Codex work into GitHub-ready maintainer artifacts. I need one outside reviewer to compare the Relay handoff with a normal PR summary and mark it reused, edited_heavily, ignored, or confusing.
+
+I also need to know whether this is useful alongside AI PR review tools like Copilot code review, CodeRabbit, Graphite, Qodo, or PR-Agent, or whether those tools already solve the job.
 
 Round 1 reviewer request:
 https://github.com/Ryan-Guo123/relay-codex/blob/main/docs/round1-reviewer-request.md

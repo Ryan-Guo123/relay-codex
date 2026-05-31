@@ -88,10 +88,11 @@ For each target:
 1. Share the stable reviewer request: [round1-reviewer-request.md](round1-reviewer-request.md).
 2. Share one concrete artifact: `.relay/validation-brief.md`, `.relay/review-readiness.md`, `.relay/pr-comment.md`, or a `relay-validation-bundle`.
 3. Share a normal Codex/manual summary for comparison.
-4. Ask the reviewer to choose exactly one outcome: `reused`, `edited_heavily`, `ignored`, or `confusing`.
-5. Ask for one product decision: keep, simplify, rename, remove, or retest.
-6. Capture the response through the [Round 1 feedback form](https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feedback.yml) or the general handoff feedback form.
-7. Apply exactly one `outcome:*` label and keep `needs-ledger-update` until [validation-ledger.md](validation-ledger.md) is updated.
+4. Ask whether they would use Relay in addition to, before, or instead of Copilot/CodeRabbit/Graphite/Qodo-style AI review.
+5. Ask the reviewer to choose exactly one outcome: `reused`, `edited_heavily`, `ignored`, or `confusing`.
+6. Ask for one product decision: keep, simplify, rename, remove, or retest.
+7. Capture the response through the [Round 1 feedback form](https://github.com/Ryan-Guo123/relay-codex/issues/new?template=round1-relay-feedback.yml) or the general handoff feedback form.
+8. Apply exactly one `outcome:*` label and keep `needs-ledger-update` until [validation-ledger.md](validation-ledger.md) is updated.
 
 ## Success Metrics
 
@@ -116,6 +117,7 @@ Round 1 is negative evidence if:
 - 3 targeted asks receive no response after 7 days
 - a maintainer says the ask itself is noisy or unwelcome
 - reviewers prefer a normal Codex summary
+- reviewers say an existing AI PR review tool already solves the job
 - reviewers ask for a board, memory engine, or autonomous runtime instead of a handoff artifact
 
 If negative evidence appears, do not add features. Simplify the artifact, change the target segment, or stop the product direction.
