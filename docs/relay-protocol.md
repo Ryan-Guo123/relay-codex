@@ -274,6 +274,12 @@ Indexing guidance:
 - Index changed-file count, `base_ref`, `change_source`, large-scope warning, sensitive paths, CODEOWNERS-suggested reviewers, unowned paths, and structured `decision` fields: `risk_level`, `decision`, and `recommended_action`.
 - Treat this as the smallest machine-readable review gate; read `pr-comment.md` when a GitHub-ready narrative is needed.
 
+Machine-readable JSON:
+
+- `review-readiness --json` emits the structured payload used by GitHub Actions artifacts.
+- The JSON compatibility contract is documented in [review-readiness.schema.json](review-readiness.schema.json).
+- Consumers should tolerate additional top-level fields and should rely only on the documented `review_readiness` fields for routing decisions.
+
 ### `.relay/pr-comment.md`
 
 Command:
@@ -395,6 +401,8 @@ Relay artifacts can be indexed by other systems, but Relay itself should stay re
 ## Compatibility Contract
 
 Relay can add new fields and sections without a major version change.
+
+`docs/review-readiness.schema.json` is the public schema for the current `review-readiness --json` payload. It is intended for GitHub Actions, dashboards, memory tools, and other integrations that want to validate Relay output without parsing Markdown.
 
 Relay should avoid removing or renaming these stable headings without a documented migration:
 

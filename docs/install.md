@@ -80,6 +80,8 @@ python3 plugins/relay-codex/scripts/relay_runtime.py pr-comment --root /path/to/
 
 This repository also ships a `Review Readiness` GitHub Actions workflow. On pull requests it generates `.relay/review-readiness.md` and `relay-review-readiness.json`, publishes the Markdown to the workflow job summary, then uploads both files as the `relay-review-readiness` artifact.
 
+The JSON artifact follows the compatibility contract in [review-readiness.schema.json](review-readiness.schema.json), so downstream tools can validate the review gate without scraping Markdown.
+
 Use a disposable test repository if you do not want `.relay/` files in a real project yet.
 
 ## Common problems

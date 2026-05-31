@@ -30,7 +30,7 @@ What is not ready yet:
 - Relay is not ready for a new patch release just because more research landed.
 - Relay is not ready to claim a finished product category until the demo proves the wedge in one real workflow.
 
-The next gate is Define: turn the research into one primary use case, one demo path, and one public message. The current validation plan is tracked in [validation-plan.md](validation-plan.md), the stricter competitor map is tracked in [market-map.md](market-map.md), and community pain research is tracked in [community-research.md](community-research.md).
+The next gate is Define: turn the research into one primary use case, one demo path, and one public message. The current validation plan is tracked in [validation-plan.md](validation-plan.md), the stricter competitor map is tracked in [market-map.md](market-map.md), community pain research is tracked in [community-research.md](community-research.md), and the stricter evidence and business case is tracked in [evidence-and-business-case.md](evidence-and-business-case.md).
 
 ## Discover
 
@@ -235,6 +235,8 @@ It answers:
 ### Confidence level
 
 This is still a product bet, not a proven category.
+
+The current evidence bar is deliberately strict: Relay should not claim likely stars, sponsorship, revenue, or broad usage until the traction gates in [evidence-and-business-case.md](evidence-and-business-case.md) pass.
 
 Relay is likely useful if:
 
