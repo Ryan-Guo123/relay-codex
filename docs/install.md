@@ -69,6 +69,7 @@ python3 plugins/relay-codex/scripts/relay_runtime.py inspect --root /path/to/tar
 python3 plugins/relay-codex/scripts/relay_runtime.py review-readiness --root /path/to/target-repo --json
 python3 plugins/relay-codex/scripts/relay_runtime.py pr-comment --root /path/to/target-repo --json
 python3 plugins/relay-codex/scripts/relay_runtime.py reviewer-pack --root /path/to/target-repo --json
+python3 plugins/relay-codex/scripts/relay_runtime.py validation-brief --root /path/to/target-repo --json
 ```
 
 For a clean PR checkout or GitHub Actions job, compare committed changes against a base ref:
@@ -76,6 +77,7 @@ For a clean PR checkout or GitHub Actions job, compare committed changes against
 ```bash
 python3 plugins/relay-codex/scripts/relay_runtime.py review-readiness --root /path/to/target-repo --base-ref origin/main --json
 python3 plugins/relay-codex/scripts/relay_runtime.py pr-comment --root /path/to/target-repo --base-ref origin/main --json
+python3 plugins/relay-codex/scripts/relay_runtime.py validation-brief --root /path/to/target-repo --base-ref origin/main --json
 ```
 
 This repository also ships a `Review Readiness` GitHub Actions workflow. On pull requests it generates `.relay/review-readiness.md` and `relay-review-readiness.json`, publishes the Markdown to the workflow job summary, then uploads both files as the `relay-review-readiness` artifact.
